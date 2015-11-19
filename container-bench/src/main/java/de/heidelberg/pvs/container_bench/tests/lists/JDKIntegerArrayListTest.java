@@ -1,9 +1,12 @@
 package de.heidelberg.pvs.container_bench.tests.lists;
 
-import de.heidelberg.pvs.container_bench.abstracts.AbstractJDKArrayListTest;
+import java.util.ArrayList;
+import java.util.List;
+
+import de.heidelberg.pvs.container_bench.abstracts.AbstractJDKListTest;
 import de.heidelberg.pvs.container_bench.utils.RandomGenerator;
 
-public class JDKIntegerArrayListTest extends AbstractJDKArrayListTest<Integer> {
+public class JDKIntegerArrayListTest extends AbstractJDKListTest<Integer> {
 
 	@Override
 	protected Integer[] generateRandomArray(int seed, int size) {
@@ -13,6 +16,11 @@ public class JDKIntegerArrayListTest extends AbstractJDKArrayListTest<Integer> {
 	@Override
 	protected Integer generateRandomIndex(int seed, int size) {
 		return RandomGenerator.generateInteger(seed, size);
+	}
+
+	@Override
+	protected List<Integer> getNewList(int size) {
+		return new ArrayList<Integer>();
 	}
 
 }

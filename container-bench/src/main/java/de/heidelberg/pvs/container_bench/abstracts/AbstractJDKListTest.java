@@ -9,10 +9,16 @@ import org.openjdk.jmh.infra.Blackhole;
 
 import de.heidelberg.pvs.container_bench.utils.RandomGenerator;
 
-
-public abstract class AbstractJDKArrayListTest<T> extends AbstractListTest {
+/**
+ * Abstract class for every test with JDK Lists implementation
+ * @author Diego
+ *
+ * @param <T>
+ * 		The held type of the {@link List} implementation
+ */
+public abstract class AbstractJDKListTest<T> extends AbstractListTest {
 	
-	private List<T> fullList = new ArrayList<T>();
+	private List<T> fullList;
 	
 	private T[] values;
 	
@@ -21,7 +27,7 @@ public abstract class AbstractJDKArrayListTest<T> extends AbstractListTest {
 	@Setup
 	public void setup(final Blackhole bh) {
 		blackhole = bh;
-		fullList = new ArrayList<T>();
+		fullList = this.getNewList(size);
 		values = this.generateRandomArray(seed, size);
 		for(int i = 0; i < size; i++) {
 			fullList.add(values[i]);
@@ -30,7 +36,9 @@ public abstract class AbstractJDKArrayListTest<T> extends AbstractListTest {
 	
 	protected abstract T[] generateRandomArray(int seed, int size);
 
-	protected  abstract Integer generateRandomIndex(int seed, int size);
+	protected abstract Integer generateRandomIndex(int seed, int size);
+	
+	protected abstract List<T> getNewList(int size);
 	
 	@Benchmark
 	public void getAll() {
