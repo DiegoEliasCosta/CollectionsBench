@@ -9,24 +9,29 @@ import org.openjdk.jmh.annotations.Mode;
 import org.openjdk.jmh.annotations.OutputTimeUnit;
 import org.openjdk.jmh.annotations.Param;
 import org.openjdk.jmh.annotations.Scope;
+import org.openjdk.jmh.annotations.Setup;
 import org.openjdk.jmh.annotations.State;
 import org.openjdk.jmh.annotations.Threads;
 import org.openjdk.jmh.annotations.Warmup;
+import org.openjdk.jmh.infra.Blackhole;
 
 @BenchmarkMode(Mode.AverageTime)
 @OutputTimeUnit(TimeUnit.NANOSECONDS)
 @Warmup(iterations = 5, time = 1, timeUnit = TimeUnit.SECONDS)
-@Measurement(iterations = 5, time = 1, timeUnit = TimeUnit.SECONDS)
+@Measurement(iterations = 10, time = 1, timeUnit = TimeUnit.SECONDS)
 @Threads(1)
-@Fork(1)
+@Fork(2)
 @State(Scope.Benchmark)
 public abstract class AbstractListTest {
 
-	@Param({ "10", "100" })
+	@Param({ "10000" })
 	public int size;
 
 	@Param({ "0" })
 	public int seed;
+	
+	@Setup
+	abstract public void setup(Blackhole blackhole);
 
 	/**
 	 * Benchmark GetAll
@@ -119,6 +124,17 @@ public abstract class AbstractListTest {
 	 */
 	abstract public void addAll();
 	
+	/**
+	 * Benchmark Copy
+	 * 
+	 * This benchmark measure the time spent by copying the entire list to a new instance
+	 * <code>
+	 * <pre>
+	 * newlist = copy(oldList)
+	 * </pre>
+	 * </code>
+	 * 
+	 */
 	abstract public void copyList();
 
 }
