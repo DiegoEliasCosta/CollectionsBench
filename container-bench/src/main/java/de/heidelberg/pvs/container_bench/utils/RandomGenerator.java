@@ -6,19 +6,28 @@ import java.util.Random;
 // FIXME: Find the best way to deal with random numbers in Java
 public class RandomGenerator {
 	
-
-	public static Integer[] generateIntegers(int randomSeed, int size) {
+	// FIXME: The functions are not been reused for performance reasons 
+	public static Integer[] generateIntegers(int seed, int size, int range) {
 		Integer[] values = new Integer[size];
-		Random generator = new Random(randomSeed);
+		Random generator = new Random(seed);
+		for(int i = 0; i < size; i++) {
+			values[i] = generator.nextInt(range);
+		}
+		return values;
+	}
+	
+	public static Integer[] generateIntegers(int seed, int size) {
+		Integer[] values = new Integer[size];
+		Random generator = new Random(seed);
 		for(int i = 0; i < size; i++) {
 			values[i] = generator.nextInt();
 		}
 		return values;
 	}
 	
-	public static Integer generateInteger(int randomSeed, int size) {
-		Random generator = new Random(randomSeed);
-		return generator.nextInt(size);
+	public static Integer generateInteger(int seed, int range) {
+		Random generator = new Random(seed);
+		return generator.nextInt(range);
 	}
 
 	public static String[] generateStrings(int seed, int size) {

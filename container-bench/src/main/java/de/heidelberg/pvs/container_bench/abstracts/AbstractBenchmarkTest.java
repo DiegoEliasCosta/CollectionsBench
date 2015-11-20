@@ -24,7 +24,7 @@ import org.openjdk.jmh.infra.Blackhole;
 @State(Scope.Benchmark)
 public abstract class AbstractBenchmarkTest {
 	
-	@Param({ "10000" })
+	@Param({ "10000", "100000", "1000000" })
 	public int size;
 
 	@Param({ "0" })

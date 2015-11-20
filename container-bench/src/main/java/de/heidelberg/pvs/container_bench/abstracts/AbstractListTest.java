@@ -1,9 +1,5 @@
 package de.heidelberg.pvs.container_bench.abstracts;
 
-import org.openjdk.jmh.annotations.Setup;
-import org.openjdk.jmh.infra.Blackhole;
-
-
 public abstract class AbstractListTest extends AbstractBenchmarkTest { 
 	
 	/**
@@ -31,7 +27,7 @@ public abstract class AbstractListTest extends AbstractBenchmarkTest {
 	 * </code>
 	 * 
 	 */
-	abstract public void getAtIndex();
+	abstract public void getElement();
 
 	/**
 	 * Benchmark RemoveAt
@@ -44,7 +40,7 @@ public abstract class AbstractListTest extends AbstractBenchmarkTest {
 	 * list.remove(index)
 	 * </code>
 	 */
-	abstract public void removeAtIndex();
+	abstract public void removeElement();
 
 	/**
 	 * Benchmark Clear
@@ -70,7 +66,7 @@ public abstract class AbstractListTest extends AbstractBenchmarkTest {
 	 * </code>
 	 * 
 	 */
-	abstract public void contains();
+	abstract public void containsElement();
 
 	/**
 	 * Benchmark Instantiate

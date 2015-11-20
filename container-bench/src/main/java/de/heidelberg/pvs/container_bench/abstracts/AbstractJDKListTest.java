@@ -5,6 +5,7 @@ import java.util.List;
 
 import org.openjdk.jmh.annotations.Benchmark;
 import org.openjdk.jmh.annotations.Setup;
+import org.openjdk.jmh.annotations.State;
 import org.openjdk.jmh.infra.Blackhole;
 
 import de.heidelberg.pvs.container_bench.utils.RandomGenerator;
@@ -19,7 +20,6 @@ import de.heidelberg.pvs.container_bench.utils.RandomGenerator;
 public abstract class AbstractJDKListTest<T> extends AbstractListTest {
 	
 	private List<T> fullList;
-	
 	private T[] values;
 	
 	private static Blackhole blackhole;
@@ -48,13 +48,13 @@ public abstract class AbstractJDKListTest<T> extends AbstractListTest {
 	}
 	
 	@Benchmark
-	public void getAtIndex() {
+	public void getElement() {
 		Integer index = this.generateRandomIndex(seed, size);
 		blackhole.consume(fullList.get(index));
 	}
 
 	@Benchmark
-	public void removeAtIndex() {
+	public void removeElement() {
 		Integer index = this.generateRandomIndex(seed, size);
 		blackhole.consume(fullList.remove(index));
 	}
@@ -65,7 +65,7 @@ public abstract class AbstractJDKListTest<T> extends AbstractListTest {
 	}
 
 	@Benchmark
-	public void contains() {
+	public void containsElement() {
 		Integer index = this.generateRandomIndex(seed, size);
 		blackhole.consume(fullList.contains(values[index]));
 	}
