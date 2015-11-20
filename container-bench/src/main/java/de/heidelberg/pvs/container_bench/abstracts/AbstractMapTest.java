@@ -6,7 +6,7 @@ import org.openjdk.jmh.infra.Blackhole;
 public abstract class AbstractMapTest extends AbstractBenchmarkTest {
 
 	@Param({ "10", "100", "1000", "10000" })
-	public int range;
+	public int rangeOfKeys;
 	
 	public Blackhole blackhole;
 

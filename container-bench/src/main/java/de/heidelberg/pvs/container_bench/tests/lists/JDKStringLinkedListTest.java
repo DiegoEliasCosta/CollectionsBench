@@ -5,11 +5,11 @@ import java.util.List;
 
 import de.heidelberg.pvs.container_bench.abstracts.AbstractJDKListTest;
 
-public class JDKIntegerLinkedListTest extends AbstractJDKListTest<Integer> {
+public class JDKStringLinkedListTest extends AbstractJDKListTest<String> {
 
 	@Override
-	protected Integer[] generateRandomArray(int seed, int size) {
-		return randomGenerator.generateIntegers(seed, size);
+	protected String[] generateRandomArray(int seed, int size) {
+		return randomGenerator.generateStrings(seed, size);
 	}
 
 	@Override
@@ -18,10 +18,8 @@ public class JDKIntegerLinkedListTest extends AbstractJDKListTest<Integer> {
 	}
 
 	@Override
-	protected List<Integer> getNewList(int size) {
-		return new LinkedList<Integer>();
+	protected List<String> getNewList(int size) {
+		return new LinkedList<String>(); 
 	}
-	
-	
 
 }

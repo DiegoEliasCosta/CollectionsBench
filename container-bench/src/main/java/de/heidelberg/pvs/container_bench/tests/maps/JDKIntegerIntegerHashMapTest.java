@@ -4,7 +4,6 @@ import java.util.HashMap;
 import java.util.Map;
 
 import de.heidelberg.pvs.container_bench.abstracts.AbstractJDKMapTest;
-import de.heidelberg.pvs.container_bench.utils.RandomGenerator;
 
 public class JDKIntegerIntegerHashMapTest extends AbstractJDKMapTest<Integer, Integer> {
 
@@ -15,27 +14,27 @@ public class JDKIntegerIntegerHashMapTest extends AbstractJDKMapTest<Integer, In
 
 	@Override
 	protected int generateRandomIndex(int size, int seed) {
-		return RandomGenerator.generateInteger(seed, size);
+		return randomGenerator.generateIntegerInRange(seed, size);
 	}
 
 	@Override
 	protected Integer[] generateRandomKeys(int size, int seed, int range) {
-		return RandomGenerator.generateIntegers(seed, size, range);
+		return randomGenerator.generateIntegersInRange(seed, size, range);
 	}
 
 	@Override
 	protected Integer generateRandomKey(int seed, int range) {
-		return RandomGenerator.generateInteger(seed, range);
+		return randomGenerator.generateIntegerInRange(seed, range);
 	}
 
 	@Override
 	protected Integer[] generateRandomValues(int size, int seed, int range) {
-		return RandomGenerator.generateIntegers(seed, size, range);
+		return randomGenerator.generateIntegers(seed, size); // The range here is irrelevant
 	}
 
 	@Override
 	protected Integer generateRandomValue(int seed, int range) {
-		return RandomGenerator.generateInteger(seed, range);
+		return randomGenerator.generateIntegerInRange(seed, range);
 	}
 
 }

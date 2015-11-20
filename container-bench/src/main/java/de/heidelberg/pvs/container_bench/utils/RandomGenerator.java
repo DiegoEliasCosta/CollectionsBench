@@ -1,42 +1,34 @@
 package de.heidelberg.pvs.container_bench.utils;
 
-import java.util.Random;
+public interface RandomGenerator {
 
+	void initializeSeed(int seed);
+	/**
+	 * Generate an array of random integers
+	 * 
+	 * @param seed
+	 *            The seed for the random algorithm
+	 * @param n
+	 *            The number of required elements
+	 * @param range
+	 *            The maximum number of the values
+	 * @return An array with n elements containing values between 0 (included)
+	 *         and range (not included)
+	 */
+	Integer[] generateIntegersInRange(int seed, int n, int range);
 
-// FIXME: Find the best way to deal with random numbers in Java
-public class RandomGenerator {
-	
-	// FIXME: The functions are not been reused for performance reasons 
-	public static Integer[] generateIntegers(int seed, int size, int range) {
-		Integer[] values = new Integer[size];
-		Random generator = new Random(seed);
-		for(int i = 0; i < size; i++) {
-			values[i] = generator.nextInt(range);
-		}
-		return values;
-	}
-	
-	public static Integer[] generateIntegers(int seed, int size) {
-		Integer[] values = new Integer[size];
-		Random generator = new Random(seed);
-		for(int i = 0; i < size; i++) {
-			values[i] = generator.nextInt();
-		}
-		return values;
-	}
-	
-	public static Integer generateInteger(int seed, int range) {
-		Random generator = new Random(seed);
-		return generator.nextInt(range);
-	}
+	/**
+	 * Generate a random integer
+	 * 
+	 * @param seed
+	 * @param size
+	 * @return
+	 */
+	Integer[] generateIntegers(int seed, int size);
 
-	public static String[] generateStrings(int seed, int size) {
-		String[] values = new String[size];
-		Random generator = new Random(seed);
-		for(int i = 0; i < size; i++) {
-			values[i] = "" + generator.nextInt();
-		}
-		return values;
-	}
+	Integer generateIntegerInRange(int seed, int range);
+
+	String[] generateStrings(int seed, int size);
+
 
 }

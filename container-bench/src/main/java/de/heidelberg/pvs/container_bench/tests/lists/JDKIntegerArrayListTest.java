@@ -4,18 +4,17 @@ import java.util.ArrayList;
 import java.util.List;
 
 import de.heidelberg.pvs.container_bench.abstracts.AbstractJDKListTest;
-import de.heidelberg.pvs.container_bench.utils.RandomGenerator;
 
 public class JDKIntegerArrayListTest extends AbstractJDKListTest<Integer> {
 
 	@Override
 	protected Integer[] generateRandomArray(int seed, int size) {
-		return RandomGenerator.generateIntegers(seed, size);
+		return randomGenerator.generateIntegers(seed, size);
 	}
 
 	@Override
 	protected Integer generateRandomIndex(int seed, int size) {
-		return RandomGenerator.generateInteger(seed, size);
+		return randomGenerator.generateIntegerInRange(seed, size);
 	}
 
 	@Override

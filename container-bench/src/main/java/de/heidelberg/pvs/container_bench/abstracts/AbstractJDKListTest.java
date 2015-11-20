@@ -5,10 +5,7 @@ import java.util.List;
 
 import org.openjdk.jmh.annotations.Benchmark;
 import org.openjdk.jmh.annotations.Setup;
-import org.openjdk.jmh.annotations.State;
 import org.openjdk.jmh.infra.Blackhole;
-
-import de.heidelberg.pvs.container_bench.utils.RandomGenerator;
 
 /**
  * Abstract class for every test with JDK Lists implementation
@@ -24,9 +21,7 @@ public abstract class AbstractJDKListTest<T> extends AbstractListTest {
 	
 	private static Blackhole blackhole;
 	
-	@Setup
-	public void setup(final Blackhole bh) {
-		blackhole = bh;
+	public void setup() {
 		fullList = this.getNewList(size);
 		values = this.generateRandomArray(seed, size);
 		for(int i = 0; i < size; i++) {

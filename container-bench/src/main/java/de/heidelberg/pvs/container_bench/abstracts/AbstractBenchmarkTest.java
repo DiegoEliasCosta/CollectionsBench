@@ -15,6 +15,9 @@ import org.openjdk.jmh.annotations.Threads;
 import org.openjdk.jmh.annotations.Warmup;
 import org.openjdk.jmh.infra.Blackhole;
 
+import de.heidelberg.pvs.container_bench.utils.JDKRandomGenerator;
+import de.heidelberg.pvs.container_bench.utils.RandomGenerator;
+
 @BenchmarkMode(Mode.AverageTime)
 @OutputTimeUnit(TimeUnit.NANOSECONDS)
 @Warmup(iterations = 5, time = 1, timeUnit = TimeUnit.SECONDS)
@@ -30,7 +33,28 @@ public abstract class AbstractBenchmarkTest {
 	@Param({ "0" })
 	public int seed;
 	
+	/**
+	 * Blackhole object responsible for consuming any return from our tested methods 
+	 */
+	protected Blackhole blackhole;
+	
+	/**
+	 * Implementation of our Randomness 
+	 */
+	protected RandomGenerator randomGenerator = new JDKRandomGenerator();
+
+	
+	/**
+	 * Setup method of the benchmark
+	 */
+	public abstract void setup();
+	
 	@Setup
-	abstract public void setup(Blackhole blackhole);
+	public void initializeSetup(Blackhole blackhole) {
+		this.blackhole = blackhole;
+		// Initialize the seed 
+		randomGenerator.initializeSeed(seed);
+		this.setup();
+	}
 
 }

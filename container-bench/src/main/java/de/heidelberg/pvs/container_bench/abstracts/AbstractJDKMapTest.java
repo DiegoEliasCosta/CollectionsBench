@@ -22,12 +22,11 @@ public abstract class AbstractJDKMapTest<K, V> extends AbstractMapTest {
 	protected abstract V generateRandomValue(int seed, int range);
 	
 	@Override
-	public void setup(Blackhole blackhole) {
-		this.blackhole = blackhole;
-		fullMap = this.getNewMap(size, seed, range);
+	public void setup() {
+		fullMap = this.getNewMap(size, seed, rangeOfKeys);
 		
-		keys = this.generateRandomKeys(size, seed, range);
-		values = this.generateRandomValues(size, seed, range);
+		keys = this.generateRandomKeys(size, seed, rangeOfKeys);
+		values = this.generateRandomValues(size, seed, rangeOfKeys);
 
 		for(int i = 0; i < size; i++) {
 			fullMap.put(keys[i], values[i]);
@@ -38,7 +37,7 @@ public abstract class AbstractJDKMapTest<K, V> extends AbstractMapTest {
 	@Override
 	@Benchmark
 	public void putAll() {
-		Map<K, V> newMap = this.getNewMap(size, seed, range);
+		Map<K, V> newMap = this.getNewMap(size, seed, rangeOfKeys);
 		for(int i = 0; i < size; i++) {
 			blackhole.consume(newMap.put(keys[i], values[i]));
 		}
