@@ -22,4 +22,9 @@ public class JDKIntegerCopyOnWriteListTest extends AbstractJDKListTest<Integer> 
 		return new CopyOnWriteArrayList<Integer>(); // There is no option for creating a list of specifying size
 	}
 
+	@Override
+	protected List<Integer> copyList(List<Integer> fullList2) {
+		return new CopyOnWriteArrayList<Integer>(fullList2);
+	}
+
 }

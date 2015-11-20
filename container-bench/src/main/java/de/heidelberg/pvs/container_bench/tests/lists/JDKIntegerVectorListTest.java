@@ -22,4 +22,9 @@ public class JDKIntegerVectorListTest extends AbstractJDKListTest<Integer> {
 		return new Vector<Integer>(size);
 	}
 
+	@Override
+	protected List<Integer> copyList(List<Integer> fullList2) {
+		return new Vector<Integer>(fullList2);
+	}
+
 }

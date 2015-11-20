@@ -22,4 +22,9 @@ public class JDKStringArrayListTest extends AbstractJDKListTest<String> {
 		return new ArrayList<String>();
 	}
 
+	@Override
+	protected List<String> copyList(List<String> fullList2) {
+		return new ArrayList<String>(fullList2);
+	}
+
 }

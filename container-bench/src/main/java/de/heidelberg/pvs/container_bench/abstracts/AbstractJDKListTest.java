@@ -1,10 +1,8 @@
 package de.heidelberg.pvs.container_bench.abstracts;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import org.openjdk.jmh.annotations.Benchmark;
-import org.openjdk.jmh.annotations.Setup;
 import org.openjdk.jmh.infra.Blackhole;
 
 /**
@@ -30,10 +28,10 @@ public abstract class AbstractJDKListTest<T> extends AbstractListTest {
 	}
 	
 	protected abstract T[] generateRandomArray(int seed, int size);
-
 	protected abstract Integer generateRandomIndex(int seed, int size);
 	
 	protected abstract List<T> getNewList(int size);
+	protected abstract List<T> copyList(List<T> fullList2);
 	
 	@Benchmark
 	public void getAll() {
@@ -67,13 +65,13 @@ public abstract class AbstractJDKListTest<T> extends AbstractListTest {
 
 	@Benchmark
 	public void instantiate() {
-		List<T> newList = new ArrayList<T>(size);
+		List<T> newList = this.getNewList(size);
 		blackhole.consume(newList);
 	}
 
 	@Benchmark
 	public void addAll() {
-		List<T> newList = new ArrayList<T>(size);
+		List<T> newList = this.getNewList(size);
 		for(int i = 0; i < size; i++) {
 			blackhole.consume(newList.add(values[i]));
 		}
@@ -81,8 +79,9 @@ public abstract class AbstractJDKListTest<T> extends AbstractListTest {
 
 	@Benchmark
 	public void copyList() {
-		List<T> newList = new ArrayList<T>(fullList);
+		List<T> newList = this.copyList(fullList);
 		blackhole.consume(newList);
 	}
+
 	
 }

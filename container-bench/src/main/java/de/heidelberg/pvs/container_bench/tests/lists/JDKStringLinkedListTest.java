@@ -22,4 +22,9 @@ public class JDKStringLinkedListTest extends AbstractJDKListTest<String> {
 		return new LinkedList<String>(); 
 	}
 
+	@Override
+	protected List<String> copyList(List<String> fullList2) {
+		return new LinkedList<String>(fullList2);
+	}
+
 }

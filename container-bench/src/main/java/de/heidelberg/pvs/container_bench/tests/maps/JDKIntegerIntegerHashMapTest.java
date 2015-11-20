@@ -37,4 +37,9 @@ public class JDKIntegerIntegerHashMapTest extends AbstractJDKMapTest<Integer, In
 		return randomGenerator.generateIntegerInRange(seed, range);
 	}
 
+	@Override
+	protected Map<Integer, Integer> copyMap(Map<Integer, Integer> fullMap2) {
+		return new HashMap<Integer, Integer>(fullMap2);
+	}
+
 }

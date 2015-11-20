@@ -1,15 +1,12 @@
 package de.heidelberg.pvs.container_bench.abstracts;
 
 import org.openjdk.jmh.annotations.Param;
-import org.openjdk.jmh.infra.Blackhole;
 
 public abstract class AbstractMapTest extends AbstractBenchmarkTest {
 
 	@Param({ "10", "100", "1000", "10000" })
 	public int rangeOfKeys;
 	
-	public Blackhole blackhole;
-
 	/**
 	 * Benchmark PutAll
 	 * 
@@ -66,5 +63,13 @@ public abstract class AbstractMapTest extends AbstractBenchmarkTest {
 	 * 
 	 */
 	abstract public void removeElement();
+	
+	/**
+	 * Benchmark Copy
+	 * 
+	 * This benchmark measure the time spent by copying another map structure
+	 */
+	abstract public void copy();
+	
 
 }

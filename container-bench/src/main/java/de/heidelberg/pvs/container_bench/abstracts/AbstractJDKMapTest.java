@@ -3,7 +3,6 @@ package de.heidelberg.pvs.container_bench.abstracts;
 import java.util.Map;
 
 import org.openjdk.jmh.annotations.Benchmark;
-import org.openjdk.jmh.infra.Blackhole;
 
 public abstract class AbstractJDKMapTest<K, V> extends AbstractMapTest {
 
@@ -20,6 +19,8 @@ public abstract class AbstractJDKMapTest<K, V> extends AbstractMapTest {
 	
 	protected abstract V[] generateRandomValues(int size, int seed, int range);
 	protected abstract V generateRandomValue(int seed, int range);
+	
+	protected abstract Map<K, V> copyMap(Map<K, V> fullMap2);
 	
 	@Override
 	public void setup() {
@@ -65,6 +66,12 @@ public abstract class AbstractJDKMapTest<K, V> extends AbstractMapTest {
 	public void getElement() {
 		int index = this.generateRandomIndex(size, seed);
 		blackhole.consume(fullMap.get(keys[index]));
+		
+	}
+
+	@Override
+	public void copy() {
+		Map<K, V> newMap = this.copyMap(fullMap); 
 		
 	}
 

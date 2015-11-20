@@ -22,4 +22,9 @@ public class JDKIntegerArrayListTest extends AbstractJDKListTest<Integer> {
 		return new ArrayList<Integer>();
 	}
 
+	@Override
+	protected List<Integer> copyList(List<Integer> fullList2) {
+		return new ArrayList<Integer>(fullList2);
+	}
+
 }

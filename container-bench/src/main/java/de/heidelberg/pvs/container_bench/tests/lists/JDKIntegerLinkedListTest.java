@@ -21,6 +21,11 @@ public class JDKIntegerLinkedListTest extends AbstractJDKListTest<Integer> {
 	protected List<Integer> getNewList(int size) {
 		return new LinkedList<Integer>();
 	}
+
+	@Override
+	protected List<Integer> copyList(List<Integer> fullList2) {
+		return new LinkedList<Integer>(fullList2);
+	}
 	
 	
 
