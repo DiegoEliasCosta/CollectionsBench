@@ -1,5 +1,7 @@
 package de.heidelberg.pvs.container_bench.utils;
 
+import de.heidelberg.pvs.container_bench.element.Element;
+
 public class UncommonMathRandomGenerator implements RandomGenerator {
 
 	
@@ -72,6 +74,24 @@ public class UncommonMathRandomGenerator implements RandomGenerator {
 
 	@Override
 	public Double generateDouble() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public Element[] generateElements(int size) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public Element generateElement() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public String generateString() {
 		// TODO Auto-generated method stub
 		return null;
 	}

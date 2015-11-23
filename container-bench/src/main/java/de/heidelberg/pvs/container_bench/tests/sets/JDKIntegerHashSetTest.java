@@ -8,7 +8,7 @@ import de.heidelberg.pvs.container_bench.abstracts.AbstractJDKSetTest;
 public class JDKIntegerHashSetTest extends AbstractJDKSetTest<Integer> {
 
 	@Override
-	protected Integer[] generateRandomArray(int size) {
+	protected Integer[] generateUniqueRandomArray(int size) {
 		return randomGenerator.generateIntegers(size);
 	}
 
@@ -20,6 +20,11 @@ public class JDKIntegerHashSetTest extends AbstractJDKSetTest<Integer> {
 	@Override
 	protected Set<Integer> copySet(Set<Integer> fullSet2) {
 		return new HashSet<Integer>(fullSet2);
+	}
+
+	@Override
+	protected Integer generateRandomIndex(int size) {
+		return randomGenerator.generateIntegerInRange(size);
 	}
 
 }

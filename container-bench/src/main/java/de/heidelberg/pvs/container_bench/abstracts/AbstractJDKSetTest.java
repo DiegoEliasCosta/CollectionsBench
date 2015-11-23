@@ -24,42 +24,33 @@ public abstract class AbstractJDKSetTest<T> extends AbstractSetTest {
 	
 	public void setup() {
 		fullSet = this.getNewSet(size);
-		values = this.generateRandomArray(size);
+		values = this.generateUniqueRandomArray(size);
 		for(int i = 0; i < size; i++) {
 			fullSet.add(values[i]);
 		}
 	}
 	
-	protected abstract T[] generateRandomArray(int size);
+	protected abstract T[] generateUniqueRandomArray(int size);
+	protected abstract Integer generateRandomIndex(int size);
 	
 	protected abstract Set<T> getNewSet(int size);
 	protected abstract Set<T> copySet(Set<T> fullSet2);
 	
 	@Benchmark
-	public void getAll() { // WIP!!!
+	public void getAll() { 
 	for(Object obj: fullSet)
 		blackhole.consume(obj);
 	}
 	
-	@Benchmark
-	public void getElement() {} /*{
-		Integer index = this.generateRandomIndex(size);
-		blackhole.consume(fullSet.get(index));
-	}*/
+	//@Benchmark
+	public void getElement() {
+		// FIXME: Take this out from the Abstract
+	} 
 
 	@Benchmark
 	public void removeElement() {
-		
-	int size = fullSet.size();
-	int item = new Random().nextInt(size);
-	int i = 0;
-	for(Object obj : fullSet)
-		{
-		    if (i == item) {
-		        blackhole.consume(fullSet.remove(obj));
-		        break;
-		    }
-		}
+		int index = this.generateRandomIndex(size);
+		blackhole.consume(this.fullSet.remove(values[index]));
 	}
 
 	@Benchmark
@@ -71,11 +62,6 @@ public abstract class AbstractJDKSetTest<T> extends AbstractSetTest {
 	public void containsElement() {
 		Integer index = this.generateRandomIndex(size);
 		blackhole.consume(fullSet.contains(values[index]));
-	}
-
-	private Integer generateRandomIndex(int size) {
-		// TODO Auto-generated method stub
-		return 0;
 	}
 
 	@Benchmark

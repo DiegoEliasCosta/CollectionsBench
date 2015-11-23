@@ -2,8 +2,10 @@ package de.heidelberg.pvs.container_bench.utils;
 
 import java.util.Random;
 
+import de.heidelberg.pvs.container_bench.element.Element;
+
 public class JDKRandomGenerator implements RandomGenerator {
-	
+
 	private final int NO_RANGE_FLAG = -1;
 
 	private Random generator;
@@ -12,12 +14,11 @@ public class JDKRandomGenerator implements RandomGenerator {
 	public void initializeSeed(int seed) {
 		this.generator = new Random(seed);
 	}
-	
-	
+
 	@Override
 	public Integer[] generateIntegersInRange(int size, int range) {
 		Integer[] values = new Integer[size];
-		
+
 		// No range specified
 		if (range == NO_RANGE_FLAG) {
 			for (int i = 0; i < size; i++) {
@@ -51,27 +52,24 @@ public class JDKRandomGenerator implements RandomGenerator {
 	public String[] generateStrings(int size) {
 		String[] values = new String[size];
 		for (int i = 0; i < size; i++) {
-			values[i] = "" + generator.nextLong();
+			values[i] = this.generateString();
 		}
 		return values;
 	}
-
 
 	@Override
 	public Integer generateInteger() {
 		return generator.nextInt();
 	}
 
-
 	@Override
-	public Long[] generateLongsInRange(int size, long range) {		
+	public Long[] generateLongsInRange(int size, long range) {
 		return generateLongs(size);
 	}
 
-
 	@Override
 	public Long[] generateLongs(int size) {
-		
+
 		Long[] longs = new Long[size];
 
 		for (int i = 0; i < size; i++) {
@@ -86,12 +84,10 @@ public class JDKRandomGenerator implements RandomGenerator {
 		return generateLong();
 	}
 
-
 	@Override
 	public Long generateLong() {
 		return generator.nextLong();
 	}
-
 
 	@Override
 	public Double[] generateDoubles(int size) {
@@ -104,10 +100,35 @@ public class JDKRandomGenerator implements RandomGenerator {
 		return doubles;
 	}
 
-
 	@Override
 	public Double generateDouble() {
 		return generator.nextDouble();
+	}
+
+	@Override
+	public Element[] generateElements(int size) {
+		Element[] elements = new Element[size];
+		for (int i = 0; i < size; i++) {
+			elements[i] = this.generateElement();
+		}
+		return elements;
+	}
+
+	@Override
+	public Element generateElement() {
+		Element element = new Element();
+		element.setDoubleField(this.generateDouble());
+		element.setIntegerField(this.generateInteger());
+		element.setLongField(this.generateLong());
+		element.setStringField(this.generateString());
+		element.setStringField2(this.generateString());
+
+		return element;
+	}
+
+	@Override
+	public String generateString() {
+		return "" + generator.nextLong();
 	}
 
 }

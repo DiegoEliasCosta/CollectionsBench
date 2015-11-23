@@ -2,6 +2,8 @@ package de.heidelberg.pvs.container_bench.utils;
 
 import org.apache.commons.math3.random.Well44497b;
 
+import de.heidelberg.pvs.container_bench.element.Element;
+
 public class ApacheRandomGenerator implements RandomGenerator {
 
 	private static final int NO_RANGE_FLAG = -1;
@@ -45,11 +47,9 @@ public class ApacheRandomGenerator implements RandomGenerator {
 	@Override
 	public String[] generateStrings(int size) {
 		String[] strings = new String[size];
-
 		for (int i = 0; i < size; i++) {
-			strings[i] = "" + generator.nextLong();
+			strings[i] = this.generateString();
 		}
-
 		return strings;
 	}
 
@@ -106,5 +106,33 @@ public class ApacheRandomGenerator implements RandomGenerator {
 	@Override
 	public Double generateDouble() {
 		return generator.nextDouble();
+	}
+
+	@Override
+	public Element generateElement() {
+		
+		Element element = new Element();
+		element.setDoubleField(this.generateDouble());
+		element.setIntegerField(this.generateInteger());
+		element.setLongField(this.generateLong());
+		element.setStringField(this.generateString());
+		element.setStringField2(this.generateString());
+		
+		return element;
+	}
+
+	@Override
+	public Element[] generateElements(int size) {
+		
+		Element[] elements = new Element[size];
+		for (int i = 0; i < size; i++) {
+			elements[i] = this.generateElement();
+		}
+		return elements;
+	}
+
+	@Override
+	public String generateString() {
+		return "" + generator.nextLong(); 
 	}
 }

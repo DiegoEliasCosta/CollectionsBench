@@ -1,5 +1,7 @@
 package de.heidelberg.pvs.container_bench.utils;
 
+import de.heidelberg.pvs.container_bench.element.Element;
+
 public interface RandomGenerator {
 
 	void initializeSeed(int seed);
@@ -16,14 +18,6 @@ public interface RandomGenerator {
 	 *         and range (not included)
 	 */
 	Integer[] generateIntegersInRange(int n, int range);
-
-	/**
-	 * Generate a random integer
-	 * 
-	 * @param seed
-	 * @param size
-	 * @return
-	 */
 	Integer[] generateIntegers(int size);
 	Integer generateIntegerInRange(int range);
 	Integer generateInteger();
@@ -33,11 +27,13 @@ public interface RandomGenerator {
 	Long generateLongInRange(long range);
 	Long generateLong();
 	
-	// Double[] generateDoublesInRange(int n, double range); // Apache doesn't provide for this
 	Double[] generateDoubles(int size);
-	// Double generateDoubleInRange(double range); // Appache doesn't provide for this 
 	Double generateDouble();
 	
+	Element[] generateElements(int size);
+	Element generateElement();
+	
 	String[] generateStrings(int size);
+	String generateString();
 	
 }

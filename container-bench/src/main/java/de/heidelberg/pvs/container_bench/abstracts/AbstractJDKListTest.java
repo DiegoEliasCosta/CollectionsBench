@@ -17,13 +17,6 @@ public abstract class AbstractJDKListTest<T> extends AbstractListTest {
 	private List<T> fullList;
 	private T[] values;
 	
-	public void setup() {
-		fullList = this.getNewList(size);
-		values = this.generateRandomArray(size);
-		for(int i = 0; i < size; i++) {
-			fullList.add(values[i]);
-		}
-	}
 	
 	protected abstract T[] generateRandomArray(int size);
 	protected abstract Integer generateRandomIndex(int size);
@@ -31,8 +24,13 @@ public abstract class AbstractJDKListTest<T> extends AbstractListTest {
 	protected abstract List<T> getNewList(int size);
 	protected abstract List<T> copyList(List<T> fullList2);
 	
-	
-	
+	public void setup() {
+		fullList = this.getNewList(size);
+		values = this.generateRandomArray(size);
+		for(int i = 0; i < size; i++) {
+			fullList.add(values[i]);
+		}
+	}
 	
 	@Benchmark
 	public void getAll() {
