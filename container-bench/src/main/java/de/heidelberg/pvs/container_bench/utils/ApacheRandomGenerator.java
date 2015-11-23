@@ -58,4 +58,53 @@ public class ApacheRandomGenerator implements RandomGenerator {
 		return generator.nextInt();
 	}
 
+	@Override
+	public Long[] generateLongsInRange(int size, long range) {
+		
+		Long[] longs = new Long[size];
+
+		for (int i = 0; i < size; i++) {
+			longs[i] = generator.nextLong(range);
+		}
+
+		return longs;
+	}
+	
+	@Override
+	public Long[] generateLongs(int size) {
+		
+		Long[] longs = new Long[size];
+
+		for (int i = 0; i < size; i++) {
+			longs[i] = generator.nextLong();
+		}
+
+		return longs;
+	}
+
+	@Override
+	public Long generateLongInRange(long range) {
+		return generator.nextLong(range);
+	}
+
+	@Override
+	public Long generateLong() {
+		return generator.nextLong();
+	}
+	
+	@Override
+	public Double[] generateDoubles(int size) {
+		Double[] doubles = new Double[size];
+
+		for (int i = 0; i < size; i++) {
+			doubles[i] = generator.nextDouble();
+		}
+
+		return doubles;
+	}
+
+	@Override
+	public Double generateDouble() {
+		return generator.nextDouble();
+	}
 }

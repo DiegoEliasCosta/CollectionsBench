@@ -25,12 +25,19 @@ public interface RandomGenerator {
 	 * @return
 	 */
 	Integer[] generateIntegers(int size);
-
 	Integer generateIntegerInRange(int range);
-	
 	Integer generateInteger();
-
+	
+	Long[] generateLongsInRange(int n, long range);
+	Long[] generateLongs(int size);
+	Long generateLongInRange(long range);
+	Long generateLong();
+	
+	// Double[] generateDoublesInRange(int n, double range); // Apache doesn't provide for this
+	Double[] generateDoubles(int size);
+	// Double generateDoubleInRange(double range); // Appache doesn't provide for this 
+	Double generateDouble();
+	
 	String[] generateStrings(int size);
-
-
+	
 }
