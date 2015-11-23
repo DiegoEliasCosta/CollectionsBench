@@ -40,4 +40,40 @@ public class UncommonMathRandomGenerator implements RandomGenerator {
 		return null;
 	}
 
+	@Override
+	public Long[] generateLongsInRange(int n, long range) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public Long[] generateLongs(int size) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public Long generateLongInRange(long range) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public Long generateLong() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public Double[] generateDoubles(int size) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public Double generateDouble() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
 }
