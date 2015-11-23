@@ -19,12 +19,12 @@ public class JDKObjectHashSetTest extends AbstractJDKSetTest<Object> {
 
 	@Override
 	protected Set<Object> getNewSet(int size) {
-		return new HashSet<>();
+		return new HashSet<Object>();
 	}
 
 	@Override
 	protected Set<Object> copySet(Set<Object> fullSet2) {
-		return new HashSet<>(fullSet2);
+		return new HashSet<Object>(fullSet2);
 	}
 
 }

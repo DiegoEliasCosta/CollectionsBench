@@ -9,7 +9,7 @@ public class JDKObjectIntegerHashMapTest extends AbstractJDKMapTest<Object, Inte
 
 	@Override
 	protected Map<Object, Integer> getNewMap(int size, int range) {
-		return new HashMap<>();
+		return new HashMap<Object, Integer>();
 	}
 
 	@Override
@@ -39,7 +39,7 @@ public class JDKObjectIntegerHashMapTest extends AbstractJDKMapTest<Object, Inte
 
 	@Override
 	protected Map<Object, Integer> copyMap(Map<Object, Integer> fullMap2) {
-		return new HashMap<>(fullMap2);
+		return new HashMap<Object, Integer>(fullMap2);
 	}
 
 }

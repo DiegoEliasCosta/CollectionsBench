@@ -20,12 +20,12 @@ public class JDKElementHashSetTest extends AbstractJDKSetTest<Element> {
 
 	@Override
 	protected Set<Element> getNewSet(int size) {
-		return new HashSet<>();
+		return new HashSet<Element>();
 	}
 
 	@Override
 	protected Set<Element> copySet(Set<Element> fullSet2) {
-		return new HashSet<>(fullSet2);
+		return new HashSet<Element>(fullSet2);
 	}
 
 
