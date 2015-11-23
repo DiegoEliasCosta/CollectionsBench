@@ -11,25 +11,31 @@ public class UncommonMathRandomGenerator implements RandomGenerator {
 	}
 
 	@Override
-	public Integer[] generateIntegersInRange(int seed, int n, int range) {
+	public Integer[] generateIntegersInRange(int n, int range) {
 		// TODO Auto-generated method stub
 		return null;
 	}
 
 	@Override
-	public Integer[] generateIntegers(int seed, int size) {
+	public Integer[] generateIntegers(int size) {
 		// TODO Auto-generated method stub
 		return null;
 	}
 
 	@Override
-	public Integer generateIntegerInRange(int seed, int range) {
+	public Integer generateIntegerInRange(int range) {
 		// TODO Auto-generated method stub
 		return null;
 	}
 
 	@Override
-	public String[] generateStrings(int seed, int size) {
+	public String[] generateStrings(int size) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public Integer generateInteger() {
 		// TODO Auto-generated method stub
 		return null;
 	}

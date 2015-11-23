@@ -20,7 +20,7 @@ public class RandomGeneratorTest {
 		RandomGenerator randomGenerator = new JDKRandomGenerator();
 		randomGenerator.initializeSeed(0);
 
-		Integer[] randomInts = randomGenerator.generateIntegersInRange(0, n, range);
+		Integer[] randomInts = randomGenerator.generateIntegersInRange(n, range);
 		this.testRandomness(randomInts, n, range, tolerance);
 
 	}
@@ -36,7 +36,7 @@ public class RandomGeneratorTest {
 		RandomGenerator randomGenerator = new ApacheRandomGenerator();
 		randomGenerator.initializeSeed(0);
 
-		Integer[] randomInts = randomGenerator.generateIntegersInRange(0, n, range);
+		Integer[] randomInts = randomGenerator.generateIntegersInRange(n, range);
 		this.testRandomness(randomInts, n, range, tolerance);
 
 	}

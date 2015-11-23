@@ -18,10 +18,10 @@ import org.openjdk.jmh.infra.Blackhole;
 
 @BenchmarkMode(Mode.AverageTime)
 @OutputTimeUnit(TimeUnit.NANOSECONDS)
-@Warmup(iterations = 5, time = 1, timeUnit = TimeUnit.SECONDS)
-@Measurement(iterations = 10, time = 1, timeUnit = TimeUnit.SECONDS)
+@Warmup(iterations = 10, time = 1, timeUnit = TimeUnit.SECONDS)
+@Measurement(iterations = 30, time = 1, timeUnit = TimeUnit.SECONDS)
 @Threads(1)
-@Fork(1)
+@Fork(2)
 @State(Scope.Benchmark)
 public class RandomGeneratorBechmarkTest {
 
@@ -29,10 +29,10 @@ public class RandomGeneratorBechmarkTest {
 
 	private RandomGenerator apacheGenerator = new ApacheRandomGenerator();
 
-	@Param({ "0", "42", "976431" })
+	@Param({"976431" })
 	int seed;
 
-	@Param({ "10", "1000000" })
+	@Param({"1000000"})
 	int size;
 
 	@Param({ "1000" })
@@ -48,23 +48,23 @@ public class RandomGeneratorBechmarkTest {
 	}
 
 	@Benchmark
-	public void jdkGenerateIntegers() {
-		bh.consume(this.jdkGenerator.generateIntegers(seed, size));
+	public void jdkGenerateInteger() {
+		bh.consume(this.jdkGenerator.generateInteger());
 	}
 
 	@Benchmark
 	public void jdkGenerateIntegersInRange() {
-		bh.consume(this.jdkGenerator.generateIntegersInRange(seed, size, range));
+		bh.consume(this.jdkGenerator.generateIntegerInRange(range));
 	}
 
 	@Benchmark
-	public void apacheGenerateIntegers() {
-		bh.consume(this.apacheGenerator.generateIntegers(seed, size));
+	public void apacheGenerateInteger() {
+		bh.consume(this.apacheGenerator.generateInteger());
 	}
 
 	@Benchmark
 	public void apacheGenerateIntegersInRange() {
-		bh.consume(this.apacheGenerator.generateIntegersInRange(seed, size, range));
+		bh.consume(this.apacheGenerator.generateIntegerInRange(range));
 	}
 
 }

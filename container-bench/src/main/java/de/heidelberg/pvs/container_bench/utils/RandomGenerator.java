@@ -15,7 +15,7 @@ public interface RandomGenerator {
 	 * @return An array with n elements containing values between 0 (included)
 	 *         and range (not included)
 	 */
-	Integer[] generateIntegersInRange(int seed, int n, int range);
+	Integer[] generateIntegersInRange(int n, int range);
 
 	/**
 	 * Generate a random integer
@@ -24,11 +24,13 @@ public interface RandomGenerator {
 	 * @param size
 	 * @return
 	 */
-	Integer[] generateIntegers(int seed, int size);
+	Integer[] generateIntegers(int size);
 
-	Integer generateIntegerInRange(int seed, int range);
+	Integer generateIntegerInRange(int range);
+	
+	Integer generateInteger();
 
-	String[] generateStrings(int seed, int size);
+	String[] generateStrings(int size);
 
 
 }

@@ -8,13 +8,13 @@ import de.heidelberg.pvs.container_bench.abstracts.AbstractJDKListTest;
 public class JDKStringLinkedListTest extends AbstractJDKListTest<String> {
 
 	@Override
-	protected String[] generateRandomArray(int seed, int size) {
-		return randomGenerator.generateStrings(seed, size);
+	protected String[] generateRandomArray(int size) {
+		return randomGenerator.generateStrings(size);
 	}
 
 	@Override
-	protected Integer generateRandomIndex(int seed, int size) {
-		return randomGenerator.generateIntegerInRange(seed, size);
+	protected Integer generateRandomIndex(int size) {
+		return randomGenerator.generateIntegerInRange(size);
 	}
 
 	@Override

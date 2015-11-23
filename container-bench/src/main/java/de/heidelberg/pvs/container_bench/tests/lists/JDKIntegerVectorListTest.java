@@ -8,13 +8,13 @@ import de.heidelberg.pvs.container_bench.abstracts.AbstractJDKListTest;
 public class JDKIntegerVectorListTest extends AbstractJDKListTest<Integer> {
 
 	@Override
-	protected Integer[] generateRandomArray(int seed, int size) {
-		return randomGenerator.generateIntegers(seed, size);
+	protected Integer[] generateRandomArray(int size) {
+		return randomGenerator.generateIntegers(size);
 	}
 
 	@Override
-	protected Integer generateRandomIndex(int seed, int size) {
-		return randomGenerator.generateIntegerInRange(seed, size);
+	protected Integer generateRandomIndex(int size) {
+		return randomGenerator.generateIntegerInRange(size);
 	}
 
 	@Override
