@@ -17,8 +17,6 @@ public abstract class AbstractJDKListTest<T> extends AbstractListTest {
 	private List<T> fullList;
 	private T[] values;
 	
-	private static Blackhole blackhole;
-	
 	public void setup() {
 		fullList = this.getNewList(size);
 		values = this.generateRandomArray(size);
@@ -32,6 +30,9 @@ public abstract class AbstractJDKListTest<T> extends AbstractListTest {
 	
 	protected abstract List<T> getNewList(int size);
 	protected abstract List<T> copyList(List<T> fullList2);
+	
+	
+	
 	
 	@Benchmark
 	public void getAll() {
