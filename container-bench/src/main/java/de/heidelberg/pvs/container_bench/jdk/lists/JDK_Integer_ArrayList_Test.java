@@ -5,7 +5,7 @@ import java.util.List;
 
 import de.heidelberg.pvs.container_bench.abstracts.AbstractJDKListTest;
 
-public class JDKIntegerArrayListTest extends AbstractJDKListTest<Integer> {
+public class JDK_Integer_ArrayList_Test extends AbstractJDKListTest<Integer> {
 	
 	
 	@Override

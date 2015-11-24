@@ -4,12 +4,13 @@ import java.util.HashMap;
 import java.util.Map;
 
 import de.heidelberg.pvs.container_bench.abstracts.AbstractJDKMapTest;
+import de.heidelberg.pvs.container_bench.element.Element;
 
-public class JDKObjectIntegerHashMapTest extends AbstractJDKMapTest<Object, Integer> {
+public class JDK_ElementInteger_HashMap_Test extends AbstractJDKMapTest<Element, Integer>{
 
 	@Override
-	protected Map<Object, Integer> getNewMap(int size, int range) {
-		return new HashMap<Object, Integer>();
+	protected Map<Element, Integer> getNewMap(int size, int range) {
+		return new HashMap<Element, Integer>();
 	}
 
 	@Override
@@ -18,13 +19,13 @@ public class JDKObjectIntegerHashMapTest extends AbstractJDKMapTest<Object, Inte
 	}
 
 	@Override
-	protected Object[] generateRandomKeys(int size, int range) {
-		return randomGenerator.generateElements(size); // range makes no sense here
+	protected Element[] generateRandomKeys(int size, int range) {
+		return randomGenerator.generateElements(size);
 	}
 
 	@Override
-	protected Object generateRandomKey(int range) {
-		return randomGenerator.generateElement(); //range makes no sense here
+	protected Element generateRandomKey(int range) {
+		return randomGenerator.generateElement();
 	}
 
 	@Override
@@ -38,8 +39,8 @@ public class JDKObjectIntegerHashMapTest extends AbstractJDKMapTest<Object, Inte
 	}
 
 	@Override
-	protected Map<Object, Integer> copyMap(Map<Object, Integer> fullMap2) {
-		return new HashMap<Object, Integer>(fullMap2);
+	protected Map<Element, Integer> copyMap(Map<Element, Integer> fullMap2) {
+		return new HashMap<Element, Integer>(fullMap2);
 	}
 
 }

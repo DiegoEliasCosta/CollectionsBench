@@ -1,13 +1,12 @@
 package de.heidelberg.pvs.container_bench.jdk.lists;
 
-import java.util.LinkedList;
 import java.util.List;
+import java.util.Vector;
 
 import de.heidelberg.pvs.container_bench.abstracts.AbstractJDKListTest;
 
-public class JDKIntegerLinkedListTest extends AbstractJDKListTest<Integer> {
+public class JDK_Integer_VectorList_Test extends AbstractJDKListTest<Integer> {
 
-	
 	@Override
 	protected Integer[] generateRandomArray(int size) {
 		return randomGenerator.generateIntegers(size);
@@ -20,14 +19,12 @@ public class JDKIntegerLinkedListTest extends AbstractJDKListTest<Integer> {
 
 	@Override
 	protected List<Integer> getNewList(int size) {
-		return new LinkedList<Integer>();
+		return new Vector<Integer>(size);
 	}
 
 	@Override
 	protected List<Integer> copyList(List<Integer> fullList2) {
-		return new LinkedList<Integer>(fullList2);
+		return new Vector<Integer>(fullList2);
 	}
-	
-	
 
 }

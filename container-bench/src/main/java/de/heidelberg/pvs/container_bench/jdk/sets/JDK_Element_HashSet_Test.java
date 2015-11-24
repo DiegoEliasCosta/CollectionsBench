@@ -4,11 +4,12 @@ import java.util.HashSet;
 import java.util.Set;
 
 import de.heidelberg.pvs.container_bench.abstracts.AbstractJDKSetTest;
+import de.heidelberg.pvs.container_bench.element.Element;
 
-public class JDKObjectHashSetTest extends AbstractJDKSetTest<Object> {
+public class JDK_Element_HashSet_Test extends AbstractJDKSetTest<Element> {
 
 	@Override
-	protected Object[] generateUniqueRandomArray(int size) {
+	protected Element[] generateUniqueRandomArray(int size) {
 		return randomGenerator.generateElements(size);
 	}
 
@@ -18,13 +19,14 @@ public class JDKObjectHashSetTest extends AbstractJDKSetTest<Object> {
 	}
 
 	@Override
-	protected Set<Object> getNewSet(int size) {
-		return new HashSet<Object>();
+	protected Set<Element> getNewSet(int size) {
+		return new HashSet<Element>();
 	}
 
 	@Override
-	protected Set<Object> copySet(Set<Object> fullSet2) {
-		return new HashSet<Object>(fullSet2);
+	protected Set<Element> copySet(Set<Element> fullSet2) {
+		return new HashSet<Element>(fullSet2);
 	}
+
 
 }

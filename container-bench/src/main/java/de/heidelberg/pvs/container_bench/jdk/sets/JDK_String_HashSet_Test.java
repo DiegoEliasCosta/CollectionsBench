@@ -5,7 +5,7 @@ import java.util.Set;
 
 import de.heidelberg.pvs.container_bench.abstracts.AbstractJDKSetTest;
 
-public class JDKStringHashSetTest extends AbstractJDKSetTest<String> {
+public class JDK_String_HashSet_Test extends AbstractJDKSetTest<String> {
 
 	@Override
 	protected String[] generateUniqueRandomArray(int size) {

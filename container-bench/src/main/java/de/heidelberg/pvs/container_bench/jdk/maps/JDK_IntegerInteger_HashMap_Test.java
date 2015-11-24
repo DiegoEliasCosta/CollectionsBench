@@ -5,11 +5,11 @@ import java.util.Map;
 
 import de.heidelberg.pvs.container_bench.abstracts.AbstractJDKMapTest;
 
-public class JDKStringIntegerHashMapTest extends AbstractJDKMapTest<String, Integer> {
+public class JDK_IntegerInteger_HashMap_Test extends AbstractJDKMapTest<Integer, Integer> {
 
 	@Override
-	protected Map<String, Integer> getNewMap(int size, int range) {
-		return new HashMap<String, Integer>();
+	protected Map<Integer, Integer> getNewMap(int size, int range) {
+		return new HashMap<Integer, Integer>();
 	}
 
 	@Override
@@ -18,13 +18,13 @@ public class JDKStringIntegerHashMapTest extends AbstractJDKMapTest<String, Inte
 	}
 
 	@Override
-	protected String[] generateRandomKeys(int size, int range) {
-		return randomGenerator.generateStrings(size); // We're not using range. Do we need another generateStrings method? -Janos
+	protected Integer[] generateRandomKeys(int size, int range) {
+		return randomGenerator.generateIntegersInRange(size, range);
 	}
 
 	@Override
-	protected String generateRandomKey(int range) {
-		return randomGenerator.generateStrings(range)[0]; // Is this okay? Looks fishy. -Janos
+	protected Integer generateRandomKey(int range) {
+		return randomGenerator.generateIntegerInRange(range);
 	}
 
 	@Override
@@ -38,8 +38,8 @@ public class JDKStringIntegerHashMapTest extends AbstractJDKMapTest<String, Inte
 	}
 
 	@Override
-	protected Map<String, Integer> copyMap(Map<String, Integer> fullMap2) {
-		return new HashMap<String, Integer>(fullMap2);
+	protected Map<Integer, Integer> copyMap(Map<Integer, Integer> fullMap2) {
+		return new HashMap<Integer, Integer>(fullMap2);
 	}
 
 }

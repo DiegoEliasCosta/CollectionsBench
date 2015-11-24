@@ -4,12 +4,11 @@ import java.util.ArrayList;
 import java.util.List;
 
 import de.heidelberg.pvs.container_bench.abstracts.AbstractJDKListTest;
-import de.heidelberg.pvs.container_bench.element.Element;
 
-public class JDKElementArrayListTest extends AbstractJDKListTest<Element> {
-	
+public class JDK_Object_ArrayList_Test extends AbstractJDKListTest<Object>{
+
 	@Override
-	protected Element[] generateRandomArray(int size) {
+	protected Object[] generateRandomArray(int size) {
 		return randomGenerator.generateElements(size);
 	}
 
@@ -19,13 +18,13 @@ public class JDKElementArrayListTest extends AbstractJDKListTest<Element> {
 	}
 
 	@Override
-	protected List<Element> getNewList(int size) {
-		return new ArrayList<Element>(size);
+	protected List<Object> getNewList(int size) {
+		return new ArrayList<Object>(size);
 	}
 
 	@Override
-	protected List<Element> copyList(List<Element> fullList2) {
-		return new ArrayList<Element>(fullList2);
+	protected List<Object> copyList(List<Object> fullList2) {
+		return new ArrayList<Object>(fullList2);
 	}
 
 }
