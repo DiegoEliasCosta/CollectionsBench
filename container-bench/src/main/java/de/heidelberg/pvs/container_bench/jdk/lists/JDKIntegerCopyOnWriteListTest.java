@@ -1,4 +1,4 @@
-package de.heidelberg.pvs.container_bench.tests.lists;
+package de.heidelberg.pvs.container_bench.jdk.lists;
 
 import java.util.List;
 import java.util.concurrent.CopyOnWriteArrayList;
@@ -6,7 +6,7 @@ import java.util.concurrent.CopyOnWriteArrayList;
 import de.heidelberg.pvs.container_bench.abstracts.AbstractJDKListTest;
 
 public class JDKIntegerCopyOnWriteListTest extends AbstractJDKListTest<Integer> {
-
+	
 	@Override
 	protected Integer[] generateRandomArray(int size) {
 		return randomGenerator.generateIntegers(size);

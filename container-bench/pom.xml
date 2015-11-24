@@ -64,9 +64,36 @@
 			<artifactId>guava</artifactId>
 			<version>18.0</version>
 		</dependency>
-		
-		
-		
+
+		<!-- GS COLLECTIONS -->
+		<dependency>
+			<groupId>com.goldmansachs</groupId>
+			<artifactId>gs-collections-api</artifactId>
+			<version>6.2.0</version>
+		</dependency>
+
+		<!-- GS COLLECTIONS -->
+		<dependency>
+			<groupId>com.goldmansachs</groupId>
+			<artifactId>gs-collections</artifactId>
+			<version>6.2.0</version>
+		</dependency>
+
+		<!-- GS COLLECTIONS -->
+		<dependency>
+			<groupId>com.goldmansachs</groupId>
+			<artifactId>gs-collections-testutils</artifactId>
+			<version>6.2.0</version>
+			<scope>test</scope>
+		</dependency>
+
+		<!-- GS COLLECTIONS -->
+		<dependency>
+			<groupId>com.goldmansachs</groupId>
+			<artifactId>gs-collections-forkjoin</artifactId>
+			<version>6.2.0</version>
+		</dependency>
+
 	</dependencies>
 
 	<properties>

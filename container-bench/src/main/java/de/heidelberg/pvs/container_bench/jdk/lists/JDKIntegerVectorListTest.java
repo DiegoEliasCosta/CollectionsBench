@@ -1,11 +1,11 @@
-package de.heidelberg.pvs.container_bench.tests.lists;
+package de.heidelberg.pvs.container_bench.jdk.lists;
 
-import java.util.ArrayList;
 import java.util.List;
+import java.util.Vector;
 
 import de.heidelberg.pvs.container_bench.abstracts.AbstractJDKListTest;
 
-public class JDKIntegerArrayListTest extends AbstractJDKListTest<Integer> {
+public class JDKIntegerVectorListTest extends AbstractJDKListTest<Integer> {
 
 	@Override
 	protected Integer[] generateRandomArray(int size) {
@@ -19,12 +19,12 @@ public class JDKIntegerArrayListTest extends AbstractJDKListTest<Integer> {
 
 	@Override
 	protected List<Integer> getNewList(int size) {
-		return new ArrayList<Integer>();
+		return new Vector<Integer>(size);
 	}
 
 	@Override
 	protected List<Integer> copyList(List<Integer> fullList2) {
-		return new ArrayList<Integer>(fullList2);
+		return new Vector<Integer>(fullList2);
 	}
 
 }

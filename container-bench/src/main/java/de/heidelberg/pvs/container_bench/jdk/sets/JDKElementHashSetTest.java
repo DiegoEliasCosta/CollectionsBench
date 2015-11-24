@@ -1,4 +1,4 @@
-package de.heidelberg.pvs.container_bench.tests.sets;
+package de.heidelberg.pvs.container_bench.jdk.sets;
 
 import java.util.HashSet;
 import java.util.Set;

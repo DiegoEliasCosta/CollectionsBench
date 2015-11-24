@@ -1,4 +1,4 @@
-package de.heidelberg.pvs.container_bench.tests.maps;
+package de.heidelberg.pvs.container_bench.jdk.maps;
 
 import java.util.HashMap;
 import java.util.Map;

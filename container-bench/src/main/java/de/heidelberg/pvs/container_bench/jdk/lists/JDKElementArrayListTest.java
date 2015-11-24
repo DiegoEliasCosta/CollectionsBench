@@ -1,4 +1,4 @@
-package de.heidelberg.pvs.container_bench.tests.lists;
+package de.heidelberg.pvs.container_bench.jdk.lists;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -7,7 +7,7 @@ import de.heidelberg.pvs.container_bench.abstracts.AbstractJDKListTest;
 import de.heidelberg.pvs.container_bench.element.Element;
 
 public class JDKElementArrayListTest extends AbstractJDKListTest<Element> {
-
+	
 	@Override
 	protected Element[] generateRandomArray(int size) {
 		return randomGenerator.generateElements(size);
