@@ -3,7 +3,7 @@ package de.heidelberg.pvs.container_bench.jdk.lists;
 import java.util.ArrayList;
 import java.util.List;
 
-import de.heidelberg.pvs.container_bench.abstracts.AbstractJDKListTest;
+import de.heidelberg.pvs.container_bench.abstracts.jdk.AbstractJDKListTest;
 
 public class JDK_Object_ArrayList_Test extends AbstractJDKListTest<Object>{
 
@@ -19,7 +19,7 @@ public class JDK_Object_ArrayList_Test extends AbstractJDKListTest<Object>{
 
 	@Override
 	protected List<Object> getNewList(int size) {
-		return new ArrayList<Object>(size);
+		return new ArrayList<Object>();
 	}
 
 	@Override

@@ -1,10 +1,12 @@
-package de.heidelberg.pvs.container_bench.abstracts;
+package de.heidelberg.pvs.container_bench.abstracts.jdk;
 
 import java.util.Random;
 import java.util.Set;
 
 import org.openjdk.jmh.annotations.Benchmark;
 import org.openjdk.jmh.infra.Blackhole;
+
+import de.heidelberg.pvs.container_bench.abstracts.AbstractSetTest;
 
 // Crude copy/paste of AbstractJDKListTest with minor adjustments to get the code to compile. WIP
 

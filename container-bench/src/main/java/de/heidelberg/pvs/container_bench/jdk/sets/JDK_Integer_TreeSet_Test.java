@@ -3,7 +3,7 @@ package de.heidelberg.pvs.container_bench.jdk.sets;
 import java.util.Set;
 import java.util.TreeSet;
 
-import de.heidelberg.pvs.container_bench.abstracts.AbstractJDKSetTest;
+import de.heidelberg.pvs.container_bench.abstracts.jdk.AbstractJDKSetTest;
 
 public class JDK_Integer_TreeSet_Test extends AbstractJDKSetTest<Integer> {
 

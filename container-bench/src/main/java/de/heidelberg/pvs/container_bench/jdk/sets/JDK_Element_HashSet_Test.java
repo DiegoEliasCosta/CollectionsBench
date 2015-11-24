@@ -3,7 +3,7 @@ package de.heidelberg.pvs.container_bench.jdk.sets;
 import java.util.HashSet;
 import java.util.Set;
 
-import de.heidelberg.pvs.container_bench.abstracts.AbstractJDKSetTest;
+import de.heidelberg.pvs.container_bench.abstracts.jdk.AbstractJDKSetTest;
 import de.heidelberg.pvs.container_bench.element.Element;
 
 public class JDK_Element_HashSet_Test extends AbstractJDKSetTest<Element> {

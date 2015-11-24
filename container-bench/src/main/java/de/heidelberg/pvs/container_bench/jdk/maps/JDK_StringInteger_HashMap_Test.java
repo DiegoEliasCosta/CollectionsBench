@@ -3,7 +3,7 @@ package de.heidelberg.pvs.container_bench.jdk.maps;
 import java.util.HashMap;
 import java.util.Map;
 
-import de.heidelberg.pvs.container_bench.abstracts.AbstractJDKMapTest;
+import de.heidelberg.pvs.container_bench.abstracts.jdk.AbstractJDKMapTest;
 
 public class JDK_StringInteger_HashMap_Test extends AbstractJDKMapTest<String, Integer> {
 
@@ -19,22 +19,22 @@ public class JDK_StringInteger_HashMap_Test extends AbstractJDKMapTest<String, I
 
 	@Override
 	protected String[] generateRandomKeys(int size, int range) {
-		return randomGenerator.generateStrings(size); // We're not using range. Do we need another generateStrings method? -Janos
+		return randomGenerator.generateStrings(size); // We're not using range. 
 	}
 
 	@Override
 	protected String generateRandomKey(int range) {
-		return randomGenerator.generateStrings(range)[0]; // Is this okay? Looks fishy. -Janos
+		return randomGenerator.generateString();
 	}
 
 	@Override
-	protected Integer[] generateRandomValues(int size, int range) {
+	protected Integer[] generateRandomValues(int size) {
 		return randomGenerator.generateIntegers(size); // The range here is irrelevant
 	}
 
 	@Override
-	protected Integer generateRandomValue(int range) {
-		return randomGenerator.generateIntegerInRange(range);
+	protected Integer generateRandomValue() {
+		return randomGenerator.generateInteger();
 	}
 
 	@Override

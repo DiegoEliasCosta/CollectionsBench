@@ -5,7 +5,7 @@ import java.util.List;
 
 import de.heidelberg.pvs.container_bench.abstracts.jdk.AbstractJDKListTest;
 
-public class JDK_String_LinkedList_Test extends AbstractJDKListTest<String> {
+public class JDK_String_Vector_Test extends AbstractJDKListTest<String> {
 
 	@Override
 	protected String[] generateRandomArray(int size) {
@@ -13,13 +13,13 @@ public class JDK_String_LinkedList_Test extends AbstractJDKListTest<String> {
 	}
 
 	@Override
-	protected Integer generateRandomIndex(int size) {
-		return randomGenerator.generateIntegerInRange(size);
+	protected Integer generateRandomIndex(int range) {
+		return randomGenerator.generateIntegerInRange(range);
 	}
 
 	@Override
 	protected List<String> getNewList(int size) {
-		return new LinkedList<String>(); 
+		return new LinkedList<String>();
 	}
 
 	@Override

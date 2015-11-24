@@ -1,8 +1,10 @@
-package de.heidelberg.pvs.container_bench.abstracts;
+package de.heidelberg.pvs.container_bench.abstracts.jdk;
 
 import java.util.Map;
 
 import org.openjdk.jmh.annotations.Benchmark;
+
+import de.heidelberg.pvs.container_bench.abstracts.AbstractMapTest;
 
 public abstract class AbstractJDKMapTest<K, V> extends AbstractMapTest {
 
@@ -17,8 +19,8 @@ public abstract class AbstractJDKMapTest<K, V> extends AbstractMapTest {
 	protected abstract K[] generateRandomKeys(int size, int range);
 	protected abstract K generateRandomKey(int range);
 	
-	protected abstract V[] generateRandomValues(int size, int range);
-	protected abstract V generateRandomValue(int range);
+	protected abstract V[] generateRandomValues(int size); // range is irrelevant here
+	protected abstract V generateRandomValue(); // range is irrelevant here
 	
 	protected abstract Map<K, V> copyMap(Map<K, V> fullMap2);
 	
@@ -27,7 +29,7 @@ public abstract class AbstractJDKMapTest<K, V> extends AbstractMapTest {
 		fullMap = this.getNewMap(size, rangeOfKeys);
 		
 		keys = this.generateRandomKeys(size, rangeOfKeys);
-		values = this.generateRandomValues(size, rangeOfKeys);
+		values = this.generateRandomValues(size);
 
 		for(int i = 0; i < size; i++) {
 			fullMap.put(keys[i], values[i]);
@@ -53,9 +55,8 @@ public abstract class AbstractJDKMapTest<K, V> extends AbstractMapTest {
 		blackhole.consume(fullMap.containsKey(keys[index]));
 	}
 
-	// FIXME: How to test remove from a state object? 
 	@Override
-	//@Benchmark
+	@Benchmark
 	public void removeElement() {
 		int index = this.generateRandomIndex(size);
 		blackhole.consume(fullMap.remove(keys[index]));

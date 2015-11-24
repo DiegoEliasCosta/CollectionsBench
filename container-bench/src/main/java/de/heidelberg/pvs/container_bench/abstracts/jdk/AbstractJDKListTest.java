@@ -1,9 +1,10 @@
-package de.heidelberg.pvs.container_bench.abstracts;
+package de.heidelberg.pvs.container_bench.abstracts.jdk;
 
 import java.util.List;
 
 import org.openjdk.jmh.annotations.Benchmark;
-import org.openjdk.jmh.infra.Blackhole;
+
+import de.heidelberg.pvs.container_bench.abstracts.AbstractListTest;
 
 /**
  * Abstract class for every test with JDK Lists implementation
@@ -17,9 +18,8 @@ public abstract class AbstractJDKListTest<T> extends AbstractListTest {
 	private List<T> fullList;
 	private T[] values;
 	
-	
 	protected abstract T[] generateRandomArray(int size);
-	protected abstract Integer generateRandomIndex(int size);
+	protected abstract Integer generateRandomIndex(int range);
 	
 	protected abstract List<T> getNewList(int size);
 	protected abstract List<T> copyList(List<T> fullList2);

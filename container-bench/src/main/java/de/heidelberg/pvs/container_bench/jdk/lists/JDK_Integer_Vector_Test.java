@@ -3,9 +3,9 @@ package de.heidelberg.pvs.container_bench.jdk.lists;
 import java.util.List;
 import java.util.Vector;
 
-import de.heidelberg.pvs.container_bench.abstracts.AbstractJDKListTest;
+import de.heidelberg.pvs.container_bench.abstracts.jdk.AbstractJDKListTest;
 
-public class JDK_Integer_VectorList_Test extends AbstractJDKListTest<Integer> {
+public class JDK_Integer_Vector_Test extends AbstractJDKListTest<Integer> {
 
 	@Override
 	protected Integer[] generateRandomArray(int size) {
@@ -19,7 +19,7 @@ public class JDK_Integer_VectorList_Test extends AbstractJDKListTest<Integer> {
 
 	@Override
 	protected List<Integer> getNewList(int size) {
-		return new Vector<Integer>(size);
+		return new Vector<Integer>();
 	}
 
 	@Override

@@ -3,7 +3,7 @@ package de.heidelberg.pvs.container_bench.jdk.maps;
 import java.util.HashMap;
 import java.util.Map;
 
-import de.heidelberg.pvs.container_bench.abstracts.AbstractJDKMapTest;
+import de.heidelberg.pvs.container_bench.abstracts.jdk.AbstractJDKMapTest;
 
 public class JDK_ObjectInteger_HashMap_Test extends AbstractJDKMapTest<Object, Integer> {
 
@@ -28,12 +28,12 @@ public class JDK_ObjectInteger_HashMap_Test extends AbstractJDKMapTest<Object, I
 	}
 
 	@Override
-	protected Integer[] generateRandomValues(int size, int range) {
+	protected Integer[] generateRandomValues(int size) {
 		return randomGenerator.generateIntegers(size); // range makes no sense for values
 	}
 
 	@Override
-	protected Integer generateRandomValue(int range) {
+	protected Integer generateRandomValue() {
 		return randomGenerator.generateInteger();
 	}
 
