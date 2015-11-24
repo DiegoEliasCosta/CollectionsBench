@@ -43,18 +43,6 @@ public abstract class AbstractListTest extends AbstractBenchmarkTest {
 	abstract public void removeElement();
 
 	/**
-	 * Benchmark Clear
-	 * 
-	 * This benchmark measure the time spent in clearing the list <br>
-	 * <br>
-	 * <code>
-	 * list.clear()
-	 * </code>
-	 * 
-	 */
-	abstract public void clear();
-
-	/**
 	 * Benchmark Contains
 	 * 
 	 * This benchmark measure the time spent executing a contain to a <b>random</b>
@@ -67,17 +55,6 @@ public abstract class AbstractListTest extends AbstractBenchmarkTest {
 	 * 
 	 */
 	abstract public void containsElement();
-
-	/**
-	 * Benchmark Instantiate
-	 * 
-	 * This benchmark measure the time spent by creating a new list
-	 * <br><br>
-	 * <code>
-	 * list = new List()
-	 * </code>
-	 */
-	abstract public void instantiate();
 
 	/**
 	 * Benchmark AddAll

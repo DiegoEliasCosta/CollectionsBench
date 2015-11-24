@@ -52,20 +52,9 @@ public abstract class AbstractJDKListTest<T> extends AbstractListTest {
 	}
 
 	@Benchmark
-	public void clear() {
-		fullList.clear(); //void
-	}
-
-	@Benchmark
 	public void containsElement() {
 		Integer index = this.generateRandomIndex(size);
 		blackhole.consume(fullList.contains(values[index]));
-	}
-
-	@Benchmark
-	public void instantiate() {
-		List<T> newList = this.getNewList(size);
-		blackhole.consume(newList);
 	}
 
 	@Benchmark

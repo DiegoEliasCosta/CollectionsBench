@@ -20,14 +20,14 @@ import de.heidelberg.pvs.container_bench.utils.RandomGenerator;
 
 @BenchmarkMode(Mode.AverageTime)
 @OutputTimeUnit(TimeUnit.NANOSECONDS)
-@Warmup(iterations = 15, time = 1, timeUnit = TimeUnit.SECONDS)
-@Measurement(iterations = 30, time = 1, timeUnit = TimeUnit.SECONDS)
+@Warmup(iterations = 10, time = 1, timeUnit = TimeUnit.SECONDS)
+@Measurement(iterations = 10, time = 1, timeUnit = TimeUnit.SECONDS)
 @Threads(1)
 @Fork(2)
 @State(Scope.Benchmark)
 public abstract class AbstractBenchmarkTest {
 	
-	@Param({ "10000", "100000", "1000000" })
+	@Param({ "100000", "1000000" })
 	public int size;
 
 	@Param({ "0" })
