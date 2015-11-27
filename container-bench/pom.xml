@@ -93,13 +93,20 @@
 			<artifactId>gs-collections-forkjoin</artifactId>
 			<version>6.2.0</version>
 		</dependency>
+		
+		<!-- KOLOBOKE -->
+		<dependency>
+			<groupId>net.openhft</groupId>
+			<artifactId>koloboke-impl-jdk8</artifactId>
+			<version>0.6.8</version>
+		</dependency>
 
 	</dependencies>
 
 	<properties>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 		<jmh.version>1.11.2</jmh.version>
-		<javac.target>1.6</javac.target>
+		<javac.target>1.8</javac.target>
 		<uberjar.name>benchmarks</uberjar.name>
 	</properties>
 

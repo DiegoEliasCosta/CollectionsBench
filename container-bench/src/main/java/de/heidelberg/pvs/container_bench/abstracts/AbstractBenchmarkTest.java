@@ -27,10 +27,17 @@ import de.heidelberg.pvs.container_bench.utils.RandomGenerator;
 @State(Scope.Benchmark)
 public abstract class AbstractBenchmarkTest {
 	
-	@Param({ "100000", "1000000" })
+	/**
+	 * From 10K - 100M
+	 */
+	@Param({ "1000", "10000","100000", "1000000", "10000000" , "100000000"})
 	public int size;
 
-	@Param({ "0" })
+	/**
+	 * Random seed generated using https://www.random.org/
+	 * Number between 1 - 1M
+	 */
+	@Param({ "467505" })
 	public int seed;
 	
 	/**

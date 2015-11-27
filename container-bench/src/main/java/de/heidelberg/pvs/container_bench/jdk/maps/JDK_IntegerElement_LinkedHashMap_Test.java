@@ -1,15 +1,16 @@
 package de.heidelberg.pvs.container_bench.jdk.maps;
 
-import java.util.HashMap;
+import java.util.LinkedHashMap;
 import java.util.Map;
 
 import de.heidelberg.pvs.container_bench.abstracts.jdk.AbstractJDKMapTest;
+import de.heidelberg.pvs.container_bench.element.Element;
 
-public class JDK_IntegerInteger_HashMap_Test extends AbstractJDKMapTest<Integer, Integer> {
+public class JDK_IntegerElement_LinkedHashMap_Test extends AbstractJDKMapTest<Integer, Element>{
 
 	@Override
-	protected Map<Integer, Integer> getNewMap(int size, int range) {
-		return new HashMap<Integer, Integer>();
+	protected Map<Integer, Element> getNewMap(int size, int range) {
+		return new LinkedHashMap<Integer, Element>();
 	}
 
 	@Override
@@ -28,18 +29,19 @@ public class JDK_IntegerInteger_HashMap_Test extends AbstractJDKMapTest<Integer,
 	}
 
 	@Override
-	protected Integer[] generateRandomValues(int size) {
-		return randomGenerator.generateIntegers(size); // The range here is irrelevant
+	protected Element[] generateRandomValues(int size) {
+		return randomGenerator.generateElements(size);
 	}
 
 	@Override
-	protected Integer generateRandomValue() {
-		return randomGenerator.generateInteger();
+	protected Element generateRandomValue() {
+		return randomGenerator.generateElement();
 	}
 
+
 	@Override
-	protected Map<Integer, Integer> copyMap(Map<Integer, Integer> fullMap2) {
-		return new HashMap<Integer, Integer>(fullMap2);
+	protected Map<Integer, Element> copyMap(Map<Integer, Element> fullMap2) {
+		return new LinkedHashMap<>();
 	}
 
 }
