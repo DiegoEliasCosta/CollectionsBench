@@ -2,11 +2,28 @@ package de.heidelberg.pvs.container_bench.abstracts;
 
 import org.openjdk.jmh.annotations.Param;
 
-public abstract class AbstractMapTest extends AbstractBenchmarkTest {
+import de.heidelberg.pvs.container_bench.random.RandomGenerator;
+
+public abstract class AbstractMapTest<K, V> extends AbstractBenchmarkTest {
 
 	@Param({ "10", "100", "1000", "10000" })
 	public int rangeOfKeys;
+
+	protected RandomGenerator<K> keyGenerator = this.instantiateRandomKeyGenerator();
+	protected abstract RandomGenerator<K> instantiateRandomKeyGenerator();
 	
+	protected RandomGenerator<V> valueGenerator = this.instantiateRandomValueGenerator();
+	protected abstract RandomGenerator<V> instantiateRandomValueGenerator();
+
+	/**
+	 * Implementation of our Randomness 
+	 */
+	@Override
+	public void randomnessSetup() {
+		keyGenerator.setSeed(seed);	
+		this.testSetup();
+	}
+
 	/**
 	 * Benchmark PutAll
 	 * 

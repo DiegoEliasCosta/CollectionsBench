@@ -5,6 +5,8 @@ import java.util.Map;
 import com.gs.collections.impl.map.mutable.UnifiedMap;
 
 import de.heidelberg.pvs.container_bench.abstracts.jdk.AbstractJDKMapTest;
+import de.heidelberg.pvs.container_bench.random.IntegerRandomGenerator;
+import de.heidelberg.pvs.container_bench.random.RandomGenerator;
 
 public class GSCollections_IntegerInteger_UnifiedMaps_Test extends AbstractJDKMapTest<Integer, Integer>{
 
@@ -14,33 +16,18 @@ public class GSCollections_IntegerInteger_UnifiedMaps_Test extends AbstractJDKMa
 	}
 
 	@Override
-	protected int generateRandomIndex(int size) {
-		return this.randomGenerator.generateIntegerInRange(size);
-	}
-
-	@Override
-	protected Integer[] generateRandomKeys(int size, int range) {
-		return randomGenerator.generateIntegersInRange(size, range);
-	}
-
-	@Override
-	protected Integer generateRandomKey(int range) {
-		return randomGenerator.generateIntegerInRange(range);
-	}
-
-	@Override
-	protected Integer[] generateRandomValues(int size) {
-		return randomGenerator.generateIntegers(size);
-	}
-
-	@Override
-	protected Integer generateRandomValue() {
-		return randomGenerator.generateInteger();
-	}
-
-	@Override
 	protected Map<Integer, Integer> copyMap(Map<Integer, Integer> fullMap2) {
 		return new UnifiedMap<Integer, Integer>(fullMap2);
+	}
+
+	@Override
+	protected RandomGenerator<Integer> instantiateRandomKeyGenerator() {
+		return new IntegerRandomGenerator();
+	}
+
+	@Override
+	protected RandomGenerator<Integer> instantiateRandomValueGenerator() {
+		return new IntegerRandomGenerator();
 	}
 
 }

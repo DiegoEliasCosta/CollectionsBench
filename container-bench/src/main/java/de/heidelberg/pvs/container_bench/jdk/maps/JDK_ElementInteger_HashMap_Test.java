@@ -5,6 +5,9 @@ import java.util.Map;
 
 import de.heidelberg.pvs.container_bench.abstracts.jdk.AbstractJDKMapTest;
 import de.heidelberg.pvs.container_bench.element.Element;
+import de.heidelberg.pvs.container_bench.random.ElementRandomGenerator;
+import de.heidelberg.pvs.container_bench.random.IntegerRandomGenerator;
+import de.heidelberg.pvs.container_bench.random.RandomGenerator;
 
 public class JDK_ElementInteger_HashMap_Test extends AbstractJDKMapTest<Element, Integer>{
 
@@ -14,33 +17,18 @@ public class JDK_ElementInteger_HashMap_Test extends AbstractJDKMapTest<Element,
 	}
 
 	@Override
-	protected int generateRandomIndex(int size) {
-		return randomGenerator.generateIntegerInRange(size);
-	}
-
-	@Override
-	protected Element[] generateRandomKeys(int size, int range) {
-		return randomGenerator.generateElements(size);
-	}
-
-	@Override
-	protected Element generateRandomKey(int range) {
-		return randomGenerator.generateElement();
-	}
-
-	@Override
-	protected Integer[] generateRandomValues(int size) {
-		return randomGenerator.generateIntegers(size); // range makes no sense for values
-	}
-
-	@Override
-	protected Integer generateRandomValue() {
-		return randomGenerator.generateInteger();
-	}
-
-	@Override
 	protected Map<Element, Integer> copyMap(Map<Element, Integer> fullMap2) {
 		return new HashMap<Element, Integer>(fullMap2);
+	}
+
+	@Override
+	protected RandomGenerator<Element> instantiateRandomKeyGenerator() {
+		return new ElementRandomGenerator();
+	}
+
+	@Override
+	protected RandomGenerator<Integer> instantiateRandomValueGenerator() {
+		return new IntegerRandomGenerator();
 	}
 
 }

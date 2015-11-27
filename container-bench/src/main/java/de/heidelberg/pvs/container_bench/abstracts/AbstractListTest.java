@@ -1,6 +1,25 @@
 package de.heidelberg.pvs.container_bench.abstracts;
 
-public abstract class AbstractListTest extends AbstractBenchmarkTest { 
+import de.heidelberg.pvs.container_bench.random.RandomGenerator;
+
+public abstract class AbstractListTest<T> extends AbstractBenchmarkTest { 
+	
+	/**
+	 * Implementation of our Randomness 
+	 */
+	protected RandomGenerator<T> generator = this.instantiateRandomGenerator();
+	
+	/**
+	 * Abstract method that returns {@link RandomGenerator}
+	 * @return
+	 */
+	protected abstract RandomGenerator<T> instantiateRandomGenerator();
+
+	@Override
+	public void randomnessSetup() {
+		generator.setSeed(seed);	
+		this.testSetup();
+	}
 	
 	/**
 	 * Benchmark GetAll

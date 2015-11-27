@@ -1,14 +1,10 @@
 package de.heidelberg.pvs.container_bench.abstracts.jdk;
 
-import java.util.Random;
 import java.util.Set;
 
 import org.openjdk.jmh.annotations.Benchmark;
-import org.openjdk.jmh.infra.Blackhole;
 
 import de.heidelberg.pvs.container_bench.abstracts.AbstractSetTest;
-
-// Crude copy/paste of AbstractJDKListTest with minor adjustments to get the code to compile. WIP
 
 /**
  * Abstract class for every test with JDK Sets implementation
@@ -17,23 +13,18 @@ import de.heidelberg.pvs.container_bench.abstracts.AbstractSetTest;
  * @param <T>
  * 		The held type of the {@link Set} implementation
  */
-public abstract class AbstractJDKSetTest<T> extends AbstractSetTest {
+public abstract class AbstractJDKSetTest<T> extends AbstractSetTest<T> {
 	
 	private Set<T> fullSet;
 	private T[] values;
 	
-	private static Blackhole blackhole;
-	
-	public void setup() {
+	public void testSetup() {
 		fullSet = this.getNewSet(size);
-		values = this.generateUniqueRandomArray(size);
+		values = generator.generateArray(size);
 		for(int i = 0; i < size; i++) {
 			fullSet.add(values[i]);
 		}
 	}
-	
-	protected abstract T[] generateUniqueRandomArray(int size);
-	protected abstract Integer generateRandomIndex(int size);
 	
 	protected abstract Set<T> getNewSet(int size);
 	protected abstract Set<T> copySet(Set<T> fullSet2);
@@ -44,14 +35,9 @@ public abstract class AbstractJDKSetTest<T> extends AbstractSetTest {
 		blackhole.consume(obj);
 	}
 	
-	//@Benchmark
-	public void getElement() {
-		// FIXME: Take this out from the Abstract
-	} 
-
 	@Benchmark
 	public void removeElement() {
-		int index = this.generateRandomIndex(size);
+		int index = generator.generateIndex(size);
 		blackhole.consume(this.fullSet.remove(values[index]));
 	}
 
@@ -62,7 +48,7 @@ public abstract class AbstractJDKSetTest<T> extends AbstractSetTest {
 
 	@Benchmark
 	public void containsElement() {
-		Integer index = this.generateRandomIndex(size);
+		Integer index = generator.generateIndex(size);
 		blackhole.consume(fullSet.contains(values[index]));
 	}
 

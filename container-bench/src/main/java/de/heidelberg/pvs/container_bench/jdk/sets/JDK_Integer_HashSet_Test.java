@@ -4,13 +4,11 @@ import java.util.HashSet;
 import java.util.Set;
 
 import de.heidelberg.pvs.container_bench.abstracts.jdk.AbstractJDKSetTest;
+import de.heidelberg.pvs.container_bench.random.IntegerRandomGenerator;
+import de.heidelberg.pvs.container_bench.random.RandomGenerator;
 
 public class JDK_Integer_HashSet_Test extends AbstractJDKSetTest<Integer> {
 
-	@Override
-	protected Integer[] generateUniqueRandomArray(int size) {
-		return randomGenerator.generateIntegers(size);
-	}
 
 	@Override
 	protected Set<Integer> getNewSet(int size) {
@@ -23,8 +21,9 @@ public class JDK_Integer_HashSet_Test extends AbstractJDKSetTest<Integer> {
 	}
 
 	@Override
-	protected Integer generateRandomIndex(int size) {
-		return randomGenerator.generateIntegerInRange(size);
+	protected RandomGenerator<Integer> instantiateRandomGenerator() {
+		return new IntegerRandomGenerator();
 	}
+
 
 }

@@ -13,20 +13,17 @@ import de.heidelberg.pvs.container_bench.abstracts.AbstractListTest;
  * @param <T>
  * 		The held type of the {@link List} implementation
  */
-public abstract class AbstractJDKListTest<T> extends AbstractListTest {
+public abstract class AbstractJDKListTest<T> extends AbstractListTest<T> {
 	
 	private List<T> fullList;
 	private T[] values;
 	
-	protected abstract T[] generateRandomArray(int size);
-	protected abstract Integer generateRandomIndex(int range);
-	
 	protected abstract List<T> getNewList(int size);
 	protected abstract List<T> copyList(List<T> fullList2);
 	
-	public void setup() {
+	public void testSetup() {
 		fullList = this.getNewList(size);
-		values = this.generateRandomArray(size);
+		values = generator.generateArray(size);
 		for(int i = 0; i < size; i++) {
 			fullList.add(values[i]);
 		}
@@ -41,19 +38,19 @@ public abstract class AbstractJDKListTest<T> extends AbstractListTest {
 	
 	@Benchmark
 	public void getElement() {
-		Integer index = this.generateRandomIndex(size);
+		Integer index = generator.generateIndex(size);
 		blackhole.consume(fullList.get(index));
 	}
 
 	@Benchmark
 	public void removeElement() {
-		Integer index = this.generateRandomIndex(size);
+		Integer index = generator.generateIndex(size);
 		blackhole.consume(fullList.remove(index));
 	}
 
 	@Benchmark
 	public void containsElement() {
-		Integer index = this.generateRandomIndex(size);
+		Integer index = generator.generateIndex(size);
 		blackhole.consume(fullList.contains(values[index]));
 	}
 

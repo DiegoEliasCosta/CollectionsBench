@@ -1,8 +1,26 @@
 package de.heidelberg.pvs.container_bench.abstracts;
 
-public abstract class AbstractSetTest extends AbstractBenchmarkTest { 
+import de.heidelberg.pvs.container_bench.random.RandomGenerator;
+
+public abstract class AbstractSetTest<T> extends AbstractBenchmarkTest { 
 	
-	// Crude copy/paste of AbstractListTest -- Janos
+	
+	/**
+	 * Implementation of our Randomness 
+	 */
+	protected RandomGenerator<T> generator = this.instantiateRandomGenerator();
+	
+	/**
+	 * Abstract method that returns {@link RandomGenerator}
+	 * @return
+	 */
+	protected abstract RandomGenerator<T> instantiateRandomGenerator();
+
+	@Override
+	public void randomnessSetup() {
+		generator.setSeed(seed);	
+		this.testSetup();
+	}
 	
 	/**
 	 * Benchmark GetAll
@@ -16,20 +34,6 @@ public abstract class AbstractSetTest extends AbstractBenchmarkTest {
 	 * </code> 
 	 */
 	abstract public void getAll();
-
-	/**
-	 * Benchmark GetAt
-	 * 
-	 * This benchmark measure the time spent in getting an element in a
-	 * <b>random</b> position of the set <br>
-	 * <br>
-	 * <code>
-	 * index = random() <br>
-	 * set.get(index); <br>
-	 * </code>
-	 * 
-	 */
-	abstract public void getElement();
 
 	/**
 	 * Benchmark RemoveAt

@@ -6,30 +6,21 @@ import org.openjdk.jmh.annotations.Benchmark;
 
 import de.heidelberg.pvs.container_bench.abstracts.AbstractMapTest;
 
-public abstract class AbstractJDKMapTest<K, V> extends AbstractMapTest {
+public abstract class AbstractJDKMapTest<K, V> extends AbstractMapTest<K, V> {
 
 	private Map<K, V> fullMap;
 	private K[] keys;
 	private V[] values;
 	
 	protected abstract Map<K, V> getNewMap(int size, int range);
-	
-	protected abstract int generateRandomIndex(int size);
-	
-	protected abstract K[] generateRandomKeys(int size, int range);
-	protected abstract K generateRandomKey(int range);
-	
-	protected abstract V[] generateRandomValues(int size); // range is irrelevant here
-	protected abstract V generateRandomValue(); // range is irrelevant here
-	
 	protected abstract Map<K, V> copyMap(Map<K, V> fullMap2);
 	
 	@Override
-	public void setup() {
+	public void testSetup() {
 		fullMap = this.getNewMap(size, rangeOfKeys);
 		
-		keys = this.generateRandomKeys(size, rangeOfKeys);
-		values = this.generateRandomValues(size);
+		keys = keyGenerator.generateArrayInRange(size, rangeOfKeys);
+		values = valueGenerator.generateArray(size);
 
 		for(int i = 0; i < size; i++) {
 			fullMap.put(keys[i], values[i]);
@@ -51,21 +42,21 @@ public abstract class AbstractJDKMapTest<K, V> extends AbstractMapTest {
 	@Override
 	@Benchmark
 	public void containsElement() {
-		int index = this.generateRandomIndex(size);
+		int index = keyGenerator.generateIndex(size);
 		blackhole.consume(fullMap.containsKey(keys[index]));
 	}
 
 	@Override
 	@Benchmark
 	public void removeElement() {
-		int index = this.generateRandomIndex(size);
+		int index = keyGenerator.generateIndex(size);
 		blackhole.consume(fullMap.remove(keys[index]));
 	}
 
 	@Override
 	@Benchmark
 	public void getElement() {
-		int index = this.generateRandomIndex(size);
+		int index = keyGenerator.generateIndex(size);
 		blackhole.consume(fullMap.get(keys[index]));
 		
 	}
