@@ -93,7 +93,7 @@
 			<artifactId>gs-collections-forkjoin</artifactId>
 			<version>6.2.0</version>
 		</dependency>
-		
+
 		<!-- KOLOBOKE -->
 		<dependency>
 			<groupId>net.openhft</groupId>

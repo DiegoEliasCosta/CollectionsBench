@@ -1,62 +1,63 @@
 package de.heidelberg.pvs.container_bench.abstracts.guava;
 
+import org.openjdk.jmh.annotations.Benchmark;
+
 import com.google.common.collect.Multiset;
 
 import de.heidelberg.pvs.container_bench.abstracts.AbstractSetTest;
 
-public abstract class AbstractGuavaMultiSetTest<T> extends AbstractSetTest {
+public abstract class AbstractGuavaMultiSetTest<T> extends AbstractSetTest<T> {
 
 	private T[] values;
 	private Multiset<T> fullSet;
 	
 	protected abstract Multiset<T> getNewMultiSet();
 	
+	protected abstract Multiset<T> copyMultiSet(Multiset<T> original);
+	
 	@Override
 	public void testSetup() {
 		fullSet = this.getNewMultiSet();
+		values = this.generator.generateArray(size);
+		for (int i = 0; i < values.length; i++) {
+			fullSet.add(values[i]);
+		}
+		
 	}
 	
 
-	@Override
+	@Benchmark
 	public void getAll() {
-		// TODO Auto-generated method stub
-		
+		for(T element : fullSet) {
+			blackhole.consume(element);
+		}
 	}
 
-	@Override
+	@Benchmark
 	public void removeElement() {
-		// TODO Auto-generated method stub
-		
+		Integer index = this.generator.generateIndex(size);
+		blackhole.consume(fullSet.remove(values[index]));
 	}
 
-	@Override
-	public void clear() {
-		// TODO Auto-generated method stub
-		
-	}
-
-	@Override
+	@Benchmark
 	public void containsElement() {
-		// TODO Auto-generated method stub
+		Integer index = this.generator.generateIndex(size);
+		blackhole.consume(fullSet.contains(values[index]));
 		
 	}
 
-	@Override
-	public void instantiate() {
-		// TODO Auto-generated method stub
-		
-	}
-
-	@Override
+	@Benchmark
 	public void addAll() {
-		// TODO Auto-generated method stub
-		
+		Multiset<T> newSet = this.getNewMultiSet();
+		for(int i = 0; i < values.length; i++) {
+			blackhole.consume(newSet.add(values[i]));
+		}
 	}
 
-	@Override
+	@Benchmark
 	public void copySet() {
-		// TODO Auto-generated method stub
-		
+		Multiset<T> copiedSet = this.copyMultiSet(fullSet);
+		blackhole.consume(copiedSet);
 	}
 
 

@@ -31,8 +31,8 @@ public abstract class AbstractJDKListTest<T> extends AbstractListTest<T> {
 	
 	@Benchmark
 	public void getAll() {
-		for(int i = 0; i < size; i++) {
-			blackhole.consume(fullList.get(i));
+		for(T element : fullList) {
+			blackhole.consume(element);
 		}
 	}
 	

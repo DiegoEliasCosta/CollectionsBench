@@ -48,17 +48,6 @@ public abstract class AbstractSetTest<T> extends AbstractBenchmarkTest {
 	 */
 	abstract public void removeElement();
 
-	/**
-	 * Benchmark Clear
-	 * 
-	 * This benchmark measure the time spent in clearing the set <br>
-	 * <br>
-	 * <code>
-	 * set.clear()
-	 * </code>
-	 * 
-	 */
-	abstract public void clear();
 
 	/**
 	 * Benchmark Contains
@@ -73,17 +62,6 @@ public abstract class AbstractSetTest<T> extends AbstractBenchmarkTest {
 	 * 
 	 */
 	abstract public void containsElement();
-
-	/**
-	 * Benchmark Instantiate
-	 * 
-	 * This benchmark measure the time spent by creating a new set
-	 * <br><br>
-	 * <code>
-	 * set = new set()
-	 * </code>
-	 */
-	abstract public void instantiate();
 
 	/**
 	 * Benchmark AddAll

@@ -31,8 +31,9 @@ public abstract class AbstractJDKSetTest<T> extends AbstractSetTest<T> {
 	
 	@Benchmark
 	public void getAll() { 
-	for(Object obj: fullSet)
-		blackhole.consume(obj);
+		for(T element : fullSet) {
+			blackhole.consume(element);
+		}
 	}
 	
 	@Benchmark
@@ -42,21 +43,11 @@ public abstract class AbstractJDKSetTest<T> extends AbstractSetTest<T> {
 	}
 
 	@Benchmark
-	public void clear() {
-		fullSet.clear(); //void
-	}
-
-	@Benchmark
 	public void containsElement() {
 		Integer index = generator.generateIndex(size);
 		blackhole.consume(fullSet.contains(values[index]));
 	}
 
-	@Benchmark
-	public void instantiate() {
-		Set<T> newSet = this.getNewSet(size);
-		blackhole.consume(newSet);
-	}
 
 	@Benchmark
 	public void addAll() {
