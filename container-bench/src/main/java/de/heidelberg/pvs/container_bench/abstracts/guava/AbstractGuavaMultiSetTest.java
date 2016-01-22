@@ -22,9 +22,7 @@ public abstract class AbstractGuavaMultiSetTest<T> extends AbstractSetTest<T> {
 		for (int i = 0; i < values.length; i++) {
 			fullSet.add(values[i]);
 		}
-		
 	}
-	
 
 	@Benchmark
 	public void getAll() {

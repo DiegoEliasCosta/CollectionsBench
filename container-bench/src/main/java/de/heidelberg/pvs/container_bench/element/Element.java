@@ -1,10 +1,10 @@
 package de.heidelberg.pvs.container_bench.element;
 
-public class Element {
+public class Element implements Comparable<Element>{
+	
+	private String stringID;
 	
 	private String stringField;
-	
-	private String stringField2;
 	
 	private Integer integerField;
 	
@@ -24,19 +24,19 @@ public class Element {
 	}
 
 	public String getStringField() {
-		return stringField;
+		return stringID;
 	}
 
 	public void setStringField(String stringField) {
-		this.stringField = stringField;
+		this.stringID = stringField;
 	}
 
 	public String getStringField2() {
-		return stringField2;
+		return stringField;
 	}
 
 	public void setStringField2(String stringField2) {
-		this.stringField2 = stringField2;
+		this.stringField = stringField2;
 	}
 
 	public Integer getIntegerField() {
@@ -61,8 +61,8 @@ public class Element {
 	 */
 	public Element(String stringField, String stringField2, Integer integerField, Long longField, Double doubleField) {
 		super();
-		this.stringField = stringField;
-		this.stringField2 = stringField2;
+		this.stringID = stringField;
+		this.stringField = stringField2;
 		this.integerField = integerField;
 		this.longField = longField;
 		this.doubleField = doubleField;
@@ -85,8 +85,8 @@ public class Element {
 		result = prime * result + ((doubleField == null) ? 0 : doubleField.hashCode());
 		result = prime * result + ((integerField == null) ? 0 : integerField.hashCode());
 		result = prime * result + ((longField == null) ? 0 : longField.hashCode());
+		result = prime * result + ((stringID == null) ? 0 : stringID.hashCode());
 		result = prime * result + ((stringField == null) ? 0 : stringField.hashCode());
-		result = prime * result + ((stringField2 == null) ? 0 : stringField2.hashCode());
 		return result;
 	}
 
@@ -117,15 +117,15 @@ public class Element {
 				return false;
 		} else if (!longField.equals(other.longField))
 			return false;
+		if (stringID == null) {
+			if (other.stringID != null)
+				return false;
+		} else if (!stringID.equals(other.stringID))
+			return false;
 		if (stringField == null) {
 			if (other.stringField != null)
 				return false;
 		} else if (!stringField.equals(other.stringField))
-			return false;
-		if (stringField2 == null) {
-			if (other.stringField2 != null)
-				return false;
-		} else if (!stringField2.equals(other.stringField2))
 			return false;
 		return true;
 	}
@@ -135,8 +135,13 @@ public class Element {
 	 */
 	@Override
 	public String toString() {
-		return "Element [stringField=" + stringField + ", stringField2=" + stringField2 + ", integerField="
+		return "Element [stringID=" + stringID + ", stringField=" + stringField + ", integerField="
 				+ integerField + ", longField=" + longField + ", doubleField=" + doubleField + "]";
+	}
+
+	@Override
+	public int compareTo(Element o) {
+		return this.stringID.compareTo(o.stringID);
 	}
 	
 
