@@ -4,20 +4,18 @@ import java.util.HashMap;
 import java.util.Map;
 
 import de.heidelberg.pvs.container_bench.abstracts.jdk.AbstractJDKMapTest;
-import de.heidelberg.pvs.container_bench.element.Element;
-import de.heidelberg.pvs.container_bench.random.ElementRandomGenerator;
 import de.heidelberg.pvs.container_bench.random.IntegerRandomGenerator;
 import de.heidelberg.pvs.container_bench.random.RandomGenerator;
 
-public class JDK_IntegerElement_HashMap_Test extends AbstractJDKMapTest<Integer, Element> {
+public class JDK_IntegerInteger_HashMap_Test extends AbstractJDKMapTest<Integer, Integer> {
 
 	@Override
-	protected Map<Integer, Element> getNewMap(int size, int range) {
+	protected Map<Integer, Integer> getNewMap(int size, int range) {
 		return new HashMap<>();
 	}
 
 	@Override
-	protected Map<Integer, Element> copyMap(Map<Integer, Element> fullMap2) {
+	protected Map<Integer, Integer> copyMap(Map<Integer, Integer> fullMap2) {
 		return new HashMap<>(fullMap2);
 	}
 
@@ -27,8 +25,8 @@ public class JDK_IntegerElement_HashMap_Test extends AbstractJDKMapTest<Integer,
 	}
 
 	@Override
-	protected RandomGenerator<Element> instantiateRandomValueGenerator() {
-		return new ElementRandomGenerator();
+	protected RandomGenerator<Integer> instantiateRandomValueGenerator() {
+		return new IntegerRandomGenerator();
 	}
 	
 	

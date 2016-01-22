@@ -4,20 +4,18 @@ import com.google.common.collect.LinkedHashMultimap;
 import com.google.common.collect.Multimap;
 
 import de.heidelberg.pvs.container_bench.abstracts.guava.AbstractGuavaMultiMapTest;
-import de.heidelberg.pvs.container_bench.element.Element;
-import de.heidelberg.pvs.container_bench.random.ElementRandomGenerator;
 import de.heidelberg.pvs.container_bench.random.IntegerRandomGenerator;
 import de.heidelberg.pvs.container_bench.random.RandomGenerator;
 
-public class Guava_IntegerElement_LinkedHashMultiMap_Test extends AbstractGuavaMultiMapTest<Integer, Element> {
+public class Guava_IntegerInteger_LinkedHashMultiMap_Test extends AbstractGuavaMultiMapTest<Integer, Integer> {
 
 	@Override
-	protected Multimap<Integer, Element> getNewMultiMap(int size, int rangeOfKeys) {
+	protected Multimap<Integer, Integer> getNewMultiMap(int size, int rangeOfKeys) {
 		return LinkedHashMultimap.create();
 	}
 
 	@Override
-	protected Multimap<Integer, Element> copyMultiMap(Multimap<Integer, Element> original) {
+	protected Multimap<Integer, Integer> copyMultiMap(Multimap<Integer, Integer> original) {
 		return LinkedHashMultimap.create(original);
 	}
 
@@ -27,8 +25,8 @@ public class Guava_IntegerElement_LinkedHashMultiMap_Test extends AbstractGuavaM
 	}
 
 	@Override
-	protected RandomGenerator<Element> instantiateRandomValueGenerator() {
-		return new ElementRandomGenerator();
+	protected RandomGenerator<Integer> instantiateRandomValueGenerator() {
+		return new IntegerRandomGenerator();
 	}
 
 }
