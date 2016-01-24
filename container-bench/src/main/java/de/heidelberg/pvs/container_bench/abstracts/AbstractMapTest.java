@@ -21,6 +21,7 @@ public abstract class AbstractMapTest<K, V> extends AbstractBenchmarkTest {
 	@Override
 	public void randomnessSetup() {
 		keyGenerator.setSeed(seed);	
+		valueGenerator.setSeed(seed);
 		this.testSetup();
 	}
 
