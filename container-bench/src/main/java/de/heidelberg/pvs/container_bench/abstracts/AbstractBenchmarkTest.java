@@ -12,11 +12,13 @@ import org.openjdk.jmh.annotations.Scope;
 import org.openjdk.jmh.annotations.Setup;
 import org.openjdk.jmh.annotations.State;
 import org.openjdk.jmh.annotations.Threads;
+import org.openjdk.jmh.annotations.Timeout;
 import org.openjdk.jmh.annotations.Warmup;
 import org.openjdk.jmh.infra.Blackhole;
 
 @BenchmarkMode(Mode.AverageTime)
 @OutputTimeUnit(TimeUnit.NANOSECONDS)
+@Timeout(time = 5, timeUnit = TimeUnit.SECONDS)
 @Warmup(iterations = 7, time = 1, timeUnit = TimeUnit.SECONDS)
 @Measurement(iterations = 30, time = 1, timeUnit = TimeUnit.SECONDS)
 @Threads(1)
