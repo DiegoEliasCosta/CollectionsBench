@@ -1,5 +1,7 @@
 package de.heidelberg.pvs.container_bench.hppc.maps;
 
+import org.openjdk.jmh.annotations.Benchmark;
+
 import com.carrotsearch.hppc.IntIntHashMap;
 
 import de.heidelberg.pvs.container_bench.abstracts.AbstractMapTest;
@@ -36,6 +38,7 @@ public class HPPC_IntegerInteger_HashMap_Test extends AbstractMapTest<Integer, I
 	}
 
 	@Override
+	@Benchmark
 	public void putAll() {
 		IntIntHashMap newMap = new IntIntHashMap();
 		for(int i = 0; i < size; i++) {
@@ -45,12 +48,14 @@ public class HPPC_IntegerInteger_HashMap_Test extends AbstractMapTest<Integer, I
 	}
 
 	@Override
+	@Benchmark
 	public void getElement() {
 		int index = keyGenerator.generateIndex(size);
 		blackhole.consume(fullMap.containsKey(keys[index]));
 	}
 
 	@Override
+	@Benchmark
 	public void containsElement() {
 		int index = keyGenerator.generateIndex(size);
 		blackhole.consume(fullMap.remove(keys[index]));
@@ -58,6 +63,7 @@ public class HPPC_IntegerInteger_HashMap_Test extends AbstractMapTest<Integer, I
 	}
 
 	@Override
+	@Benchmark
 	public void removeElement() {
 		int index = keyGenerator.generateIndex(size);
 		blackhole.consume(fullMap.get(keys[index]));
@@ -65,6 +71,7 @@ public class HPPC_IntegerInteger_HashMap_Test extends AbstractMapTest<Integer, I
 	}
 
 	@Override
+	@Benchmark
 	public void copy() {
 		IntIntHashMap newMap = new IntIntHashMap(fullMap); 
 		blackhole.consume(newMap);

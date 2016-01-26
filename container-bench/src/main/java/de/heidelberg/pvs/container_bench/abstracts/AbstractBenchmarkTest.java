@@ -29,7 +29,7 @@ public abstract class AbstractBenchmarkTest {
 	/**
 	 * From 10K - 100M
 	 */
-	@Param({ "1000", "10000","100000", "1000000", "10000000" , "100000000"})
+	@Param({ "1000", "10000","100000", "1000000", "10000000" })
 	public int size;
 
 	/**

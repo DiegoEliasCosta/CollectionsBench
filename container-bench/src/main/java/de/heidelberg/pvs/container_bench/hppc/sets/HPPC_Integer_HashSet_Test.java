@@ -1,5 +1,7 @@
 package de.heidelberg.pvs.container_bench.hppc.sets;
 
+import org.openjdk.jmh.annotations.Benchmark;
+
 import com.carrotsearch.hppc.IntHashSet;
 import com.carrotsearch.hppc.cursors.IntCursor;
 
@@ -28,6 +30,7 @@ public class HPPC_Integer_HashSet_Test extends AbstractSetTest<Integer> {
 	}
 
 	@Override
+	@Benchmark
 	public void getAll() {
 		for(IntCursor element : fullSet) {
 			blackhole.consume(element);
@@ -35,12 +38,14 @@ public class HPPC_Integer_HashSet_Test extends AbstractSetTest<Integer> {
 	}
 
 	@Override
+	@Benchmark
 	public void removeElement() {
 		int index = generator.generateIndex(size);
 		blackhole.consume(this.fullSet.remove(values[index]));
 	}
 
 	@Override
+	@Benchmark
 	public void containsElement() {
 		Integer index = generator.generateIndex(size);
 		blackhole.consume(fullSet.contains(values[index]));
@@ -48,6 +53,7 @@ public class HPPC_Integer_HashSet_Test extends AbstractSetTest<Integer> {
 	}
 
 	@Override
+	@Benchmark
 	public void addAll() {
 		IntHashSet newSet = new IntHashSet();
 		for(int i = 0; i < size; i++) {
@@ -57,6 +63,7 @@ public class HPPC_Integer_HashSet_Test extends AbstractSetTest<Integer> {
 	}
 
 	@Override
+	@Benchmark
 	public void copySet() {
 		IntHashSet newSet = new IntHashSet(fullSet);
 		blackhole.consume(newSet);

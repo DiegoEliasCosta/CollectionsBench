@@ -1,5 +1,7 @@
 package de.heidelberg.pvs.container_bench.hppc.sets;
 
+import org.openjdk.jmh.annotations.Benchmark;
+
 import com.carrotsearch.hppc.LongHashSet;
 import com.carrotsearch.hppc.cursors.LongCursor;
 
@@ -35,12 +37,14 @@ public class HPPC_Long_HashSet_Test extends AbstractSetTest<Long> {
 	}
 
 	@Override
+	@Benchmark
 	public void removeElement() {
 		int index = generator.generateIndex(size);
 		blackhole.consume(this.fullSet.remove(values[index]));
 	}
 
 	@Override
+	@Benchmark
 	public void containsElement() {
 		Integer index = generator.generateIndex(size);
 		blackhole.consume(fullSet.contains(values[index]));
@@ -48,6 +52,7 @@ public class HPPC_Long_HashSet_Test extends AbstractSetTest<Long> {
 	}
 
 	@Override
+	@Benchmark
 	public void addAll() {
 		LongHashSet newSet = new LongHashSet();
 		for(int i = 0; i < size; i++) {
@@ -57,12 +62,11 @@ public class HPPC_Long_HashSet_Test extends AbstractSetTest<Long> {
 	}
 
 	@Override
+	@Benchmark
 	public void copySet() {
 		LongHashSet newSet = new LongHashSet(fullSet);
 		blackhole.consume(newSet);
 		
 	}
-
-	
 
 }
