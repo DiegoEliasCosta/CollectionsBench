@@ -1,22 +1,22 @@
-package de.heidelberg.pvs.container_bench.fastutils.lists;
+package de.heidelberg.pvs.container_bench.fastutils.plists;
 
 import java.util.List;
 
 import de.heidelberg.pvs.container_bench.abstracts.jdk.AbstractJDKListTest;
 import de.heidelberg.pvs.container_bench.random.IntegerRandomGenerator;
 import de.heidelberg.pvs.container_bench.random.RandomGenerator;
-import it.unimi.dsi.fastutil.objects.ObjectArrayList;
+import it.unimi.dsi.fastutil.ints.IntArrayList;
 
 public class FastUtils_Integer_ArrayList_Test extends AbstractJDKListTest<Integer> {
 
 	@Override
 	protected List<Integer> getNewList(int size) {
-		return new ObjectArrayList<>();
+		return new IntArrayList();
 	}
 
 	@Override
 	protected List<Integer> copyList(List<Integer> fullList2) {
-		return new ObjectArrayList<>(fullList2);
+		return new IntArrayList(fullList2);
 	}
 
 	@Override
