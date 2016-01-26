@@ -1,4 +1,4 @@
-package de.heidelberg.pvs.container_bench.koloboke.maps;
+package de.heidelberg.pvs.container_bench.koloboke.pmaps;
 
 import java.util.Map;
 

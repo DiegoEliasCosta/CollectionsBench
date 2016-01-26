@@ -1,7 +1,5 @@
 package de.heidelberg.pvs.container_bench.preliminary_tests;
 
-import de.heidelberg.pvs.container_bench.random.ElementRandomGenerator;
-
 import java.util.concurrent.TimeUnit;
 
 import org.openjdk.jmh.annotations.Benchmark;
@@ -17,6 +15,8 @@ import org.openjdk.jmh.annotations.State;
 import org.openjdk.jmh.annotations.Threads;
 import org.openjdk.jmh.annotations.Warmup;
 import org.openjdk.jmh.infra.Blackhole;
+
+import de.heidelberg.pvs.container_bench.random.ElementRandomGenerator;
 
 @BenchmarkMode(Mode.AverageTime)
 @OutputTimeUnit(TimeUnit.NANOSECONDS)

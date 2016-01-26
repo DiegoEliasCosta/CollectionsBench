@@ -1,4 +1,4 @@
-package de.heidelberg.pvs.container_bench.hppc.lists;
+package de.heidelberg.pvs.container_bench.hppc.plists;
 
 import org.openjdk.jmh.annotations.Benchmark;
 

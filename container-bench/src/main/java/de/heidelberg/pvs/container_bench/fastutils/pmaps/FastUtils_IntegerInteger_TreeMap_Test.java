@@ -1,25 +1,22 @@
-package de.heidelberg.pvs.container_bench.koloboke.maps;
+package de.heidelberg.pvs.container_bench.fastutils.pmaps;
 
 import java.util.Map;
-
-import com.gs.collections.impl.factory.primitive.IntIntMaps;
 
 import de.heidelberg.pvs.container_bench.abstracts.jdk.AbstractJDKMapTest;
 import de.heidelberg.pvs.container_bench.random.IntegerRandomGenerator;
 import de.heidelberg.pvs.container_bench.random.RandomGenerator;
-import net.openhft.koloboke.collect.map.IntIntMapFactory;
-import net.openhft.koloboke.collect.map.hash.HashIntIntMaps;
+import it.unimi.dsi.fastutil.ints.Int2IntAVLTreeMap;
 
-public class Koloboke_IntegerInteger_HashMap_Test extends AbstractJDKMapTest<Integer, Integer> {
+public class FastUtils_IntegerInteger_TreeMap_Test extends AbstractJDKMapTest<Integer , Integer>{
 
 	@Override
 	protected Map<Integer, Integer> getNewMap(int size, int range) {
-		return HashIntIntMaps.newMutableMap();
+		return new Int2IntAVLTreeMap();
 	}
 
 	@Override
 	protected Map<Integer, Integer> copyMap(Map<Integer, Integer> fullMap2) {
-		return HashIntIntMaps.newMutableMap(fullMap2);
+		return new Int2IntAVLTreeMap(fullMap2);
 	}
 
 	@Override

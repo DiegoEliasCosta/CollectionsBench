@@ -4,8 +4,6 @@ import com.google.common.collect.ArrayListMultimap;
 import com.google.common.collect.Multimap;
 
 import de.heidelberg.pvs.container_bench.abstracts.guava.AbstractGuavaMultiMapTest;
-import de.heidelberg.pvs.container_bench.element.Element;
-import de.heidelberg.pvs.container_bench.random.ElementRandomGenerator;
 import de.heidelberg.pvs.container_bench.random.IntegerRandomGenerator;
 import de.heidelberg.pvs.container_bench.random.RandomGenerator;
 

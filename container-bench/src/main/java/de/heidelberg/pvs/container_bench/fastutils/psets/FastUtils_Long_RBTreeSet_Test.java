@@ -1,22 +1,22 @@
-package de.heidelberg.pvs.container_bench.fastutils.sets;
+package de.heidelberg.pvs.container_bench.fastutils.psets;
 
 import java.util.Set;
 
 import de.heidelberg.pvs.container_bench.abstracts.jdk.AbstractJDKSetTest;
 import de.heidelberg.pvs.container_bench.random.LongRandomGenerator;
 import de.heidelberg.pvs.container_bench.random.RandomGenerator;
-import it.unimi.dsi.fastutil.objects.ObjectOpenHashSet;
+import it.unimi.dsi.fastutil.longs.LongRBTreeSet;
 
-public class FastUtils_Long_HashSet_Test extends AbstractJDKSetTest<Long> {
+public class FastUtils_Long_RBTreeSet_Test extends AbstractJDKSetTest<Long> {
 
 	@Override
 	protected Set<Long> getNewSet(int size) {
-		return new ObjectOpenHashSet<>();
+		return new LongRBTreeSet();
 	}
 
 	@Override
 	protected Set<Long> copySet(Set<Long> fullSet2) {
-		return new ObjectOpenHashSet<>(fullSet2);
+		return new LongRBTreeSet(fullSet2);
 	}
 
 	@Override

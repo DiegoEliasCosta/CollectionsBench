@@ -5,19 +5,18 @@ import java.util.Map;
 import de.heidelberg.pvs.container_bench.abstracts.jdk.AbstractJDKMapTest;
 import de.heidelberg.pvs.container_bench.random.IntegerRandomGenerator;
 import de.heidelberg.pvs.container_bench.random.RandomGenerator;
-import it.unimi.dsi.fastutil.ints.Int2IntLinkedOpenHashMap;
-import it.unimi.dsi.fastutil.ints.Int2IntOpenHashMap;
+import it.unimi.dsi.fastutil.objects.Object2ObjectLinkedOpenHashMap;
 
 public class FastUtils_IntegerInteger_LinkedHashMap_Test extends AbstractJDKMapTest<Integer, Integer> {
 
 	@Override
 	protected Map<Integer, Integer> getNewMap(int size, int range) {
-		return new Int2IntLinkedOpenHashMap();
+		return new Object2ObjectLinkedOpenHashMap<>();
 	}
 
 	@Override
 	protected Map<Integer, Integer> copyMap(Map<Integer, Integer> fullMap2) {
-		return new Int2IntLinkedOpenHashMap(fullMap2);
+		return new Object2ObjectLinkedOpenHashMap<>(fullMap2);
 	}
 
 	@Override
