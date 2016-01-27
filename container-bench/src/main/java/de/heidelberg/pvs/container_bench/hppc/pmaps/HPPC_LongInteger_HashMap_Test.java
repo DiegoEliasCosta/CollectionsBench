@@ -73,7 +73,7 @@ public class HPPC_LongInteger_HashMap_Test extends AbstractMapTest<Long, Integer
 
 	@Override
 	@Benchmark
-	public void copy() {
+	public void copyMap() {
 		LongIntHashMap newMap = new LongIntHashMap(fullMap); 
 		blackhole.consume(newMap);
 		

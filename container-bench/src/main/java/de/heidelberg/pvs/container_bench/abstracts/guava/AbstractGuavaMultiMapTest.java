@@ -56,7 +56,7 @@ public abstract class AbstractGuavaMultiMapTest<K, V> extends AbstractMapTest<K,
 	}
 
 	@Override
-	public void copy() {
+	public void copyMap() {
 		Multimap<K, V> newMap = this.copyMultiMap(fullMap); 
 		blackhole.consume(newMap);
 	}

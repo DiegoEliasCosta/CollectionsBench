@@ -72,7 +72,7 @@ public class HPPC_IntegerInteger_HashMap_Test extends AbstractMapTest<Integer, I
 
 	@Override
 	@Benchmark
-	public void copy() {
+	public void copyMap() {
 		IntIntHashMap newMap = new IntIntHashMap(fullMap); 
 		blackhole.consume(newMap);
 		

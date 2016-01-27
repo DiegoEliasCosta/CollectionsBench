@@ -87,7 +87,7 @@ public abstract class AbstractMapTest<K, V> extends AbstractBenchmarkTest {
 	 * 
 	 * This benchmark measure the time spent by copying another map structure
 	 */
-	abstract public void copy();
+	abstract public void copyMap();
 	
 
 }
