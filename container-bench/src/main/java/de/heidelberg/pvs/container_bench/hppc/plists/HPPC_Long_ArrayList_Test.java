@@ -69,7 +69,7 @@ public class HPPC_Long_ArrayList_Test extends AbstractListTest<Long> {
 	@Override
 	@Benchmark
 	public void copyList() {
-		LongArrayList newList = new LongArrayList();
+		LongArrayList newList = new LongArrayList(fullList);
 		blackhole.consume(newList);
 	}
 

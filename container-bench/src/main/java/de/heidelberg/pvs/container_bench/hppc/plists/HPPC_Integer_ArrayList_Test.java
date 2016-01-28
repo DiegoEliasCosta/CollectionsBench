@@ -72,7 +72,7 @@ public class HPPC_Integer_ArrayList_Test extends AbstractListTest<Integer> {
 	@Override
 	@Benchmark
 	public void copyList() {
-		IntArrayList newList = new IntArrayList();
+		IntArrayList newList = new IntArrayList(fullList);
 		blackhole.consume(newList);
 	}
 

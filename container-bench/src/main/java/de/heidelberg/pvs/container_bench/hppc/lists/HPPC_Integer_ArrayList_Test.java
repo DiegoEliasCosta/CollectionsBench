@@ -66,13 +66,14 @@ public class HPPC_Integer_ArrayList_Test extends AbstractListTest<Integer> {
 		ObjectArrayList<Integer> newList = new ObjectArrayList<>();
 		for(int i = 0; i < size; i++) {
 			newList.add(values[i]);
-		}		
+		}
+		blackhole.consume(newList);
 	}
 
 	@Override
 	@Benchmark
 	public void copyList() {
-		ObjectArrayList<Integer> newList = new ObjectArrayList<>();
+		ObjectArrayList<Integer> newList = new ObjectArrayList<>(fullList);
 		blackhole.consume(newList);
 	}
 

@@ -60,6 +60,7 @@ public abstract class AbstractJDKListTest<T> extends AbstractListTest<T> {
 		for(int i = 0; i < size; i++) {
 			blackhole.consume(newList.add(values[i]));
 		}
+		blackhole.consume(newList);
 	}
 
 	@Benchmark

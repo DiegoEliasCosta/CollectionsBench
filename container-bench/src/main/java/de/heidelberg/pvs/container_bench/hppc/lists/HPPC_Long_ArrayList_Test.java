@@ -64,12 +64,13 @@ public class HPPC_Long_ArrayList_Test extends AbstractListTest<Long> {
 		for (int i = 0; i < size; i++) {
 			newList.add(values[i]);
 		}
+		blackhole.consume(newList);
 	}
 
 	@Override
 	@Benchmark
 	public void copyList() {
-		ObjectArrayList<Long> newList = new ObjectArrayList<Long>();
+		ObjectArrayList<Long> newList = new ObjectArrayList<Long>(fullList);
 		blackhole.consume(newList);
 	}
 
