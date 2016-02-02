@@ -1,5 +1,7 @@
 package de.heidelberg.pvs.container_bench.abstracts.guava;
 
+import org.openjdk.jmh.annotations.Benchmark;
+
 import com.google.common.collect.Multimap;
 
 import de.heidelberg.pvs.container_bench.abstracts.AbstractMapTest;
@@ -7,6 +9,7 @@ import de.heidelberg.pvs.container_bench.abstracts.AbstractMapTest;
 public abstract class AbstractGuavaMultiMapTest<K, V> extends AbstractMapTest<K, V> {
 
 	private K[] keys;
+	private K[] newKeys;
 	private V[] values;
 	private Multimap<K, V> fullMap;
 
@@ -20,6 +23,7 @@ public abstract class AbstractGuavaMultiMapTest<K, V> extends AbstractMapTest<K,
 		fullMap = this.getNewMultiMap(size, rangeOfKeys);
 
 		keys = keyGenerator.generateArrayInRange(size, rangeOfKeys);
+		newKeys = keyGenerator.generateArrayInRange(size, 2 * rangeOfKeys); // 50 % of colision
 		values = valueGenerator.generateArray(size);
 
 		for (int i = 0; i < size; i++) {
@@ -34,6 +38,13 @@ public abstract class AbstractGuavaMultiMapTest<K, V> extends AbstractMapTest<K,
 		for(int i = 0; i < size; i++) {
 			blackhole.consume(newMap.put(keys[i], values[i]));
 		}
+	}
+	
+	@Override
+	@Benchmark
+	public void putElement() {
+		Integer index = this.keyGenerator.generateIndex(size);
+		blackhole.consume(this.fullMap.put(newKeys[index], values[index]));
 	}
 
 	@Override

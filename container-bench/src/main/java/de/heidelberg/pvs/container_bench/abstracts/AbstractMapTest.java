@@ -39,6 +39,21 @@ public abstract class AbstractMapTest<K, V> extends AbstractBenchmarkTest {
 	 * 
 	 */
 	abstract public void putAll();
+	
+	/**
+	 * Benchmark PutElement
+	 * 
+	 * This benchmark measure the time spent at putting one elements into
+	 * a full map. The element has 50% of chance of collision. <code>
+	 * <pre>
+	 * for(;;)
+	 *   element = random(2 * range)
+	 *   map.put(element)
+	 * </pre>
+	 * </code>
+	 * 
+	 */
+	abstract public void putElement();
 
 	/**
 	 * Benchmark GetElement

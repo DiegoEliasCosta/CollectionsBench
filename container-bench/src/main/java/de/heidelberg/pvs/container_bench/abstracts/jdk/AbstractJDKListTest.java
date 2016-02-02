@@ -62,6 +62,12 @@ public abstract class AbstractJDKListTest<T> extends AbstractListTest<T> {
 		}
 		blackhole.consume(newList);
 	}
+	
+	@Benchmark
+	public void addElement() {
+		Integer index = generator.generateIndex(size);
+		blackhole.consume(this.fullList.add(values[index]));
+	}
 
 	@Benchmark
 	public void copyList() {

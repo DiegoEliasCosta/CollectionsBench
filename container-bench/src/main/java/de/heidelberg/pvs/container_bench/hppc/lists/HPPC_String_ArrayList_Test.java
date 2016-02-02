@@ -6,21 +6,20 @@ import com.carrotsearch.hppc.ObjectArrayList;
 import com.carrotsearch.hppc.cursors.ObjectCursor;
 
 import de.heidelberg.pvs.container_bench.abstracts.AbstractListTest;
+import de.heidelberg.pvs.container_bench.abstracts.hppc.AbstractHPPCListTest;
 import de.heidelberg.pvs.container_bench.random.RandomGenerator;
 import de.heidelberg.pvs.container_bench.random.StringRandomGenerator;
 
-public class HPPC_String_ArrayList_Test extends AbstractListTest<String> {
-
-	ObjectArrayList<String> fullList;
-	String[] values;
+public class HPPC_String_ArrayList_Test extends AbstractHPPCListTest<String> {
 
 	@Override
-	public void testSetup() {
-		fullList = new ObjectArrayList<String>();
-		values = this.generator.generateArray(size);
-		for (int i = 0; i < size; i++) {
-			fullList.add(values[i]);
-		}
+	protected ObjectArrayList<String> getNewList(int size) {
+		return new ObjectArrayList<>();
+	}
+
+	@Override
+	protected ObjectArrayList<String> copyList(ObjectArrayList<String> original) {
+		return new ObjectArrayList<>(original);
 	}
 
 	@Override
@@ -28,50 +27,5 @@ public class HPPC_String_ArrayList_Test extends AbstractListTest<String> {
 		return new StringRandomGenerator();
 	}
 
-	@Override
-	@Benchmark
-	public void getAll() {
-		for (ObjectCursor<String> element : fullList) {
-			blackhole.consume(element);
-		}
-	}
-
-	@Override
-	@Benchmark
-	public void getElement() {
-		Integer index = generator.generateIndex(size);
-		blackhole.consume(fullList.get(index));
-	}
-
-	@Override
-	@Benchmark
-	public void removeElement() {
-		Integer index = generator.generateIndex(size);
-		blackhole.consume(fullList.remove(index));
-	}
-
-	@Override
-	@Benchmark
-	public void containsElement() {
-		Integer index = generator.generateIndex(size);
-		blackhole.consume(fullList.contains(values[index]));
-	}
-
-	@Override
-	@Benchmark
-	public void addAll() {
-		ObjectArrayList<String> newList = new ObjectArrayList<String>();
-		for (int i = 0; i < size; i++) {
-			newList.add(values[i]);
-		}
-		blackhole.consume(newList);
-	}
-
-	@Override
-	@Benchmark
-	public void copyList() {
-		ObjectArrayList<String> newList = new ObjectArrayList<String>(fullList);
-		blackhole.consume(newList);
-	}
 
 }

@@ -1,20 +1,20 @@
-package de.heidelberg.pvs.container_bench.abstracts.jdk;
-
-import java.util.Map;
+package de.heidelberg.pvs.container_bench.abstracts.hppc;
 
 import org.openjdk.jmh.annotations.Benchmark;
 
+import com.carrotsearch.hppc.ObjectObjectHashMap;
+
 import de.heidelberg.pvs.container_bench.abstracts.AbstractMapTest;
 
-public abstract class AbstractJDKMapTest<K, V> extends AbstractMapTest<K, V> {
+public abstract class AbstractHPPCMapTest<K, V> extends AbstractMapTest<K, V> {
 
-	private Map<K, V> fullMap;
+	private ObjectObjectHashMap<K, V> fullMap;
 	private K[] keys;
 	private K[] newKeys;
 	private V[] values;
 	
-	protected abstract Map<K, V> getNewMap(int size, int range);
-	protected abstract Map<K, V> copyMap(Map<K, V> fullMap2);
+	protected abstract ObjectObjectHashMap<K, V> getNewMap(int size, int range);
+	protected abstract ObjectObjectHashMap<K, V> copyMap(ObjectObjectHashMap<K, V> fullMap2);
 	
 	@Override
 	public void testSetup() {
@@ -34,7 +34,7 @@ public abstract class AbstractJDKMapTest<K, V> extends AbstractMapTest<K, V> {
 	@Override
 	@Benchmark
 	public void putAll() {
-		Map<K, V> newMap = this.getNewMap(size, rangeOfKeys);
+		ObjectObjectHashMap<K, V> newMap = this.getNewMap(size, rangeOfKeys);
 		for(int i = 0; i < size; i++) {
 			blackhole.consume(newMap.put(keys[i], values[i]));
 		}
@@ -74,7 +74,7 @@ public abstract class AbstractJDKMapTest<K, V> extends AbstractMapTest<K, V> {
 	@Override
 	@Benchmark
 	public void copyMap() {
-		Map<K, V> newMap = this.copyMap(fullMap); 
+		ObjectObjectHashMap<K, V> newMap = this.copyMap(fullMap); 
 		blackhole.consume(newMap);
 	}
 

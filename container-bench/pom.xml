@@ -122,6 +122,12 @@
 			<version>0.7.1</version>
 		</dependency>
 
+		<!-- MAYHOUT -->
+		<dependency>
+			<groupId>org.apache.mahout</groupId>
+			<artifactId>mahout-collections</artifactId>
+			<version>1.0</version>
+		</dependency>
 
 
 	</dependencies>

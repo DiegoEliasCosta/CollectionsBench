@@ -72,10 +72,25 @@ public abstract class AbstractSetTest<T> extends AbstractBenchmarkTest {
 	 * <pre>
 	 * for(;;) 
 	 *     set.add(random())
+	 * </pre>    
 	 * </code>
 	 * 
 	 */
 	abstract public void addAll();
+	
+	/**
+	 * Benchmark AddElement
+	 * 
+	 * This benchmark measure the time spent by one <b>random</b> element into 
+	 * a full set. The element has 50% of chance of collision.
+	 * <code> 
+	 * <pre>
+	 *     set.add(random(2 * range))
+	 *   </pre>  
+	 * </code>
+	 * 
+	 */
+	abstract public void addElement();
 	
 	/**
 	 * Benchmark Copy

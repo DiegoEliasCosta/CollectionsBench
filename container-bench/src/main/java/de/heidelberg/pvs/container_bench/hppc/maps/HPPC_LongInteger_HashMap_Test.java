@@ -1,33 +1,24 @@
 package de.heidelberg.pvs.container_bench.hppc.maps;
 
-import org.openjdk.jmh.annotations.Benchmark;
-
 import com.carrotsearch.hppc.ObjectObjectHashMap;
 
-import de.heidelberg.pvs.container_bench.abstracts.AbstractMapTest;
+import de.heidelberg.pvs.container_bench.abstracts.hppc.AbstractHPPCMapTest;
 import de.heidelberg.pvs.container_bench.random.IntegerRandomGenerator;
 import de.heidelberg.pvs.container_bench.random.LongRandomGenerator;
 import de.heidelberg.pvs.container_bench.random.RandomGenerator;
 
-public class HPPC_LongInteger_HashMap_Test extends AbstractMapTest<Long, Integer>{
-
-	
-	private ObjectObjectHashMap<Long, Integer> fullMap;
-	private Long[] keys;
-	private Integer[] values;
-	
+public class HPPC_LongInteger_HashMap_Test extends AbstractHPPCMapTest<Long, Integer>{
 
 	@Override
-	public void testSetup() {
-		fullMap = new ObjectObjectHashMap<>();
-		keys = keyGenerator.generateArrayInRange(size, rangeOfKeys);
-		values = valueGenerator.generateArray(size);
-		for(int i = 0; i < size; i++) {
-			fullMap.put(keys[i], values[i]);
-		}
-		
+	protected ObjectObjectHashMap<Long, Integer> getNewMap(int size, int range) {
+		return new ObjectObjectHashMap<>();
 	}
-	
+
+	@Override
+	protected ObjectObjectHashMap<Long, Integer> copyMap(ObjectObjectHashMap<Long, Integer> fullMap2) {
+		return new ObjectObjectHashMap<>(fullMap2);
+	}
+
 	@Override
 	protected RandomGenerator<Long> instantiateRandomKeyGenerator() {
 		return new LongRandomGenerator();
@@ -38,46 +29,7 @@ public class HPPC_LongInteger_HashMap_Test extends AbstractMapTest<Long, Integer
 		return new IntegerRandomGenerator();
 	}
 
-	@Override
-	@Benchmark
-	public void putAll() {
-		ObjectObjectHashMap<Long, Integer> newMap = new ObjectObjectHashMap<>();
-		for(int i = 0; i < size; i++) {
-			blackhole.consume(newMap.put(keys[i], values[i]));
-		}
-		
-	}
-
-	@Override
-	@Benchmark
-	public void getElement() {
-		int index = keyGenerator.generateIndex(size);
-		blackhole.consume(fullMap.containsKey(keys[index]));
-	}
-
-	@Override
-	@Benchmark
-	public void containsElement() {
-		int index = keyGenerator.generateIndex(size);
-		blackhole.consume(fullMap.remove(keys[index]));
-		
-	}
-
-	@Override
-	@Benchmark
-	public void removeElement() {
-		int index = keyGenerator.generateIndex(size);
-		blackhole.consume(fullMap.get(keys[index]));
-		
-	}
-
-	@Override
-	@Benchmark
-	public void copyMap() {
-		ObjectObjectHashMap<Long, Integer> newMap = new ObjectObjectHashMap<>(fullMap); 
-		blackhole.consume(newMap);
-		
-	}
+	
 
 
 }

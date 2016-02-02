@@ -1,8 +1,11 @@
-package de.heidelberg.pvs.container_bench.abstracts.jdk;
+package de.heidelberg.pvs.container_bench.abstracts.hppc;
 
 import java.util.Set;
 
 import org.openjdk.jmh.annotations.Benchmark;
+
+import com.carrotsearch.hppc.ObjectHashSet;
+import com.carrotsearch.hppc.cursors.ObjectCursor;
 
 import de.heidelberg.pvs.container_bench.abstracts.AbstractSetTest;
 
@@ -13,12 +16,16 @@ import de.heidelberg.pvs.container_bench.abstracts.AbstractSetTest;
  * @param <T>
  * 		The held type of the {@link Set} implementation
  */
-public abstract class AbstractJDKSetTest<T> extends AbstractSetTest<T> {
+public abstract class AbstractHPPCSetTest<T> extends AbstractSetTest<T> {
 	
-	private Set<T> fullSet;
+	private ObjectHashSet<T> fullSet;
 	private T[] values;
 	private T[] newValues;
 	private int newValuesSize;
+	
+	protected abstract ObjectHashSet<T> getNewSet(int size);
+	protected abstract ObjectHashSet<T> copySet(ObjectHashSet<T> original);
+	
 	
 	public void testSetup() {
 		newValuesSize = 2 * size; // 50% of colision
@@ -30,12 +37,9 @@ public abstract class AbstractJDKSetTest<T> extends AbstractSetTest<T> {
 		}
 	}
 	
-	protected abstract Set<T> getNewSet(int size);
-	protected abstract Set<T> copySet(Set<T> fullSet2);
-	
 	@Benchmark
 	public void getAll() { 
-		for(T element : fullSet) {
+		for(ObjectCursor<T> element : fullSet) {
 			blackhole.consume(element);
 		}
 	}
@@ -55,7 +59,7 @@ public abstract class AbstractJDKSetTest<T> extends AbstractSetTest<T> {
 
 	@Benchmark
 	public void addAll() {
-		Set<T> newSet = this.getNewSet(size);
+		ObjectHashSet<T> newSet = this.getNewSet(size);
 		for(int i = 0; i < size; i++) {
 			blackhole.consume(newSet.add(values[i]));
 		}
@@ -69,7 +73,7 @@ public abstract class AbstractJDKSetTest<T> extends AbstractSetTest<T> {
 
 	@Benchmark
 	public void copySet() {
-		Set<T> newSet = this.copySet(fullSet);
+		ObjectHashSet<T> newSet = this.copySet(fullSet);
 		blackhole.consume(newSet);
 	}
 }

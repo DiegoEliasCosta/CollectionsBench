@@ -1,39 +1,37 @@
-package de.heidelberg.pvs.container_bench.hppc.plists;
+package de.heidelberg.pvs.container_bench.abstracts.hppc;
 
 import org.openjdk.jmh.annotations.Benchmark;
 
-import com.carrotsearch.hppc.LongArrayList;
-import com.carrotsearch.hppc.cursors.LongCursor;
+import com.carrotsearch.hppc.ObjectArrayList;
+import com.carrotsearch.hppc.cursors.ObjectCursor;
 
 import de.heidelberg.pvs.container_bench.abstracts.AbstractListTest;
-import de.heidelberg.pvs.container_bench.random.LongRandomGenerator;
-import de.heidelberg.pvs.container_bench.random.RandomGenerator;
 
-public class HPPC_Long_ArrayList_Test extends AbstractListTest<Long> {
+public abstract class AbstractHPPCListTest<T> extends AbstractListTest<T> {
 
-	LongArrayList fullList;
-	Long[] values;
+	ObjectArrayList<T> fullList;
+	T[] values;
+
+	protected abstract ObjectArrayList<T> getNewList(int size);
+	protected abstract ObjectArrayList<T> copyList(ObjectArrayList<T> original);
 	
 	@Override
 	public void testSetup() {
-		fullList = new LongArrayList();
+		fullList = this.getNewList(size);
 		values = this.generator.generateArray(size);
-		for(int i = 0; i < size; i++) {
+		for (int i = 0; i < size; i++) {
 			fullList.add(values[i]);
 		}
-	}
-	
-	@Override
-	protected RandomGenerator<Long> instantiateRandomGenerator() {
-		return new LongRandomGenerator();
+
 	}
 
 	@Override
 	@Benchmark
 	public void getAll() {
-		for(LongCursor element : fullList) {
+		for (ObjectCursor<T> element : fullList) {
 			blackhole.consume(element);
 		}
+
 	}
 
 	@Override
@@ -54,23 +52,31 @@ public class HPPC_Long_ArrayList_Test extends AbstractListTest<Long> {
 	@Benchmark
 	public void containsElement() {
 		Integer index = generator.generateIndex(size);
-		blackhole.consume(fullList.contains(values[index]));		
+		blackhole.consume(fullList.contains(values[index]));
 	}
 
 	@Override
 	@Benchmark
 	public void addAll() {
-		LongArrayList newList = new LongArrayList();
-		for(int i = 0; i < size; i++) {
+		ObjectArrayList<T> newList = new ObjectArrayList<>();
+		for (int i = 0; i < size; i++) {
 			newList.add(values[i]);
-		}		
+		}
+		blackhole.consume(newList);
 	}
 
 	@Override
 	@Benchmark
 	public void copyList() {
-		LongArrayList newList = new LongArrayList(fullList);
+		ObjectArrayList<T> newList = new ObjectArrayList<>(fullList);
 		blackhole.consume(newList);
+	}
+
+	@Override
+	public void addElement() {
+		Integer index = this.generator.generateIndex(size);
+		this.fullList.add(values[index]);
+		
 	}
 
 }

@@ -89,6 +89,21 @@ public abstract class AbstractListTest<T> extends AbstractBenchmarkTest {
 	 */
 	abstract public void addAll();
 	
+
+	/**
+	 * Benchmark AddAll
+	 * 
+	 * This benchmark measure the time spent by adding <b>random</b> elements into 
+	 * the list, until it reaches its specified size
+	 * <code> 
+	 * <pre>
+	 * for(;;) 
+	 *     list.add(random())
+	 * </code>
+	 * 
+	 */
+	abstract public void addElement();
+	
 	/**
 	 * Benchmark Copy
 	 * 

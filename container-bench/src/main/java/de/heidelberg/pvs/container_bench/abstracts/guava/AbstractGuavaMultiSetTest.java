@@ -9,6 +9,7 @@ import de.heidelberg.pvs.container_bench.abstracts.AbstractSetTest;
 public abstract class AbstractGuavaMultiSetTest<T> extends AbstractSetTest<T> {
 
 	private T[] values;
+	private T[] newValues;
 	private Multiset<T> fullSet;
 	
 	protected abstract Multiset<T> getNewMultiSet();
@@ -19,6 +20,7 @@ public abstract class AbstractGuavaMultiSetTest<T> extends AbstractSetTest<T> {
 	public void testSetup() {
 		fullSet = this.getNewMultiSet();
 		values = this.generator.generateArray(size);
+		newValues = this.generator.generateArrayInRange(size, 2 * size);
 		for (int i = 0; i < values.length; i++) {
 			fullSet.add(values[i]);
 		}
@@ -50,6 +52,13 @@ public abstract class AbstractGuavaMultiSetTest<T> extends AbstractSetTest<T> {
 		for(int i = 0; i < values.length; i++) {
 			blackhole.consume(newSet.add(values[i]));
 		}
+	}
+	
+	@Override
+	@Benchmark
+	public void addElement() {
+		Integer index = this.generator.generateIndex(size);
+		blackhole.consume(this.fullSet.add(newValues[index]));
 	}
 
 	@Benchmark
