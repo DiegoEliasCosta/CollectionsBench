@@ -33,11 +33,6 @@ public abstract class AbstractGuavaMultiSetTest<T> extends AbstractSetTest<T> {
 		}
 	}
 
-	@Benchmark
-	public void removeElement() {
-		Integer index = this.generator.generateIndex(size);
-		blackhole.consume(fullSet.remove(values[index]));
-	}
 
 	@Benchmark
 	public void containsElement() {
@@ -56,9 +51,10 @@ public abstract class AbstractGuavaMultiSetTest<T> extends AbstractSetTest<T> {
 	
 	@Override
 	@Benchmark
-	public void addElement() {
+	public void addAndRemoveElement() {
 		Integer index = this.generator.generateIndex(size);
 		blackhole.consume(this.fullSet.add(newValues[index]));
+		blackhole.consume(this.fullSet.remove(newValues[index]));
 	}
 
 	@Benchmark

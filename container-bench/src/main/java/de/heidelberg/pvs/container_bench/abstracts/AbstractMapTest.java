@@ -53,7 +53,7 @@ public abstract class AbstractMapTest<K, V> extends AbstractBenchmarkTest {
 	 * </code>
 	 * 
 	 */
-	abstract public void putElement();
+	abstract public void putAndRemoveElement();
 
 	/**
 	 * Benchmark GetElement
@@ -81,21 +81,6 @@ public abstract class AbstractMapTest<K, V> extends AbstractBenchmarkTest {
 	 */
 	abstract public void containsElement();
 
-	/**
-	 * Benchmark Remove
-	 * 
-	 * This benchmark measure the time spent by removing an existing element
-	 * from the map
-	 * 
-	 * <code>
-	 * <pre>
-	 * element = random(1, range) // 100% of chance 
-	 * map.remove(element)
-	 * </pre>
-	 * </code>
-	 * 
-	 */
-	abstract public void removeElement();
 	
 	/**
 	 * Benchmark Copy

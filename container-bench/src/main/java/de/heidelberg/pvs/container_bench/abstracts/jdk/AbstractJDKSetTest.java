@@ -33,6 +33,7 @@ public abstract class AbstractJDKSetTest<T> extends AbstractSetTest<T> {
 	protected abstract Set<T> getNewSet(int size);
 	protected abstract Set<T> copySet(Set<T> fullSet2);
 	
+	@Override
 	@Benchmark
 	public void getAll() { 
 		for(T element : fullSet) {
@@ -40,19 +41,14 @@ public abstract class AbstractJDKSetTest<T> extends AbstractSetTest<T> {
 		}
 	}
 	
-	@Benchmark
-	public void removeElement() {
-		int index = generator.generateIndex(size);
-		blackhole.consume(this.fullSet.remove(values[index]));
-	}
-
+	@Override
 	@Benchmark
 	public void containsElement() {
 		Integer index = generator.generateIndex(size);
 		blackhole.consume(fullSet.contains(values[index]));
 	}
 
-
+	@Override
 	@Benchmark
 	public void addAll() {
 		Set<T> newSet = this.getNewSet(size);
@@ -61,12 +57,15 @@ public abstract class AbstractJDKSetTest<T> extends AbstractSetTest<T> {
 		}
 	}
 	
+	@Override
 	@Benchmark
-	public void addElement() {
+	public void addAndRemoveElement() {
 		Integer index = this.generator.generateIndex(newValuesSize);
-		this.fullSet.add(newValues[index]);
+		blackhole.consume(this.fullSet.add(newValues[index]));
+		blackhole.consume(this.fullSet.remove(newValues[index]));
 	}
 
+	@Override
 	@Benchmark
 	public void copySet() {
 		Set<T> newSet = this.copySet(fullSet);

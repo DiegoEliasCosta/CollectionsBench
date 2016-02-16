@@ -35,19 +35,6 @@ public abstract class AbstractSetTest<T> extends AbstractBenchmarkTest {
 	 */
 	abstract public void getAll();
 
-	/**
-	 * Benchmark RemoveAt
-	 * 
-	 * This benchmark measure the time spent in removing a <b>random</b> element
-	 * of the set. <br>
-	 * <br>
-	 * <code>
-	 * index = random() <br>
-	 * set.remove(index)
-	 * </code>
-	 */
-	abstract public void removeElement();
-
 
 	/**
 	 * Benchmark Contains
@@ -90,7 +77,7 @@ public abstract class AbstractSetTest<T> extends AbstractBenchmarkTest {
 	 * </code>
 	 * 
 	 */
-	abstract public void addElement();
+	abstract public void addAndRemoveElement();
 	
 	/**
 	 * Benchmark Copy

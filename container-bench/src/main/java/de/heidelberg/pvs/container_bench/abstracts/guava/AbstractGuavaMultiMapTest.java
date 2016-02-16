@@ -33,6 +33,7 @@ public abstract class AbstractGuavaMultiMapTest<K, V> extends AbstractMapTest<K,
 	}
 
 	@Override
+	@Benchmark
 	public void putAll() {
 		Multimap<K, V> newMap = this.getNewMultiMap(size, rangeOfKeys);
 		for(int i = 0; i < size; i++) {
@@ -42,31 +43,29 @@ public abstract class AbstractGuavaMultiMapTest<K, V> extends AbstractMapTest<K,
 	
 	@Override
 	@Benchmark
-	public void putElement() {
+	public void putAndRemoveElement() {
 		Integer index = this.keyGenerator.generateIndex(size);
 		blackhole.consume(this.fullMap.put(newKeys[index], values[index]));
+		blackhole.consume(this.fullMap.remove(newKeys[index], values[index]));
 	}
 
 	@Override
+	@Benchmark
 	public void getElement() {
 		int index = keyGenerator.generateIndex(size);
 		blackhole.consume(fullMap.get(keys[index]));
 	}
 
 	@Override
+	@Benchmark
 	public void containsElement() {
 		int index = keyGenerator.generateIndex(size);
 		blackhole.consume(fullMap.containsKey(keys[index]));
 	}
 
-	@Override
-	public void removeElement() {
-		int index = keyGenerator.generateIndex(size);
-		blackhole.consume(fullMap.remove(keys[index], values[index]));
-
-	}
 
 	@Override
+	@Benchmark
 	public void copyMap() {
 		Multimap<K, V> newMap = this.copyMultiMap(fullMap); 
 		blackhole.consume(newMap);

@@ -44,12 +44,7 @@ public abstract class AbstractHPPCSetTest<T> extends AbstractSetTest<T> {
 		}
 	}
 	
-	@Benchmark
-	public void removeElement() {
-		int index = generator.generateIndex(size);
-		blackhole.consume(this.fullSet.remove(values[index]));
-	}
-
+	
 	@Benchmark
 	public void containsElement() {
 		Integer index = generator.generateIndex(size);
@@ -66,9 +61,10 @@ public abstract class AbstractHPPCSetTest<T> extends AbstractSetTest<T> {
 	}
 	
 	@Benchmark
-	public void addElement() {
+	public void addAndRemoveElement() {
 		Integer index = this.generator.generateIndex(newValuesSize);
-		this.fullSet.add(newValues[index]);
+		blackhole.consume(this.fullSet.add(newValues[index]));
+		blackhole.consume(this.fullSet.remove(newValues[index]));
 	}
 
 	@Benchmark

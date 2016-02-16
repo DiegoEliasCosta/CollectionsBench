@@ -49,19 +49,6 @@ public abstract class AbstractListTest<T> extends AbstractBenchmarkTest {
 	abstract public void getElement();
 
 	/**
-	 * Benchmark RemoveAt
-	 * 
-	 * This benchmark measure the time spent in removing a <b>random</b> element
-	 * of the list. <br>
-	 * <br>
-	 * <code>
-	 * index = random() <br>
-	 * list.remove(index)
-	 * </code>
-	 */
-	abstract public void removeElement();
-
-	/**
 	 * Benchmark Contains
 	 * 
 	 * This benchmark measure the time spent executing a contain to a <b>random</b>
@@ -91,20 +78,6 @@ public abstract class AbstractListTest<T> extends AbstractBenchmarkTest {
 	
 
 	/**
-	 * Benchmark AddAll
-	 * 
-	 * This benchmark measure the time spent by adding <b>random</b> elements into 
-	 * the list, until it reaches its specified size
-	 * <code> 
-	 * <pre>
-	 * for(;;) 
-	 *     list.add(random())
-	 * </code>
-	 * 
-	 */
-	abstract public void addElement();
-	
-	/**
 	 * Benchmark Copy
 	 * 
 	 * This benchmark measure the time spent by copying the entire list to a new instance
@@ -116,5 +89,12 @@ public abstract class AbstractListTest<T> extends AbstractBenchmarkTest {
 	 * 
 	 */
 	abstract public void copyList();
+	
+	/**
+	 * Steady-State performance solution for testing addElement
+	 * 
+	 * 
+	 */
+	abstract public void addAndRemoveElementAt();
 
 }
