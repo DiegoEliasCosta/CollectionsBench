@@ -53,7 +53,7 @@ public abstract class AbstractHPPCListTest<T> extends AbstractListTest<T> {
 	public void addAll() {
 		ObjectArrayList<T> newList = new ObjectArrayList<>();
 		for (int i = 0; i < size; i++) {
-			newList.add(values[i]);
+			newList.add(values[i]); // void
 		}
 		blackhole.consume(newList);
 	}
@@ -67,10 +67,10 @@ public abstract class AbstractHPPCListTest<T> extends AbstractListTest<T> {
 	
 	@Override
 	@Benchmark
-	public void addAndRemoveElementAt() {
+	public void addAndRemoveElement() {
 		Integer index = generator.generateIndex(size);
 		fullList.add(values[index]);
-		fullList.remove(size); 
+		blackhole.consume(fullList.remove(size)); 
 	}
 
 

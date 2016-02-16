@@ -72,7 +72,7 @@ public abstract class AbstractJDKListTest<T> extends AbstractListTest<T> {
 
 	@Override
 	@Benchmark
-	public void addAndRemoveElementAt() {
+	public void addAndRemoveElement() {
 		Integer index = generator.generateIndex(size);
 		blackhole.consume(fullList.add(values[index]));
 		blackhole.consume(fullList.remove(size));

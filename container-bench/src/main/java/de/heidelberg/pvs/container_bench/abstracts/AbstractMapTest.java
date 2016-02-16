@@ -38,7 +38,7 @@ public abstract class AbstractMapTest<K, V> extends AbstractBenchmarkTest {
 	 * </code>
 	 * 
 	 */
-	abstract public void putAll();
+	abstract public void addAll();
 	
 	/**
 	 * Benchmark PutElement
@@ -53,7 +53,7 @@ public abstract class AbstractMapTest<K, V> extends AbstractBenchmarkTest {
 	 * </code>
 	 * 
 	 */
-	abstract public void putAndRemoveElement();
+	abstract public void addAndRemoveElement();
 
 	/**
 	 * Benchmark GetElement

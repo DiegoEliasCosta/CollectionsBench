@@ -95,6 +95,8 @@ public abstract class AbstractListTest<T> extends AbstractBenchmarkTest {
 	 * 
 	 * 
 	 */
-	abstract public void addAndRemoveElementAt();
+	abstract public void addAndRemoveElement();
+	
+	
 
 }

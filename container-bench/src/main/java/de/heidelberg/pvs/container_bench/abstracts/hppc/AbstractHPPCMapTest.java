@@ -33,7 +33,7 @@ public abstract class AbstractHPPCMapTest<K, V> extends AbstractMapTest<K, V> {
 	
 	@Override
 	@Benchmark
-	public void putAll() {
+	public void addAll() {
 		ObjectObjectHashMap<K, V> newMap = this.getNewMap(size, rangeOfKeys);
 		for(int i = 0; i < size; i++) {
 			blackhole.consume(newMap.put(keys[i], values[i]));
@@ -42,7 +42,7 @@ public abstract class AbstractHPPCMapTest<K, V> extends AbstractMapTest<K, V> {
 	
 	@Override
 	@Benchmark
-	public void putAndRemoveElement() {
+	public void addAndRemoveElement() {
 		Integer index = this.keyGenerator.generateIndex(size);
 		blackhole.consume(this.fullMap.put(newKeys[index], values[index]));
 		blackhole.consume(this.fullMap.remove(newKeys[index]));

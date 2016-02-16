@@ -26,6 +26,7 @@ public abstract class AbstractGuavaMultiSetTest<T> extends AbstractSetTest<T> {
 		}
 	}
 
+	@Override
 	@Benchmark
 	public void getAll() {
 		for(T element : fullSet) {
@@ -33,7 +34,7 @@ public abstract class AbstractGuavaMultiSetTest<T> extends AbstractSetTest<T> {
 		}
 	}
 
-
+	@Override
 	@Benchmark
 	public void containsElement() {
 		Integer index = this.generator.generateIndex(size);
@@ -41,6 +42,7 @@ public abstract class AbstractGuavaMultiSetTest<T> extends AbstractSetTest<T> {
 		
 	}
 
+	@Override
 	@Benchmark
 	public void addAll() {
 		Multiset<T> newSet = this.getNewMultiSet();
@@ -57,6 +59,7 @@ public abstract class AbstractGuavaMultiSetTest<T> extends AbstractSetTest<T> {
 		blackhole.consume(this.fullSet.remove(newValues[index]));
 	}
 
+	@Override
 	@Benchmark
 	public void copySet() {
 		Multiset<T> copiedSet = this.copyMultiSet(fullSet);
