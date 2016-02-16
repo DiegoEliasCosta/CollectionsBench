@@ -72,6 +72,12 @@ public abstract class AbstractHPPCListTest<T> extends AbstractListTest<T> {
 		fullList.add(values[index]);
 		blackhole.consume(fullList.remove(size)); 
 	}
+	
+	@Override
+	@Benchmark
+	public void getSize() {
+		blackhole.consume(fullList.size());
+	}
 
 
 }

@@ -91,5 +91,10 @@ public abstract class AbstractSetTest<T> extends AbstractBenchmarkTest {
 	 * 
 	 */
 	abstract public void copySet();
+	
+	/**
+	 * TODO
+	 */
+	abstract public void getSize();
 
 }

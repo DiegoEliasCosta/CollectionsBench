@@ -77,5 +77,11 @@ public abstract class AbstractJDKListTest<T> extends AbstractListTest<T> {
 		blackhole.consume(fullList.add(values[index]));
 		blackhole.consume(fullList.remove(size));
 	}
+	
+	@Override
+	@Benchmark
+	public void getSize() {
+		blackhole.consume(fullList.size());
+	}
 
 }

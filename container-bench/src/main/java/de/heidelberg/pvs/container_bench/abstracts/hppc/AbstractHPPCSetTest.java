@@ -72,4 +72,10 @@ public abstract class AbstractHPPCSetTest<T> extends AbstractSetTest<T> {
 		ObjectHashSet<T> newSet = this.copySet(fullSet);
 		blackhole.consume(newSet);
 	}
+	
+	@Override
+	@Benchmark
+	public void getSize() {
+		blackhole.consume(fullSet.size());
+	}
 }

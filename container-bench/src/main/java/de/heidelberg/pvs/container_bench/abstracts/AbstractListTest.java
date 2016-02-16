@@ -93,9 +93,14 @@ public abstract class AbstractListTest<T> extends AbstractBenchmarkTest {
 	/**
 	 * Steady-State performance solution for testing addElement
 	 * 
-	 * 
+	 * TODO
 	 */
 	abstract public void addAndRemoveElement();
+	
+	/**
+	 * TODO
+	 */
+	abstract public void getSize();
 	
 	
 

@@ -71,4 +71,10 @@ public abstract class AbstractJDKSetTest<T> extends AbstractSetTest<T> {
 		Set<T> newSet = this.copySet(fullSet);
 		blackhole.consume(newSet);
 	}
+	
+	@Override
+	@Benchmark
+	public void getSize() {
+		blackhole.consume(fullSet.size());
+	}
 }
