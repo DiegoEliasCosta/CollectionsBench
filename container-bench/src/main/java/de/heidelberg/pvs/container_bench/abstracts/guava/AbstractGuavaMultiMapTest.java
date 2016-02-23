@@ -20,10 +20,11 @@ public abstract class AbstractGuavaMultiMapTest<K, V> extends AbstractMapTest<K,
 	@Override
 	public void testSetup() {
 
-		fullMap = this.getNewMultiMap(size, rangeOfKeys);
+		int varietyOfKeys = (int) (size * ((double)percentageRangeKeys / 100));
+		fullMap = this.getNewMultiMap(size, varietyOfKeys);
 
-		keys = keyGenerator.generateArrayInRange(size, rangeOfKeys);
-		newKeys = keyGenerator.generateArrayInRange(size, 2 * rangeOfKeys); // 50 % of colision
+		keys = keyGenerator.generateArrayInRange(size, varietyOfKeys);
+		newKeys = keyGenerator.generateArrayInRange(size, 2 * varietyOfKeys); // 50 % of colision
 		values = valueGenerator.generateArray(size);
 
 		for (int i = 0; i < size; i++) {
@@ -35,7 +36,7 @@ public abstract class AbstractGuavaMultiMapTest<K, V> extends AbstractMapTest<K,
 	@Override
 	@Benchmark
 	public void addAll() {
-		Multimap<K, V> newMap = this.getNewMultiMap(size, rangeOfKeys);
+		Multimap<K, V> newMap = this.getNewMultiMap(size, percentageRangeKeys);
 		for(int i = 0; i < size; i++) {
 			blackhole.consume(newMap.put(keys[i], values[i]));
 		}

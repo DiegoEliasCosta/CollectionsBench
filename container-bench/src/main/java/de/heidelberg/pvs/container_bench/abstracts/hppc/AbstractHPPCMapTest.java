@@ -18,10 +18,11 @@ public abstract class AbstractHPPCMapTest<K, V> extends AbstractMapTest<K, V> {
 	
 	@Override
 	public void testSetup() {
-		fullMap = this.getNewMap(size, rangeOfKeys);
-		
-		keys = keyGenerator.generateArrayInRange(size, rangeOfKeys);
-		newKeys = keyGenerator.generateArrayInRange(size, 2 * rangeOfKeys);
+		int varietyOfKeys = (int) (size * ((double)percentageRangeKeys / 100));
+		fullMap = this.getNewMap(size, varietyOfKeys);
+
+		keys = keyGenerator.generateArrayInRange(size, varietyOfKeys);
+		newKeys = keyGenerator.generateArrayInRange(size, 2 * varietyOfKeys);
 		
 		values = valueGenerator.generateArray(size);
 
@@ -34,7 +35,7 @@ public abstract class AbstractHPPCMapTest<K, V> extends AbstractMapTest<K, V> {
 	@Override
 	@Benchmark
 	public void addAll() {
-		ObjectObjectHashMap<K, V> newMap = this.getNewMap(size, rangeOfKeys);
+		ObjectObjectHashMap<K, V> newMap = this.getNewMap(size, percentageRangeKeys);
 		for(int i = 0; i < size; i++) {
 			blackhole.consume(newMap.put(keys[i], values[i]));
 		}

@@ -7,7 +7,7 @@ import de.heidelberg.pvs.container_bench.random.RandomGenerator;
 import de.heidelberg.pvs.container_bench.random.StringRandomGenerator;
 import net.openhft.koloboke.collect.set.hash.HashObjSets;
 
-public class Koloboke_String_HashLongSet_Test extends AbstractJDKSetTest<String> {
+public class Koloboke_String_HashSet_Test extends AbstractJDKSetTest<String> {
 
 	@Override
 	protected Set<String> getNewSet(int size) {
