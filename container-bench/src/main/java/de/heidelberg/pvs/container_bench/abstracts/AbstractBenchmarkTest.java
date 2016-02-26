@@ -16,7 +16,7 @@ import org.openjdk.jmh.annotations.Timeout;
 import org.openjdk.jmh.annotations.Warmup;
 import org.openjdk.jmh.infra.Blackhole;
 
-@BenchmarkMode(Mode.All)
+@BenchmarkMode(Mode.AverageTime)
 @OutputTimeUnit(TimeUnit.NANOSECONDS)
 @Timeout(time = 5, timeUnit = TimeUnit.SECONDS)
 @Warmup(iterations = 7, time = 1, timeUnit = TimeUnit.SECONDS)
