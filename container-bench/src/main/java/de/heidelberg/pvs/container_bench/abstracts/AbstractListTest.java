@@ -95,12 +95,14 @@ public abstract class AbstractListTest<T> extends AbstractBenchmarkTest {
 	 * 
 	 * TODO
 	 */
-	abstract public void addAndRemoveElement();
+	abstract public void addElement();
 	
 	/**
 	 * TODO
 	 */
 	abstract public void getSize();
+	
+	abstract public void removeAndAddElement();
 	
 	
 

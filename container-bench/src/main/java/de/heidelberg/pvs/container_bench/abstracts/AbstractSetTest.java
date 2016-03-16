@@ -77,7 +77,7 @@ public abstract class AbstractSetTest<T> extends AbstractBenchmarkTest {
 	 * </code>
 	 * 
 	 */
-	abstract public void addAndRemoveElement();
+	abstract public void addElement();
 	
 	/**
 	 * Benchmark Copy

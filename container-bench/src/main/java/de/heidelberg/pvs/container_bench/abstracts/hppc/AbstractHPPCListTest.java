@@ -67,7 +67,7 @@ public abstract class AbstractHPPCListTest<T> extends AbstractListTest<T> {
 	
 	@Override
 	@Benchmark
-	public void addAndRemoveElement() {
+	public void addElement() {
 		Integer index = generator.generateIndex(size);
 		fullList.add(values[index]);
 		blackhole.consume(fullList.remove(size)); 
@@ -77,6 +77,14 @@ public abstract class AbstractHPPCListTest<T> extends AbstractListTest<T> {
 	@Benchmark
 	public void getSize() {
 		blackhole.consume(fullList.size());
+	}
+	
+	@Override
+	@Benchmark
+	public void removeAndAddElement() {
+		Integer index = generator.generateIndex(size);
+		blackhole.consume(fullList.removeFirst(values[index]));
+		fullList.add(values[index]); // void
 	}
 
 

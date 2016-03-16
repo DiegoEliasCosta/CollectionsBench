@@ -43,7 +43,7 @@ public abstract class AbstractJDKMapTest<K, V> extends AbstractMapTest<K, V> {
 	
 	@Override
 	@Benchmark
-	public void addAndRemoveElement() {
+	public void addElement() {
 		Integer index = this.keyGenerator.generateIndex(size);
 		blackhole.consume(this.fullMap.put(newKeys[index], values[index]));
 		blackhole.consume(this.fullMap.remove(newKeys[index]));

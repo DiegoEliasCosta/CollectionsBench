@@ -59,7 +59,7 @@ public abstract class AbstractJDKSetTest<T> extends AbstractSetTest<T> {
 	
 	@Override
 	@Benchmark
-	public void addAndRemoveElement() {
+	public void addElement() {
 		Integer index = this.generator.generateIndex(newValuesSize);
 		blackhole.consume(this.fullSet.add(newValues[index]));
 		blackhole.consume(this.fullSet.remove(newValues[index]));

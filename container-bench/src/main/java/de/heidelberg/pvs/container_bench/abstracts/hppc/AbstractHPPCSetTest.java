@@ -61,7 +61,7 @@ public abstract class AbstractHPPCSetTest<T> extends AbstractSetTest<T> {
 	}
 	
 	@Benchmark
-	public void addAndRemoveElement() {
+	public void addElement() {
 		Integer index = this.generator.generateIndex(newValuesSize);
 		blackhole.consume(this.fullSet.add(newValues[index]));
 		blackhole.consume(this.fullSet.remove(newValues[index]));
