@@ -3,7 +3,6 @@ package de.heidelberg.pvs.container_bench.hppc.sets;
 import com.carrotsearch.hppc.ObjectHashSet;
 
 import de.heidelberg.pvs.container_bench.abstracts.hppc.AbstractHPPCSetTest;
-import de.heidelberg.pvs.container_bench.random.IntegerRandomGenerator;
 import de.heidelberg.pvs.container_bench.random.RandomGenerator;
 import de.heidelberg.pvs.container_bench.random.StringRandomGenerator;
 

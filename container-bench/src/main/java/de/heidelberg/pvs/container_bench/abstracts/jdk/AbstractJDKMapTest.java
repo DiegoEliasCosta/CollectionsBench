@@ -78,6 +78,6 @@ public abstract class AbstractJDKMapTest<K, V> extends AbstractMapTest<K, V> {
 	public void getSize() {
 		blackhole.consume(fullMap.size());
 	}
-
+	
 	
 }

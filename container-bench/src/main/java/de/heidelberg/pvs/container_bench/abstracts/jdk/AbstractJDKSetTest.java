@@ -77,4 +77,12 @@ public abstract class AbstractJDKSetTest<T> extends AbstractSetTest<T> {
 	public void getSize() {
 		blackhole.consume(fullSet.size());
 	}
+	
+	@Override
+	@Benchmark
+	public void removeElement() {
+		Integer index = this.generator.generateIndex(size);
+		blackhole.consume(this.fullSet.remove(values[index]));
+		blackhole.consume(this.fullSet.add(values[index])); // Keeping the steady-state
+	}
 }

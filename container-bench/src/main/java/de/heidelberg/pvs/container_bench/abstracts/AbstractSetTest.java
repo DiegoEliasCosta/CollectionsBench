@@ -96,5 +96,7 @@ public abstract class AbstractSetTest<T> extends AbstractBenchmarkTest {
 	 * TODO
 	 */
 	abstract public void getSize();
+	
+	abstract public void removeElement();
 
 }
