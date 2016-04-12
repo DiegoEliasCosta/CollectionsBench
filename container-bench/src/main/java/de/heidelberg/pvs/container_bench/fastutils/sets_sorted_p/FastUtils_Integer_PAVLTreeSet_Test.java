@@ -7,7 +7,7 @@ import de.heidelberg.pvs.container_bench.random.IntegerRandomGenerator;
 import de.heidelberg.pvs.container_bench.random.RandomGenerator;
 import it.unimi.dsi.fastutil.ints.IntAVLTreeSet;
 
-public class FastUtils_Integer_PAVLTree_Test extends AbstractJDKSetTest<Integer> {
+public class FastUtils_Integer_PAVLTreeSet_Test extends AbstractJDKSetTest<Integer> {
 
 	@Override
 	protected Set<Integer> getNewSet(int size) {
