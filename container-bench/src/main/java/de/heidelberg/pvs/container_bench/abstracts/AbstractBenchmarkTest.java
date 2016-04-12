@@ -19,17 +19,17 @@ import org.openjdk.jmh.infra.Blackhole;
 @BenchmarkMode(Mode.AverageTime)
 @OutputTimeUnit(TimeUnit.NANOSECONDS)
 @Timeout(time = 5, timeUnit = TimeUnit.SECONDS)
-@Warmup(iterations = 7, time = 1, timeUnit = TimeUnit.SECONDS)
-@Measurement(iterations = 15, time = 1, timeUnit = TimeUnit.SECONDS)
+@Warmup(iterations = 10, time = 1, timeUnit = TimeUnit.SECONDS)
+@Measurement(iterations = 30, time = 1, timeUnit = TimeUnit.SECONDS)
 @Threads(1)
-@Fork(1)
+@Fork(2)
 @State(Scope.Benchmark)
 public abstract class AbstractBenchmarkTest {
 	
 	/**
 	 * From 10K - 100M
 	 */
-	@Param({ "1000", "10000", "100000", "1000000", "10000000" })
+	@Param({ "100", "1000", "10000", "100000", "1000000" })
 	public int size;
 
 	/**

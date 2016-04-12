@@ -1,4 +1,4 @@
-package de.heidelberg.pvs.container_bench.fastutils.maps;
+package de.heidelberg.pvs.container_bench.fastutils.maps_sorted_p;
 
 import java.util.Map;
 
@@ -6,13 +6,12 @@ import de.heidelberg.pvs.container_bench.abstracts.jdk.AbstractJDKMapTest;
 import de.heidelberg.pvs.container_bench.random.IntegerRandomGenerator;
 import de.heidelberg.pvs.container_bench.random.RandomGenerator;
 import it.unimi.dsi.fastutil.ints.Int2IntAVLTreeMap;
-import it.unimi.dsi.fastutil.objects.Object2ObjectArrayMap;
 
-public class FastUtils_StringInteger_TreeMap_Test extends AbstractJDKMapTest<Integer , Integer>{
+public class FastUtils_IntegerInteger_PTreeMap_Test extends AbstractJDKMapTest<Integer , Integer>{
 
 	@Override
 	protected Map<Integer, Integer> getNewMap(int size, int range) {
-		return new Object2ObjectArrayMap<>();
+		return new Int2IntAVLTreeMap();
 	}
 
 	@Override
