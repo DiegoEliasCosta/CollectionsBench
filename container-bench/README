@@ -21,5 +21,9 @@ Libraries Implemented
  -- Koloboke
  -- Trove
  
+How to run the complete benchmark
+	java -jar Benchmarks.jar 
+
+ 
 
 * - http://openjdk.java.net/projects/code-tools/jmh/
