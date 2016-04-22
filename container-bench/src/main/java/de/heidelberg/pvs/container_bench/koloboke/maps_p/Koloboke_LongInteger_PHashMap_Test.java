@@ -9,7 +9,7 @@ import de.heidelberg.pvs.container_bench.random.RandomGenerator;
 import net.openhft.koloboke.collect.map.hash.HashLongIntMaps;
 import net.openhft.koloboke.collect.map.hash.HashObjObjMaps;
 
-public class Koloboke_LongInteger_HashMap_Test extends AbstractJDKMapTest<Long, Integer> {
+public class Koloboke_LongInteger_PHashMap_Test extends AbstractJDKMapTest<Long, Integer> {
 
 	@Override
 	protected Map<Long, Integer> getNewMap(int size, int range) {
