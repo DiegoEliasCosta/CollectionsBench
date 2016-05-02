@@ -3,9 +3,6 @@ package de.heidelberg.pvs.container_bench.fastutils.maps;
 import java.util.Map;
 
 import de.heidelberg.pvs.container_bench.abstracts.jdk.AbstractJDKMapTest;
-import de.heidelberg.pvs.container_bench.random.IntegerRandomGenerator;
-import de.heidelberg.pvs.container_bench.random.LongRandomGenerator;
-import de.heidelberg.pvs.container_bench.random.RandomGenerator;
 import it.unimi.dsi.fastutil.objects.Object2ObjectOpenHashMap;
 
 public class FastUtils_LongInteger_OpenHashMap_Test extends AbstractJDKMapTest<Long, Integer> {
@@ -18,16 +15,6 @@ public class FastUtils_LongInteger_OpenHashMap_Test extends AbstractJDKMapTest<L
 	@Override
 	protected Map<Long, Integer> copyMap(Map<Long, Integer> fullMap2) {
 		return new Object2ObjectOpenHashMap<>(fullMap2);
-	}
-
-	@Override
-	protected RandomGenerator<Long> instantiateRandomKeyGenerator() {
-		return new LongRandomGenerator();
-	}
-
-	@Override
-	protected RandomGenerator<Integer> instantiateRandomValueGenerator() {
-		return new IntegerRandomGenerator();
 	}
 
 }

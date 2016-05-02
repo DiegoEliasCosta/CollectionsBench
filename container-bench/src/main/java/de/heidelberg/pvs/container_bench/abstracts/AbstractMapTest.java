@@ -2,6 +2,9 @@ package de.heidelberg.pvs.container_bench.abstracts;
 
 import org.openjdk.jmh.annotations.Param;
 
+import com.google.common.reflect.TypeToken;
+
+import de.heidelberg.pvs.container_bench.random.RandomFactory;
 import de.heidelberg.pvs.container_bench.random.RandomGenerator;
 
 public abstract class AbstractMapTest<K, V> extends AbstractBenchmarkTest {
@@ -10,10 +13,7 @@ public abstract class AbstractMapTest<K, V> extends AbstractBenchmarkTest {
 	public int percentageRangeKeys;
 
 	protected RandomGenerator<K> keyGenerator = this.instantiateRandomKeyGenerator();
-	protected abstract RandomGenerator<K> instantiateRandomKeyGenerator();
-	
 	protected RandomGenerator<V> valueGenerator = this.instantiateRandomValueGenerator();
-	protected abstract RandomGenerator<V> instantiateRandomValueGenerator();
 
 	/**
 	 * Implementation of our Randomness 
@@ -23,6 +23,18 @@ public abstract class AbstractMapTest<K, V> extends AbstractBenchmarkTest {
 		keyGenerator.setSeed(seed);	
 		valueGenerator.setSeed(seed);
 		this.testSetup();
+	}
+	
+	@SuppressWarnings({ "serial", "unchecked" })
+	private RandomGenerator<V> instantiateRandomValueGenerator() {
+		TypeToken<V> type = new TypeToken<V>(getClass()) {};
+		return (RandomGenerator<V>) RandomFactory.buildRandomGenerator(type);
+	}
+
+	@SuppressWarnings({ "serial", "unchecked" })
+	private RandomGenerator<K> instantiateRandomKeyGenerator() {
+		TypeToken<K> type = new TypeToken<K>(getClass()) {};
+		return (RandomGenerator<K>) RandomFactory.buildRandomGenerator(type);
 	}
 
 	/**
@@ -94,6 +106,10 @@ public abstract class AbstractMapTest<K, V> extends AbstractBenchmarkTest {
 	 * TODO
 	 */
 	abstract public void getSize();
+	
+	abstract public void removeElement();
+	
+	abstract public void getAll();
 	
 
 }

@@ -5,9 +5,6 @@ import java.util.Map;
 import com.gs.collections.impl.map.sorted.mutable.TreeSortedMap;
 
 import de.heidelberg.pvs.container_bench.abstracts.jdk.AbstractJDKMapTest;
-import de.heidelberg.pvs.container_bench.random.IntegerRandomGenerator;
-import de.heidelberg.pvs.container_bench.random.RandomGenerator;
-import de.heidelberg.pvs.container_bench.random.StringRandomGenerator;
 
 public class GSCollections_StringInteger_TreeSortedMaps_Test extends AbstractJDKMapTest<String, Integer>{
 
@@ -21,14 +18,5 @@ public class GSCollections_StringInteger_TreeSortedMaps_Test extends AbstractJDK
 		return new TreeSortedMap<String, Integer>(fullMap2);
 	}
 
-	@Override
-	protected RandomGenerator<String> instantiateRandomKeyGenerator() {
-		return new StringRandomGenerator();
-	}
-
-	@Override
-	protected RandomGenerator<Integer> instantiateRandomValueGenerator() {
-		return new IntegerRandomGenerator();
-	}
 
 }

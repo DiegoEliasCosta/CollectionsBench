@@ -1,5 +1,8 @@
 package de.heidelberg.pvs.container_bench.abstracts;
 
+import com.google.common.reflect.TypeToken;
+
+import de.heidelberg.pvs.container_bench.random.RandomFactory;
 import de.heidelberg.pvs.container_bench.random.RandomGenerator;
 
 public abstract class AbstractSetTest<T> extends AbstractBenchmarkTest { 
@@ -11,11 +14,17 @@ public abstract class AbstractSetTest<T> extends AbstractBenchmarkTest {
 	protected RandomGenerator<T> generator = this.instantiateRandomGenerator();
 	
 	/**
-	 * Abstract method that returns {@link RandomGenerator}
+	 * Builds and returns the correct generator {@link RandomGenerator}.
+	 * In order to find the generator type we use TypeToken from Guava,
+	 * which uses reflection to infer the subclass type.
 	 * @return
 	 */
-	protected abstract RandomGenerator<T> instantiateRandomGenerator();
-
+	@SuppressWarnings({ "serial", "unchecked" })
+	private RandomGenerator<T> instantiateRandomGenerator() {
+		TypeToken<T> type = new TypeToken<T>(getClass()) {};
+		return (RandomGenerator<T>) RandomFactory.buildRandomGenerator(type);
+	}
+	
 	@Override
 	public void randomnessSetup() {
 		generator.setSeed(seed);	

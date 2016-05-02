@@ -4,9 +4,6 @@ import java.util.LinkedHashMap;
 import java.util.Map;
 
 import de.heidelberg.pvs.container_bench.abstracts.jdk.AbstractJDKMapTest;
-import de.heidelberg.pvs.container_bench.random.IntegerRandomGenerator;
-import de.heidelberg.pvs.container_bench.random.RandomGenerator;
-import de.heidelberg.pvs.container_bench.random.StringRandomGenerator;
 
 public class JDK_StringInteger_LinkedHashMap_Test extends AbstractJDKMapTest<String, Integer>{
 
@@ -21,16 +18,5 @@ public class JDK_StringInteger_LinkedHashMap_Test extends AbstractJDKMapTest<Str
 		return new LinkedHashMap<>();
 	}
 
-
-	@Override
-	protected RandomGenerator<String> instantiateRandomKeyGenerator() {
-		return new StringRandomGenerator();
-	}
-
-
-	@Override
-	protected RandomGenerator<Integer> instantiateRandomValueGenerator() {
-		return new IntegerRandomGenerator();
-	}
 
 }

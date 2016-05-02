@@ -3,8 +3,6 @@ package de.heidelberg.pvs.container_bench.fastutils.lists_p;
 import java.util.List;
 
 import de.heidelberg.pvs.container_bench.abstracts.jdk.AbstractJDKListTest;
-import de.heidelberg.pvs.container_bench.random.IntegerRandomGenerator;
-import de.heidelberg.pvs.container_bench.random.RandomGenerator;
 import it.unimi.dsi.fastutil.ints.IntArrayList;
 
 public class FastUtils_Integer_PArrayList_Test extends AbstractJDKListTest<Integer> {
@@ -17,11 +15,6 @@ public class FastUtils_Integer_PArrayList_Test extends AbstractJDKListTest<Integ
 	@Override
 	protected List<Integer> copyList(List<Integer> fullList2) {
 		return new IntArrayList(fullList2);
-	}
-
-	@Override
-	protected RandomGenerator<Integer> instantiateRandomGenerator() {
-		return new IntegerRandomGenerator();
 	}
 
 }

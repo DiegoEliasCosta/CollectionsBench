@@ -3,8 +3,6 @@ package de.heidelberg.pvs.container_bench.koloboke.sets;
 import java.util.Set;
 
 import de.heidelberg.pvs.container_bench.abstracts.jdk.AbstractJDKSetTest;
-import de.heidelberg.pvs.container_bench.random.IntegerRandomGenerator;
-import de.heidelberg.pvs.container_bench.random.RandomGenerator;
 import net.openhft.koloboke.collect.set.hash.HashObjSets;
 
 public class Koloboke_Integer_HashSet_Test extends AbstractJDKSetTest<Integer> {
@@ -19,10 +17,5 @@ public class Koloboke_Integer_HashSet_Test extends AbstractJDKSetTest<Integer> {
 		return HashObjSets.newMutableSet(fullSet2);
 	}
 
-	@Override
-	protected RandomGenerator<Integer> instantiateRandomGenerator() {
-		return new IntegerRandomGenerator();
-	}
-	
 
 }

@@ -3,8 +3,6 @@ package de.heidelberg.pvs.container_bench.hppc.sets;
 import com.carrotsearch.hppc.ObjectHashSet;
 
 import de.heidelberg.pvs.container_bench.abstracts.hppc.AbstractHPPCSetTest;
-import de.heidelberg.pvs.container_bench.random.IntegerRandomGenerator;
-import de.heidelberg.pvs.container_bench.random.RandomGenerator;
 
 public class HPPC_Integer_HashSet_Test extends AbstractHPPCSetTest<Integer> {
 
@@ -17,13 +15,5 @@ public class HPPC_Integer_HashSet_Test extends AbstractHPPCSetTest<Integer> {
 	protected ObjectHashSet<Integer> copySet(ObjectHashSet<Integer> original) {
 		return new ObjectHashSet<>(original);
 	}
-
-	@Override
-	protected RandomGenerator<Integer> instantiateRandomGenerator() {
-		return new IntegerRandomGenerator();
-	}
-
-
-	
 
 }

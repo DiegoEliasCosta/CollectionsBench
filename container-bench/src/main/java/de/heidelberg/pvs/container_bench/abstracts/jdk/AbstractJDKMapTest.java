@@ -1,6 +1,7 @@
 package de.heidelberg.pvs.container_bench.abstracts.jdk;
 
 import java.util.Map;
+import java.util.Map.Entry;
 
 import org.openjdk.jmh.annotations.Benchmark;
 
@@ -79,5 +80,20 @@ public abstract class AbstractJDKMapTest<K, V> extends AbstractMapTest<K, V> {
 		blackhole.consume(fullMap.size());
 	}
 	
+	@Override
+	@Benchmark
+	public void removeElement() {
+		Integer index = this.keyGenerator.generateIndex(size);
+		blackhole.consume(this.fullMap.remove(keys[index]));
+		blackhole.consume(this.fullMap.put(keys[index], values[index])); // Keeping the steady-state
+	}
+	
+	@Override
+	@Benchmark
+	public void getAll() {
+		for(Entry<K, V> entry : this.fullMap.entrySet()) {
+			blackhole.consume(entry);
+		}
+	}
 	
 }

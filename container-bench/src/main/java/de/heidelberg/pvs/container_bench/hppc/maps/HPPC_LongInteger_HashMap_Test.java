@@ -3,9 +3,6 @@ package de.heidelberg.pvs.container_bench.hppc.maps;
 import com.carrotsearch.hppc.ObjectObjectHashMap;
 
 import de.heidelberg.pvs.container_bench.abstracts.hppc.AbstractHPPCMapTest;
-import de.heidelberg.pvs.container_bench.random.IntegerRandomGenerator;
-import de.heidelberg.pvs.container_bench.random.LongRandomGenerator;
-import de.heidelberg.pvs.container_bench.random.RandomGenerator;
 
 public class HPPC_LongInteger_HashMap_Test extends AbstractHPPCMapTest<Long, Integer>{
 
@@ -18,18 +15,5 @@ public class HPPC_LongInteger_HashMap_Test extends AbstractHPPCMapTest<Long, Int
 	protected ObjectObjectHashMap<Long, Integer> copyMap(ObjectObjectHashMap<Long, Integer> fullMap2) {
 		return new ObjectObjectHashMap<>(fullMap2);
 	}
-
-	@Override
-	protected RandomGenerator<Long> instantiateRandomKeyGenerator() {
-		return new LongRandomGenerator();
-	}
-
-	@Override
-	protected RandomGenerator<Integer> instantiateRandomValueGenerator() {
-		return new IntegerRandomGenerator();
-	}
-
-	
-
 
 }

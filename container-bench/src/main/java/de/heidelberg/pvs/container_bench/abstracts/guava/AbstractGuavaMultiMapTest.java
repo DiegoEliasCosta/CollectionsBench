@@ -1,5 +1,7 @@
 package de.heidelberg.pvs.container_bench.abstracts.guava;
 
+import java.util.Map.Entry;
+
 import org.openjdk.jmh.annotations.Benchmark;
 
 import com.google.common.collect.Multimap;
@@ -76,6 +78,22 @@ public abstract class AbstractGuavaMultiMapTest<K, V> extends AbstractMapTest<K,
 	@Benchmark
 	public void getSize() {
 		blackhole.consume(fullMap.size());
+	}
+	
+	@Override
+	@Benchmark
+	public void removeElement() {
+		Integer index = this.keyGenerator.generateIndex(size);
+		blackhole.consume(this.fullMap.remove(keys[index], values[index]));
+		blackhole.consume(this.fullMap.put(keys[index], values[index])); // Keeping the steady-state
+	}
+	
+	@Override
+	@Benchmark
+	public void getAll() {
+		for(Entry<K, V> entry : this.fullMap.entries()) {
+			blackhole.consume(entry);
+		}
 	}
 
 }
