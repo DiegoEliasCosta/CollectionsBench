@@ -99,7 +99,7 @@ public abstract class AbstractSetTest<T> extends AbstractBenchmarkTest {
 	 * </code>
 	 * 
 	 */
-	abstract public void copySet();
+	abstract public void copy();
 	
 	/**
 	 * TODO

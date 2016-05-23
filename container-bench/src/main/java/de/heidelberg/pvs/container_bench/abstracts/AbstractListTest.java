@@ -97,7 +97,7 @@ public abstract class AbstractListTest<T> extends AbstractBenchmarkTest {
 	 * </code>
 	 * 
 	 */
-	abstract public void copyList();
+	abstract public void copy();
 	
 	/**
 	 * Steady-State performance solution for testing addElement
@@ -106,12 +106,7 @@ public abstract class AbstractListTest<T> extends AbstractBenchmarkTest {
 	 */
 	abstract public void addElement();
 	
-	/**
-	 * TODO
-	 */
-	abstract public void getSize();
-	
-	abstract public void removeAndAddElement();
+	abstract public void removeElement();
 	
 	
 

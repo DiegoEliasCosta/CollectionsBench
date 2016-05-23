@@ -69,7 +69,7 @@ public abstract class AbstractJDKMapTest<K, V> extends AbstractMapTest<K, V> {
 
 	@Override
 	@Benchmark
-	public void copyMap() {
+	public void copy() {
 		Map<K, V> newMap = this.copyMap(fullMap); 
 		blackhole.consume(newMap);
 	}

@@ -60,7 +60,7 @@ public abstract class AbstractHPPCListTest<T> extends AbstractListTest<T> {
 
 	@Override
 	@Benchmark
-	public void copyList() {
+	public void copy() {
 		ObjectArrayList<T> newList = new ObjectArrayList<>(fullList);
 		blackhole.consume(newList);
 	}
@@ -75,13 +75,7 @@ public abstract class AbstractHPPCListTest<T> extends AbstractListTest<T> {
 	
 	@Override
 	@Benchmark
-	public void getSize() {
-		blackhole.consume(fullList.size());
-	}
-	
-	@Override
-	@Benchmark
-	public void removeAndAddElement() {
+	public void removeElement() {
 		Integer index = generator.generateIndex(size);
 		blackhole.consume(fullList.removeFirst(values[index]));
 		fullList.add(values[index]); // void

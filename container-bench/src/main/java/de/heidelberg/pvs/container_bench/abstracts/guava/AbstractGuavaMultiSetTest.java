@@ -61,7 +61,7 @@ public abstract class AbstractGuavaMultiSetTest<T> extends AbstractSetTest<T> {
 
 	@Override
 	@Benchmark
-	public void copySet() {
+	public void copy() {
 		Multiset<T> copiedSet = this.copyMultiSet(fullSet);
 		blackhole.consume(copiedSet);
 	}

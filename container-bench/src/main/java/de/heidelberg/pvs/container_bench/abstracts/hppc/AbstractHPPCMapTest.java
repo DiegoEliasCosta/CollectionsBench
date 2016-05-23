@@ -68,7 +68,7 @@ public abstract class AbstractHPPCMapTest<K, V> extends AbstractMapTest<K, V> {
 
 	@Override
 	@Benchmark
-	public void copyMap() {
+	public void copy() {
 		ObjectObjectHashMap<K, V> newMap = this.copyMap(fullMap);
 		blackhole.consume(newMap);
 	}

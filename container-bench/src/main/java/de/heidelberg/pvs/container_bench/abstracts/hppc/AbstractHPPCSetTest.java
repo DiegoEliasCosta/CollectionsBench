@@ -68,7 +68,7 @@ public abstract class AbstractHPPCSetTest<T> extends AbstractSetTest<T> {
 	}
 
 	@Benchmark
-	public void copySet() {
+	public void copy() {
 		ObjectHashSet<T> newSet = this.copySet(fullSet);
 		blackhole.consume(newSet);
 	}
