@@ -76,12 +76,6 @@ public abstract class AbstractGuavaMultiMapTest<K, V> extends AbstractMapTest<K,
 	
 	@Override
 	@Benchmark
-	public void getSize() {
-		blackhole.consume(fullMap.size());
-	}
-	
-	@Override
-	@Benchmark
 	public void removeElement() {
 		Integer index = this.keyGenerator.generateIndex(size);
 		blackhole.consume(this.fullMap.remove(keys[index], values[index]));

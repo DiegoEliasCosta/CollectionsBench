@@ -102,11 +102,6 @@ public abstract class AbstractMapTest<K, V> extends AbstractBenchmarkTest {
 	 */
 	abstract public void copy();
 	
-	/**
-	 * TODO
-	 */
-	abstract public void getSize();
-	
 	abstract public void removeElement();
 	
 	abstract public void getAll();
