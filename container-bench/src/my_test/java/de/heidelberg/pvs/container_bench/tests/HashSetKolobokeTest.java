@@ -29,6 +29,16 @@ public class HashSetKolobokeTest {
 		
 		Assert.assertTrue(copiedSet.containsAll(hashSet));
 		
+		int remove = initialSize / 100;
+		for(int i = 0; i < initialSize; i++) {
+			hashSet.remove(i);
+		}
+		
+		for(int i = 0; i < remove; i++) {
+			Assert.assertTrue(copiedSet.contains(i));
+		}
+		
+		
 	}
 	
 	@Test

@@ -15,7 +15,7 @@ public class JDK_StringInteger_LinkedHashMap_Test extends AbstractJDKMapTest<Str
 
 	@Override
 	protected Map<String, Integer> copyMap(Map<String, Integer> fullMap2) {
-		return new LinkedHashMap<>();
+		return new LinkedHashMap<>(fullMap2);
 	}
 
 

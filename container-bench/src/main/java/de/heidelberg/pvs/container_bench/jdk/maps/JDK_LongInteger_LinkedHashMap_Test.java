@@ -15,7 +15,7 @@ public class JDK_LongInteger_LinkedHashMap_Test extends AbstractJDKMapTest<Long,
 
 	@Override
 	protected Map<Long, Integer> copyMap(Map<Long, Integer> fullMap2) {
-		return new LinkedHashMap<>();
+		return new LinkedHashMap<>(fullMap2);
 	}
 
 }
