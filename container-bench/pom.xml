@@ -127,6 +127,14 @@
 		</dependency>
 
 
+		<!-- JLIBS -->
+		<!-- http://mvnrepository.com/artifact/in.jlibs/jlibs-core -->
+		<dependency>
+			<groupId>in.jlibs</groupId>
+			<artifactId>jlibs-core</artifactId>
+			<version>2.1</version>
+		</dependency>
+
 	</dependencies>
 
 	<properties>

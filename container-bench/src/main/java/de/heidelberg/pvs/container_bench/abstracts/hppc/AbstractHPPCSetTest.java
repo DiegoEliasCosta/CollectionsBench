@@ -38,7 +38,7 @@ public abstract class AbstractHPPCSetTest<T> extends AbstractSetTest<T> {
 	}
 	
 	@Benchmark
-	public void getAll() { 
+	public void iterate() { 
 		for(ObjectCursor<T> element : fullSet) {
 			blackhole.consume(element);
 		}
@@ -53,11 +53,12 @@ public abstract class AbstractHPPCSetTest<T> extends AbstractSetTest<T> {
 
 
 	@Benchmark
-	public void addAll() {
+	public void populate() {
 		ObjectHashSet<T> newSet = this.getNewSet(size);
 		for(int i = 0; i < size; i++) {
-			blackhole.consume(newSet.add(values[i]));
+			newSet.add(values[i]);
 		}
+		blackhole.consume(newSet);
 	}
 	
 	@Benchmark
@@ -71,12 +72,6 @@ public abstract class AbstractHPPCSetTest<T> extends AbstractSetTest<T> {
 	public void copy() {
 		ObjectHashSet<T> newSet = this.copySet(fullSet);
 		blackhole.consume(newSet);
-	}
-	
-	@Override
-	@Benchmark
-	public void getSize() {
-		blackhole.consume(fullSet.size());
 	}
 	
 	@Override

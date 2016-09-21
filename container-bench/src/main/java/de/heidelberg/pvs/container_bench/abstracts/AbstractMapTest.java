@@ -9,7 +9,7 @@ import de.heidelberg.pvs.container_bench.random.RandomGenerator;
 
 public abstract class AbstractMapTest<K, V> extends AbstractBenchmarkTest {
 
-	@Param({ "50" })
+	@Param({ "100" })
 	public int percentageRangeKeys;
 
 	protected RandomGenerator<K> keyGenerator = this.instantiateRandomKeyGenerator();
@@ -50,7 +50,7 @@ public abstract class AbstractMapTest<K, V> extends AbstractBenchmarkTest {
 	 * </code>
 	 * 
 	 */
-	abstract public void addAll();
+	abstract public void populate();
 	
 	/**
 	 * Benchmark PutElement
@@ -104,7 +104,7 @@ public abstract class AbstractMapTest<K, V> extends AbstractBenchmarkTest {
 	
 	abstract public void removeElement();
 	
-	abstract public void getAll();
+	abstract public void iterate();
 	
 
 }

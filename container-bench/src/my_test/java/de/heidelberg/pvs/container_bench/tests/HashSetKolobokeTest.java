@@ -2,6 +2,7 @@ package de.heidelberg.pvs.container_bench.tests;
 
 import static org.junit.Assert.*;
 
+import java.util.HashSet;
 import java.util.Set;
 
 import org.junit.Test;
@@ -13,7 +14,7 @@ import net.openhft.koloboke.collect.set.hash.HashObjSets;
 public class HashSetKolobokeTest {
 	
 	@Test
-	public void testCopyHashSet() throws Exception {
+	public void testCopyKoloboke() throws Exception {
 		
 		Set<Integer> hashSet = HashObjSets.newMutableSet();
 	
@@ -30,19 +31,40 @@ public class HashSetKolobokeTest {
 		Assert.assertTrue(copiedSet.containsAll(hashSet));
 		
 		int remove = initialSize / 100;
-		for(int i = 0; i < initialSize; i++) {
+		for(int i = 0; i < remove; i++) {
 			hashSet.remove(i);
 		}
 		
 		for(int i = 0; i < remove; i++) {
 			Assert.assertTrue(copiedSet.contains(i));
 		}
-		
-		
 	}
 	
 	@Test
-	public void testName() throws Exception {
+	public void testCopyJDK() throws Exception {
+		
+		Set<Integer> hashSet = new HashSet<>();
+		
+		int initialSize = 10000000;
+		for(int i = 0; i < initialSize; i++) {
+			hashSet.add(i);
+		}
+		
+		Set<Integer> copiedSet = new HashSet<>(hashSet);
+		
+		int size = copiedSet.size();
+		Assert.assertEquals(initialSize, size);
+		
+		Assert.assertTrue(copiedSet.containsAll(hashSet));
+		
+		int remove = initialSize / 100;
+		for(int i = 0; i < remove; i++) {
+			hashSet.remove(i);
+		}
+		
+		for(int i = 0; i < remove; i++) {
+			Assert.assertTrue(copiedSet.contains(i));
+		}
 		
 	}
 

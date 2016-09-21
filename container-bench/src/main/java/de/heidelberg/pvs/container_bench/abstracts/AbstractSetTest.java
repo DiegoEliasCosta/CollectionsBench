@@ -42,7 +42,7 @@ public abstract class AbstractSetTest<T> extends AbstractBenchmarkTest {
 	 * </pre> 
 	 * </code> 
 	 */
-	abstract public void getAll();
+	abstract public void iterate();
 
 
 	/**
@@ -72,7 +72,7 @@ public abstract class AbstractSetTest<T> extends AbstractBenchmarkTest {
 	 * </code>
 	 * 
 	 */
-	abstract public void addAll();
+	abstract public void populate();
 	
 	/**
 	 * Benchmark AddElement
@@ -101,10 +101,6 @@ public abstract class AbstractSetTest<T> extends AbstractBenchmarkTest {
 	 */
 	abstract public void copy();
 	
-	/**
-	 * TODO
-	 */
-	abstract public void getSize();
 	
 	abstract public void removeElement();
 

@@ -27,7 +27,7 @@ public abstract class AbstractHPPCListTest<T> extends AbstractListTest<T> {
 
 	@Override
 	@Benchmark
-	public void getAll() {
+	public void iterate() {
 		for (ObjectCursor<T> element : fullList) {
 			blackhole.consume(element);
 		}
@@ -50,7 +50,7 @@ public abstract class AbstractHPPCListTest<T> extends AbstractListTest<T> {
 
 	@Override
 	@Benchmark
-	public void addAll() {
+	public void populate() {
 		ObjectArrayList<T> newList = new ObjectArrayList<>();
 		for (int i = 0; i < size; i++) {
 			newList.add(values[i]); // void

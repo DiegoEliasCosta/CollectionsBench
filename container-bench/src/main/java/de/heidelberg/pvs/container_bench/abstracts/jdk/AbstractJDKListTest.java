@@ -33,7 +33,7 @@ public abstract class AbstractJDKListTest<T> extends AbstractListTest<T> {
 
 	@Override
 	@Benchmark
-	public void getAll() {
+	public void iterate() {
 		for (T element : fullList) {
 			blackhole.consume(element);
 		}
@@ -55,10 +55,10 @@ public abstract class AbstractJDKListTest<T> extends AbstractListTest<T> {
 
 	@Override
 	@Benchmark
-	public void addAll() {
+	public void populate() {
 		List<T> newList = this.getNewList(size);
 		for (int i = 0; i < size; i++) {
-			blackhole.consume(newList.add(values[i]));
+			newList.add(values[i]);
 		}
 		blackhole.consume(newList);
 	}

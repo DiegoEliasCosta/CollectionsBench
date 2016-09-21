@@ -41,7 +41,7 @@ public abstract class AbstractListTest<T> extends AbstractBenchmarkTest {
 	 * </pre> 
 	 * </code> 
 	 */
-	abstract public void getAll();
+	abstract public void iterate();
 
 	/**
 	 * Benchmark GetAt
@@ -83,7 +83,7 @@ public abstract class AbstractListTest<T> extends AbstractBenchmarkTest {
 	 * </code>
 	 * 
 	 */
-	abstract public void addAll();
+	abstract public void populate();
 	
 
 	/**

@@ -28,7 +28,7 @@ public abstract class AbstractGuavaMultiSetTest<T> extends AbstractSetTest<T> {
 
 	@Override
 	@Benchmark
-	public void getAll() {
+	public void iterate() {
 		for(T element : fullSet) {
 			blackhole.consume(element);
 		}
@@ -44,11 +44,12 @@ public abstract class AbstractGuavaMultiSetTest<T> extends AbstractSetTest<T> {
 
 	@Override
 	@Benchmark
-	public void addAll() {
+	public void populate() {
 		Multiset<T> newSet = this.getNewMultiSet();
 		for(int i = 0; i < values.length; i++) {
-			blackhole.consume(newSet.add(values[i]));
+			newSet.add(values[i]);
 		}
+		blackhole.consume(newSet);
 	}
 	
 	@Override
@@ -64,12 +65,6 @@ public abstract class AbstractGuavaMultiSetTest<T> extends AbstractSetTest<T> {
 	public void copy() {
 		Multiset<T> copiedSet = this.copyMultiSet(fullSet);
 		blackhole.consume(copiedSet);
-	}
-	
-	@Override
-	@Benchmark
-	public void getSize() {
-		blackhole.consume(fullSet.size());
 	}
 	
 	@Override
