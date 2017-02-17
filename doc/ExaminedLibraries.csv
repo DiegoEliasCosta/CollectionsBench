@@ -1,0 +1,8 @@
+Library,Version,Homepage URL
+JDK,8.0_65,https://www.oracle.com/java/index.html
+Guava (Gu),18,https://github.com/google/guava
+fastutil(fu),7.0.10,http://fastutil.di.unimi.it/
+Koloboke (Ko),0.6.8,http://chronicle.software/products/koloboke-collections/
+HPPC (HP),0.7.1,http://labs.carrotsearch.com/hppc.html
+GSCollections (GS) (now Eclipse Collections) ,6.2.0,https://github.com/goldmansachs/gs-collections
+Trove (Tr),3.0.3,http://trove.starlight-systems.com/

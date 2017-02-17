@@ -1,0 +1,80 @@
+This table lists all the benchmarks we looked at in order to make an informed decision as to which libraries to study further.
+	• Benchmark Title is always a clickable link, leading to the source of the benchmark.
+	• # of APIs Tested shows how many different libraries a give benchmark looked at.
+	• # of Scenarios Tested is a number showing in how many different usage scenarios those libraries were tested.
+	• Goal shows whether the benchmark was meant to trace differences in memory usage or in execution time - or in some cases, both.
+	• Best API shows the overall best library according to a given benchmark.
+	• Tools explains which tool was used to come up with the data, where applicable.
+	• Containers Tested shows which particular collection data types the benchmark looked at.
+	• Workload shows which different runs a given benchmark used to see whether the number of operations or the element size of a container changed the results.
+		- Workload is given as Op, which is the operation performed, and a tuple of numbers, Min, Max and Step, which gives the actual numbers for these workloads.
+
+Note: workloads start at Min and then are tested again for each Step sized increment until Max is reached.
+
+ID	Benchmark Title (year)	# of APIs Tested	# of Scenarios Tested	Goal	Best API	Tools	Containers Tested	Workload
+								"Op [Min, Max, Step]"
+[1]	GSC Memory Tests	4	13	Memory	GS-collections	MemoryTestBench	List	"ADD [25k, 1M, 25K]"
+						External Memory benchmark	Map	"SIZE [0, 500, 50]"
+						Source-code available	Set	
+							Mutable bag	
+								
+[2]	Trove Memory Consumption Tests (2012)	2	3	Memory	Trove			
+[3]	Large Hash Map Overview (2015)	6	15	Time	FastUtil	JMH	Map	"GET [10k, 100M, *10]"
+						Source-code available	int-int	"PUT [10, 100M, *10]"
+							int-Integer	"REMOVE [10, 100M, *10]"
+							Integer-Integer	
+							Integer (identity-map) Integer	
+[4]	Koloboke Map vs.custom HashMap (2015)	1	3		custom	Source-code available	Map	"GET [10K, 100M, *10]"
+							int-int	"PUT [10K, 100M, *10]"
+								"REMOVE [10K, 100M, *10]"
+[5]	Java Collection Performance (2011) DZONE	3	20 (List)	Time	Javolution	Source-code available	List	PUT [100K]
+				Memory			Set	GET [100K]
+								"CONTAINS [5K, 10K]"
+								… (a lot of different operations)
+[6]	Hash Map Comparison (2012)	5	1	Time	Koloboke	Source-code available	Map (really specifics implementations)	
+[7]	BigList (2004) DZONE	4	9	Memory	BrowniesCollection		List	HOLD [1M]
+				Time (per operation)				GET [1M]
+								ADD [1M]
+								REMOVE [1M]
+[8]	Javolution Collections (2005)	2	8	Memory	Javolution		List	"ADD [10, 10K, *10]"
+				Time			Map	"SEARCH [10, 10K, *10]"
+							Set	"GET [10, 10K, *10]"
+								"CONTAINS [10, 10K, *10]"
+[9]	HashSet Comparison (2014)	4	1	Time	Koloboke	Source-code available	Set	ADD [1M]
+						JMH		CONTAINS [1M]
+								GET [1M]
+								REMOVE [1M]
+[10]	Time vs. Memory tradeoff (2014) DZONE	7	5	Memory x Time tradeoff	Koloboke		Map	"GET [?],"
+								"UPDATE [?],"
+								"PUT [?],"
+								FOR_EACH [?]
+[11]	Int Int Hash Map Comparison (2011)	5	2	Time	HPPC(put) FastUtil(get)	Google Caliper	Map	PUT [1M]
+								GET-WITH-REMOVED [1M]
+								(three distributions)
+[12]	Performance of PrimitiveCollections (2013)	4	3		HPPC			
+[13]	Trove vs JDK (at least 2012)	2	9	Memory	Trove		List	SEARCH [10k]
+				Time			Map	PUT [10K]
+							Set	CONTAINS [10K]
+[14]	Colt vs JDK vs Trove Hashmap (2009)	3	6	Memory	Colt (last update: 2004)	Source-code available	Map	PUT [10M]
+				Time				GET [10M]
+								CONTAINS [10M]
+[15]	Java Collections Benchmarks	4	4		Guava	10 Replications	List	"ADD [10K, 110K, 1,1M]"
+								"REMOVE [10K, 110K, 1,1M]"
+								"SEARCH [10K, 110K, 1,1M]"
+
+Results:
+
+Library	Type	Tested in	Best in	# of Appearances	# of Bests
+Java Collections (JDK)	Object	"[1], [2], [3], [5], [6], [7], [8], [9], [10], [11], [13], [14], [15]"		13	0
+Trove	Primitive	"[1], [2], [3], [6], [10], [11], [12], [13], [14], [15]"	[2] [13]	10	2
+HPPC	Primitive	"[3], [6], [9], [10], [11], [12]"	[11] [12]	6	2
+Koloboke	Object	"[3], [4], [6], [9], [10]"	[6] [9] [10]	5	3
+FastUtil	Primitive	"[3], [10], [11], [12]"	[3] [11]	4	2
+gs-collections	Object	"[1], [3], [6], [10]"	[1]	4	1
+Javolution	Object	"[5], [7], [8], [15]"	[5]	4	1
+Guava	Object	"[1], [9], [15]"	[15]	3	1
+Mahout	Primitive	"[10], [11], [12]"		3	0
+commons-collections	Object	"[5], [7]"		2	0
+BrowniesCollection	Object	[7]	[7]	1	1
+Colt	Object	[14]	[14]	1	1
+

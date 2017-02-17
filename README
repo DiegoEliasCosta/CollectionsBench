@@ -1,0 +1,29 @@
+Collections-Bench is a benchmark tool for Evaluating the Performance of Java Collections 
+using a set of Micro-Benchmarks.
+
+It uses JMH* for building, running and analyzing the Micro-Benchmark.
+
+Available Scenarios
+ -- add
+ -- addAll
+ -- get
+ -- getAll
+ -- remove
+ -- copy
+ -- contains
+ 
+Libraries Implemented
+ -- JDK (SDK8)
+ -- FastUtils
+ -- GSCollections
+ -- Guava 
+ -- HPPC
+ -- Koloboke
+ -- Trove
+ 
+How to run the complete benchmark
+	java -jar Benchmarks.jar 
+
+ 
+
+* - http://openjdk.java.net/projects/code-tools/jmh/
