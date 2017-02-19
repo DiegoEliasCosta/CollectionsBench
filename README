@@ -13,7 +13,7 @@ You only need to Maven install to generate the Benchmarks.jar file.
 
 ## Default parameters
 
-java -jar Benchmarks.jar 
+`java -jar Benchmarks.jar` 
 
 
 ## Available Test Scenarios
