@@ -20,6 +20,15 @@ For instance, to run the benchmark of standard (JDK) ArrayList containing intege
 java -jar Benchmarks.jar JDK_Integer_ArrayList_*
 ```
 
+**Specifying benchmark parameters** The benchmark parameters are defined in the class AbstractBenchmarkTest.java (10 warmups, 30 replications, 1 second each). You can re-define the parameters by using the JMH command line structure. 
+
+For 20 warmup iterations, 30 replications of 5 seconds each.
+```
+java -jar Benchmarks.jar -wi 20 -i 30 -r 5
+```
+
+For more information about the parameters, run the help menu: `java -jar Benchmarks.jar -h`
+
 
 ## Available Test Scenarios
 
