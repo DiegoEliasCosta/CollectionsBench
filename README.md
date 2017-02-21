@@ -15,13 +15,17 @@ You can also run
 
 ## Available Test Scenarios
 
- -- add
- -- addAll
- -- get
- -- getAll
- -- remove
- -- copy
- -- contains
+Currently implemented scenarios
+
+| Scenario	| Description											|
+| --------- | -----------------------------------------				|
+| add		| Add a random element into the collection. 			|
+| populate	| Populate an empty collection with N random elements 	|
+| get		| Get a random element from the collection 				|
+| iterate	| Traverse the collection								| 
+| remove	| Remove a random element from the collection 			|
+| copy		| Copy to an empty collection							|  
+| contains	| Search a random element in the collection 			|
 
 ## Implemented Collection Libraries
  
