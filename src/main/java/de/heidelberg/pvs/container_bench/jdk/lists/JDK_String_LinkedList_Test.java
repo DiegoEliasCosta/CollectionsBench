@@ -8,7 +8,7 @@ import de.heidelberg.pvs.container_bench.abstracts.jdk.AbstractJDKListTest;
 public class JDK_String_LinkedList_Test extends AbstractJDKListTest<String> {
 
 	@Override
-	protected List<String> getNewList(int size) {
+	protected List<String> getNewList() {
 		return new LinkedList<String>(); 
 	}
 

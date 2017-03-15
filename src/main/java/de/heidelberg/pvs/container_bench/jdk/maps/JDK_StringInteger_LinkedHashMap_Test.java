@@ -8,7 +8,7 @@ import de.heidelberg.pvs.container_bench.abstracts.jdk.AbstractJDKMapTest;
 public class JDK_StringInteger_LinkedHashMap_Test extends AbstractJDKMapTest<String, Integer>{
 
 	@Override
-	protected Map<String, Integer> getNewMap(int size, int range) {
+	protected Map<String, Integer> getNewMap() {
 		return new LinkedHashMap<String, Integer>();
 	}
 

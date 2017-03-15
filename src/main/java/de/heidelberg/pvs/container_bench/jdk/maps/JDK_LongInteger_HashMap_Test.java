@@ -8,7 +8,7 @@ import de.heidelberg.pvs.container_bench.abstracts.jdk.AbstractJDKMapTest;
 public class JDK_LongInteger_HashMap_Test extends AbstractJDKMapTest<Long, Integer> {
 
 	@Override
-	protected Map<Long, Integer> getNewMap(int size, int range) {
+	protected Map<Long, Integer> getNewMap() {
 		return new HashMap<>();
 	}
 

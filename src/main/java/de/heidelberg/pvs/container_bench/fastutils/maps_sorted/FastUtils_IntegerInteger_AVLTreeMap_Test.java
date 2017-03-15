@@ -8,7 +8,7 @@ import it.unimi.dsi.fastutil.objects.Object2ObjectAVLTreeMap;
 public class FastUtils_IntegerInteger_AVLTreeMap_Test extends AbstractJDKMapTest<Integer , Integer>{
 
 	@Override
-	protected Map<Integer, Integer> getNewMap(int size, int range) {
+	protected Map<Integer, Integer> getNewMap() {
 		return new Object2ObjectAVLTreeMap<>();
 	}
 

@@ -126,6 +126,12 @@
 			<version>1.0</version>
 		</dependency>
 
+		<!-- ONLINE ADAPTER -->
+		<dependency>
+			<groupId>de.heidelberg.pvs.diego</groupId>
+			<artifactId>collections-online-adapter</artifactId>
+			<version>0.0.1-SNAPSHOT</version>
+		</dependency>
 
 		<!-- JLIBS -->
 		<!-- http://mvnrepository.com/artifact/in.jlibs/jlibs-core -->
@@ -141,7 +147,7 @@
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 		<jmh.version>1.11.2</jmh.version>
 		<javac.target>1.8</javac.target>
-		<uberjar.name>benchmarks</uberjar.name>
+		<uberjar.name>collections-bench</uberjar.name>
 	</properties>
 
 	<build>

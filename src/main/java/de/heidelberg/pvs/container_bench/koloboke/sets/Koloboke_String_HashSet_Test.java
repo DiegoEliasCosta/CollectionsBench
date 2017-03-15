@@ -8,7 +8,7 @@ import net.openhft.koloboke.collect.set.hash.HashObjSets;
 public class Koloboke_String_HashSet_Test extends AbstractJDKSetTest<String> {
 
 	@Override
-	protected Set<String> getNewSet(int size) {
+	protected Set<String> getNewSet() {
 		return HashObjSets.newMutableSet();
 	}
 

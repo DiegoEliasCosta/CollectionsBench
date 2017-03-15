@@ -8,7 +8,7 @@ import it.unimi.dsi.fastutil.objects.ObjectRBTreeSet;
 public class FastUtils_Integer_AVLTreeSet_Test extends AbstractJDKSetTest<Integer> {
 
 	@Override
-	protected Set<Integer> getNewSet(int size) {
+	protected Set<Integer> getNewSet() {
 		return new ObjectRBTreeSet<>();
 	}
 

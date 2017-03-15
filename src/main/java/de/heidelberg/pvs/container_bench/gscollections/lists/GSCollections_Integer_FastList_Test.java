@@ -9,7 +9,7 @@ import de.heidelberg.pvs.container_bench.abstracts.jdk.AbstractJDKListTest;
 public class GSCollections_Integer_FastList_Test extends AbstractJDKListTest<Integer>{
 
 	@Override
-	protected List<Integer> getNewList(int size) {
+	protected List<Integer> getNewList() {
 		return new FastList<Integer>();
 	}
 

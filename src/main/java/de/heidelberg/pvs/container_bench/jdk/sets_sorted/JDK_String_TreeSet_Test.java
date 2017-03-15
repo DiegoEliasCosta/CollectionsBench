@@ -8,7 +8,7 @@ import de.heidelberg.pvs.container_bench.abstracts.jdk.AbstractJDKSetTest;
 public class JDK_String_TreeSet_Test extends AbstractJDKSetTest<String> {
 
 	@Override
-	protected Set<String> getNewSet(int size) {
+	protected Set<String> getNewSet() {
 		return new TreeSet<>();
 	}
 

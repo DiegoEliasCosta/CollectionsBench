@@ -8,7 +8,7 @@ import gnu.trove.set.hash.THashSet;
 public class Trove_String_HashSet_Test extends AbstractJDKSetTest<String> {
 
 	@Override
-	protected Set<String> getNewSet(int size) {
+	protected Set<String> getNewSet() {
 		return new THashSet<>();
 	}
 

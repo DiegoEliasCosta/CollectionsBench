@@ -8,7 +8,7 @@ import net.openhft.koloboke.collect.map.hash.HashObjObjMaps;
 public class Koloboke_StringInteger_HashMap_Test extends AbstractJDKMapTest<String, Integer> {
 
 	@Override
-	protected Map<String, Integer> getNewMap(int size, int range) {
+	protected Map<String, Integer> getNewMap() {
 		return HashObjObjMaps.newMutableMap();
 	}
 

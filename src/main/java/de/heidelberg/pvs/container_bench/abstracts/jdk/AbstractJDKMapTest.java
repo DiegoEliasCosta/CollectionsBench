@@ -14,13 +14,13 @@ public abstract class AbstractJDKMapTest<K, V> extends AbstractMapTest<K, V> {
 	private K[] newKeys;
 	private V[] values;
 		
-	protected abstract Map<K, V> getNewMap(int size, int range);
+	protected abstract Map<K, V> getNewMap();
 	protected abstract Map<K, V> copyMap(Map<K, V> fullMap2);
 	
 	@Override
 	public void testSetup() {
 		int varietyOfKeys = (int) (size * ((double)percentageRangeKeys / 100));
-		fullMap = this.getNewMap(size, varietyOfKeys);
+		fullMap = this.getNewMap();
 
 		keys = keyGenerator.generateArray(size);
 		newKeys = keyGenerator.generateArrayInRange(size, 2 * varietyOfKeys);
@@ -36,7 +36,7 @@ public abstract class AbstractJDKMapTest<K, V> extends AbstractMapTest<K, V> {
 	@Override
 	@Benchmark
 	public void populate() {
-		Map<K, V> newMap = this.getNewMap(size, percentageRangeKeys);
+		Map<K, V> newMap = this.getNewMap();
 		for(int i = 0; i < size; i++) {
 			blackhole.consume(newMap.put(keys[i], values[i]));
 		}

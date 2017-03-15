@@ -9,7 +9,7 @@ public class JDK_Integer_TreeSet_Test extends AbstractJDKSetTest<Integer> {
 
 
 	@Override
-	protected Set<Integer> getNewSet(int size) {
+	protected Set<Integer> getNewSet() {
 		return new TreeSet<Integer>(); // cannot specify size
 	}
 

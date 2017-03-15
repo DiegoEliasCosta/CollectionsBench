@@ -8,7 +8,7 @@ import it.unimi.dsi.fastutil.objects.Object2ObjectOpenHashMap;
 public class FastUtils_IntegerInteger_OpenHashMap_Test extends AbstractJDKMapTest<Integer, Integer> {
 
 	@Override
-	protected Map<Integer, Integer> getNewMap(int size, int range) {
+	protected Map<Integer, Integer> getNewMap() {
 		return new Object2ObjectOpenHashMap<>();
 	}
 

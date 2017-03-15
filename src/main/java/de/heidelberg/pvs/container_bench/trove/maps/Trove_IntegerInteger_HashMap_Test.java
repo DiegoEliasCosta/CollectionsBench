@@ -8,7 +8,7 @@ import gnu.trove.map.hash.THashMap;
 public class Trove_IntegerInteger_HashMap_Test extends AbstractJDKMapTest<Integer, Integer> {
 
 	@Override
-	protected Map<Integer, Integer> getNewMap(int size, int range) {
+	protected Map<Integer, Integer> getNewMap() {
 		// FIXME: Check the use of Identity Hashing Strategy
 		return new THashMap<Integer, Integer>(); 
 	}

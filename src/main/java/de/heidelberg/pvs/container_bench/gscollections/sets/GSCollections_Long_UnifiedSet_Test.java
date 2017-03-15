@@ -9,7 +9,7 @@ import de.heidelberg.pvs.container_bench.abstracts.jdk.AbstractJDKSetTest;
 public class GSCollections_Long_UnifiedSet_Test extends AbstractJDKSetTest<Long> {
 
 	@Override
-	protected Set<Long> getNewSet(int size) {
+	protected Set<Long> getNewSet() {
 		return new UnifiedSet<Long>();
 	}
 

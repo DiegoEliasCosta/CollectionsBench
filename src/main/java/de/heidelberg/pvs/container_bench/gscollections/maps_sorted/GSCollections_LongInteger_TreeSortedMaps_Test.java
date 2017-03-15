@@ -9,7 +9,7 @@ import de.heidelberg.pvs.container_bench.abstracts.jdk.AbstractJDKMapTest;
 public class GSCollections_LongInteger_TreeSortedMaps_Test extends AbstractJDKMapTest<Long, Integer>{
 
 	@Override
-	protected Map<Long, Integer> getNewMap(int size, int range) {
+	protected Map<Long, Integer> getNewMap() {
 		return new TreeSortedMap<Long, Integer>();
 	}
 

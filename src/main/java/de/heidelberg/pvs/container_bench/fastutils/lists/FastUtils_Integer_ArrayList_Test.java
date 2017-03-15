@@ -8,7 +8,7 @@ import it.unimi.dsi.fastutil.objects.ObjectArrayList;
 public class FastUtils_Integer_ArrayList_Test extends AbstractJDKListTest<Integer> {
 
 	@Override
-	protected List<Integer> getNewList(int size) {
+	protected List<Integer> getNewList() {
 		return new ObjectArrayList<>();
 	}
 

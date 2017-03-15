@@ -22,7 +22,7 @@ public abstract class AbstractJDKSetTest<T> extends AbstractSetTest<T> {
 	
 	public void testSetup() {
 		newValuesSize = 2 * size; // 50% of colision
-		fullSet = this.getNewSet(size);
+		fullSet = this.getNewSet();
 		values = generator.generateArray(size);
 		newValues = generator.generateArray(2 * size);
 		for(int i = 0; i < size; i++) {
@@ -30,7 +30,7 @@ public abstract class AbstractJDKSetTest<T> extends AbstractSetTest<T> {
 		}
 	}
 	
-	protected abstract Set<T> getNewSet(int size);
+	protected abstract Set<T> getNewSet();
 	protected abstract Set<T> copySet(Set<T> fullSet2);
 	
 	@Override
@@ -51,7 +51,7 @@ public abstract class AbstractJDKSetTest<T> extends AbstractSetTest<T> {
 	@Override
 	@Benchmark
 	public void populate() {
-		Set<T> newSet = this.getNewSet(size);
+		Set<T> newSet = this.getNewSet();
 		for(int i = 0; i < size; i++) {
 			newSet.add(values[i]);
 		}

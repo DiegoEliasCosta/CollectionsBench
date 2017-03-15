@@ -9,7 +9,7 @@ public class JDK_Long_ArrayList_Test extends AbstractJDKListTest<Long> {
 	
 
 	@Override
-	protected List<Long> getNewList(int size) {
+	protected List<Long> getNewList() {
 		return new ArrayList<Long>();
 	}
 

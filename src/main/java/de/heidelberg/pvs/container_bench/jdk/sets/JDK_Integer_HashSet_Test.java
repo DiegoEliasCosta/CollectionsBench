@@ -9,7 +9,7 @@ public class JDK_Integer_HashSet_Test extends AbstractJDKSetTest<Integer> {
 
 
 	@Override
-	protected Set<Integer> getNewSet(int size) {
+	protected Set<Integer> getNewSet() {
 		return new HashSet<Integer>();
 	}
 

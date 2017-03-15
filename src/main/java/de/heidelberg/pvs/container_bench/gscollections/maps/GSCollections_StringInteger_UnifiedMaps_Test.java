@@ -9,7 +9,7 @@ import de.heidelberg.pvs.container_bench.abstracts.jdk.AbstractJDKMapTest;
 public class GSCollections_StringInteger_UnifiedMaps_Test extends AbstractJDKMapTest<String, Integer>{
 
 	@Override
-	protected Map<String, Integer> getNewMap(int size, int range) {
+	protected Map<String, Integer> getNewMap() {
 		return new UnifiedMap<String, Integer>();
 	}
 

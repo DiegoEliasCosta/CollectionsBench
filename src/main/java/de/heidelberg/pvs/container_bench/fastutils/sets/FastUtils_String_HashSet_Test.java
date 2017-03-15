@@ -8,7 +8,7 @@ import it.unimi.dsi.fastutil.objects.ObjectOpenHashSet;
 public class FastUtils_String_HashSet_Test extends AbstractJDKSetTest<String> {
 
 	@Override
-	protected Set<String> getNewSet(int size) {
+	protected Set<String> getNewSet() {
 		return new ObjectOpenHashSet<>();
 	}
 
