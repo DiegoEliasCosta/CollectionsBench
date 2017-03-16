@@ -75,5 +75,9 @@ public abstract class AbstractGuavaMultiSetTest<T> extends AbstractSetTest<T> {
 		blackhole.consume(this.fullSet.add(values[index])); // Keeping the steady-state
 	}
 
+	@Override
+	protected Object getFullCollection() {
+		return fullSet;
+	}
 
 }

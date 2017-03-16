@@ -55,6 +55,13 @@
 			<scope>provided</scope>
 		</dependency>
 
+		<!-- JOL -->
+		<dependency>
+			<groupId>org.openjdk.jol</groupId>
+			<artifactId>jol-core</artifactId>
+			<version>0.7</version>
+		</dependency>
+
 		<!-- GUAVA -->
 		<dependency>
 			<groupId>com.google.guava</groupId>

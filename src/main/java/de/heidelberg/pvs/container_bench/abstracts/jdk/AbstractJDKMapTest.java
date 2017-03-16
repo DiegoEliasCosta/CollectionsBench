@@ -4,6 +4,9 @@ import java.util.Map;
 import java.util.Map.Entry;
 
 import org.openjdk.jmh.annotations.Benchmark;
+import org.openjdk.jmh.annotations.BenchmarkMode;
+import org.openjdk.jmh.annotations.Mode;
+import org.openjdk.jol.info.GraphLayout;
 
 import de.heidelberg.pvs.container_bench.abstracts.AbstractMapTest;
 
@@ -89,6 +92,12 @@ public abstract class AbstractJDKMapTest<K, V> extends AbstractMapTest<K, V> {
 		for(Entry<K, V> entry : this.fullMap.entrySet()) {
 			blackhole.consume(entry);
 		}
+	}
+	
+
+	@Override
+	protected Object getFullCollection() {
+		return fullMap;
 	}
 	
 }

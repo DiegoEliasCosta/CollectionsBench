@@ -81,4 +81,9 @@ public abstract class AbstractHPPCSetTest<T> extends AbstractSetTest<T> {
 		blackhole.consume(this.fullSet.remove(values[index]));
 		blackhole.consume(this.fullSet.add(values[index])); // Keeping the steady-state
 	}
+	
+	@Override
+	protected Object getFullCollection() {
+		return fullSet;
+	}
 }

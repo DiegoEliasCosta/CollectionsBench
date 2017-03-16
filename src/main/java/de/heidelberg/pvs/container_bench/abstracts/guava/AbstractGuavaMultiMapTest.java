@@ -90,5 +90,10 @@ public abstract class AbstractGuavaMultiMapTest<K, V> extends AbstractMapTest<K,
 			blackhole.consume(entry);
 		}
 	}
+	
+	@Override
+	protected Object getFullCollection() {
+		return fullMap;
+	}
 
 }

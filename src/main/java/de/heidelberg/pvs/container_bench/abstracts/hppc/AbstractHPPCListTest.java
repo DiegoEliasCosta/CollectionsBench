@@ -81,5 +81,9 @@ public abstract class AbstractHPPCListTest<T> extends AbstractListTest<T> {
 		fullList.add(values[index]); // void
 	}
 
+	@Override
+	protected Object getFullCollection() {
+		return fullList;
+	}
 
 }

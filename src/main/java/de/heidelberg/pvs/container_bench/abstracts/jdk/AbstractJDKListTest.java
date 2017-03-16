@@ -23,6 +23,7 @@ public abstract class AbstractJDKListTest<T> extends AbstractListTest<T> {
 
 	protected abstract List<T> copyList(List<T> fullList2);
 
+	@Override
 	public void testSetup() {
 		fullList = this.getNewList();
 		values = generator.generateArray(size);
@@ -62,7 +63,7 @@ public abstract class AbstractJDKListTest<T> extends AbstractListTest<T> {
 		}
 		blackhole.consume(newList);
 	}
-	
+
 	@Override
 	@Benchmark
 	public void copy() {
@@ -77,14 +78,19 @@ public abstract class AbstractJDKListTest<T> extends AbstractListTest<T> {
 		blackhole.consume(fullList.add(values[index]));
 		blackhole.consume(fullList.remove(size));
 	}
-	
+
 	@Override
 	@Benchmark
 	public void removeElement() {
 		Integer index = generator.generateIndex(size);
 		blackhole.consume(fullList.remove(values[index]));
 		blackhole.consume(fullList.add(values[index]));
-		
+
+	}
+	
+	@Override
+	protected Object getFullCollection() {
+		return fullList;
 	}
 
 }

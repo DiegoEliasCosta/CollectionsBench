@@ -90,4 +90,9 @@ public abstract class AbstractHPPCMapTest<K, V> extends AbstractMapTest<K, V> {
 		}
 	}
 
+	@Override
+	protected Object getFullCollection() {
+		return fullMap;
+	}
+	
 }
