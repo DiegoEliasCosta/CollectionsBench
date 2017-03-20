@@ -7,7 +7,7 @@ import de.heidelberg.pvs.diego.collections_online_adapter.context.CollectionType
 import de.heidelberg.pvs.diego.collections_online_adapter.context.SetAllocationContext;
 import de.heidelberg.pvs.diego.collections_online_adapter.context.facade.SetAllocationContextFacade;
 
-public class OnlineAdapter_Integer_HashSet_Test extends AbstractJDKSetTest<Integer> {
+public class OnlineAdapter_Integer_MemoryOptimizedHashSet_Test extends AbstractJDKSetTest<Integer> {
 
 	SetAllocationContext<Integer> contextEmptySet = new SetAllocationContextFacade<>(CollectionTypeEnum.HASH);
 	

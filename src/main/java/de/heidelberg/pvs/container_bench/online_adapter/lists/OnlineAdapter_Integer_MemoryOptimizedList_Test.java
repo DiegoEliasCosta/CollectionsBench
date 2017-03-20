@@ -7,7 +7,7 @@ import de.heidelberg.pvs.diego.collections_online_adapter.context.CollectionType
 import de.heidelberg.pvs.diego.collections_online_adapter.context.ListAllocationContext;
 import de.heidelberg.pvs.diego.collections_online_adapter.context.facade.ListAllocationContextFacade;
 
-public class OnlineAdapter_Integer_List_Test extends AbstractJDKListTest<Integer> {
+public class OnlineAdapter_Integer_MemoryOptimizedList_Test extends AbstractJDKListTest<Integer> {
 
 	ListAllocationContext<Integer> contextEmptyList = new ListAllocationContextFacade<>(CollectionTypeEnum.ARRAY);
 	

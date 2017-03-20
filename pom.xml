@@ -119,6 +119,15 @@
 			<version>7.0.10</version>
 		</dependency>
 
+		<!-- https://mvnrepository.com/artifact/edu.stanford.nlp/stanford-corenlp -->
+		<!--  Stanford's NLP -->
+		<dependency>
+			<groupId>edu.stanford.nlp</groupId>
+			<artifactId>stanford-corenlp</artifactId>
+			<version>3.7.0</version>
+		</dependency>
+
+
 		<!-- HPPCS -->
 		<dependency>
 			<groupId>com.carrotsearch</groupId>

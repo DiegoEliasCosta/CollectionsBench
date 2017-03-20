@@ -1,4 +1,4 @@
-package de.heidelberg.pvs.container_bench.online_adapter.maps;
+package de.heidelberg.pvs.container_bench.google.maps;
 
 import java.util.Map;
 
@@ -6,7 +6,7 @@ import com.google.api.client.util.ArrayMap;
 
 import de.heidelberg.pvs.container_bench.abstracts.jdk.AbstractJDKMapTest;
 
-public class OnlineAdapter_IntegerInteger_ArrayMap_Test extends AbstractJDKMapTest<Integer, Integer> {
+public class Google_IntegerInteger_ArrayMap_Test extends AbstractJDKMapTest<Integer, Integer> {
 
 	@Override
 	protected Map<Integer, Integer> getNewMap() {

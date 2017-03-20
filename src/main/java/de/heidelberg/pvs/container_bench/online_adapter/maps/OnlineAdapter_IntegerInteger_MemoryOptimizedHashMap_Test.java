@@ -7,7 +7,7 @@ import de.heidelberg.pvs.diego.collections_online_adapter.context.CollectionType
 import de.heidelberg.pvs.diego.collections_online_adapter.context.MapAllocationContext;
 import de.heidelberg.pvs.diego.collections_online_adapter.context.facade.MapAllocationContextFacade;
 
-public class OnlineAdapter_IntegerInteger_HashMap_Test extends AbstractJDKMapTest<Integer, Integer> {
+public class OnlineAdapter_IntegerInteger_MemoryOptimizedHashMap_Test extends AbstractJDKMapTest<Integer, Integer> {
 
 	MapAllocationContext<Integer, Integer> contextEmptyList = new MapAllocationContextFacade<>(CollectionTypeEnum.HASH);
 	MapAllocationContext<Integer, Integer> contextCopyList = new MapAllocationContextFacade<>(CollectionTypeEnum.HASH);

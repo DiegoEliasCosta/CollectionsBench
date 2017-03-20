@@ -55,9 +55,6 @@ public abstract class AbstractBenchmarkTest {
 	 */
 	protected Blackhole blackhole;
 
-	@Param({ "true" })
-	private Boolean reportFootprint;
-
 	/**
 	 * Setup method of the benchmark
 	 */
