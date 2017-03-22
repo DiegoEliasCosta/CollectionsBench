@@ -17,7 +17,7 @@ import de.heidelberg.pvs.container_bench.abstracts.AbstractListTest;
 public abstract class AbstractJDKListTest<T> extends AbstractListTest<T> {
 
 	private List<T> fullList;
-	private T[] values;
+	protected T[] values;
 
 	protected abstract List<T> getNewList();
 

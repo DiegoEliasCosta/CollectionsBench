@@ -1,36 +1,36 @@
-package de.heidelberg.pvs.container_bench.gscollections.maps;
+package de.heidelberg.pvs.container_bench.online_adapter.lists;
 
 import java.io.FileWriter;
 import java.io.IOException;
 import java.io.PrintWriter;
-import java.util.Map;
+import java.util.ArrayList;
+import java.util.List;
 
 import org.openjdk.jmh.annotations.Benchmark;
 import org.openjdk.jol.info.GraphLayout;
 
-import com.gs.collections.impl.map.mutable.UnifiedMap;
+import de.heidelberg.pvs.container_bench.abstracts.jdk.AbstractJDKListTest;
+import de.heidelberg.pvs.diego.collections_online_adapter.custom.HashArrayList;
 
-import de.heidelberg.pvs.container_bench.abstracts.jdk.AbstractJDKMapTest;
-
-public class GSCollections_IntegerInteger_UnifiedMaps_Test extends AbstractJDKMapTest<Integer, Integer>{
+public class OnlineAdapter_Integer_HashArrayList_Test extends AbstractJDKListTest<Integer> {
 
 	@Override
-	protected Map<Integer, Integer> getNewMap() {
-		return new UnifiedMap<Integer, Integer>();
+	protected List<Integer> getNewList() {
+		return new HashArrayList<>();
 	}
 
 	@Override
-	protected Map<Integer, Integer> copyMap(Map<Integer, Integer> fullMap2) {
-		return new UnifiedMap<Integer, Integer>(fullMap2);
+	protected List<Integer> copyList(List<Integer> fullList2) {
+		return new HashArrayList<>(fullList2);
 	}
-
+	
 	@Benchmark
 	public void reportBoundedCollectionFootprint() throws IOException {
-		Map<Integer, Integer> fullCollection;
-		fullCollection = new UnifiedMap<>(size);
+		List<Integer> fullCollection;
+		fullCollection = new HashArrayList<>(size);
 		
 		for (int i = 0; i < size; i++) {
-			fullCollection.put(keys[i], values[i]);
+			fullCollection.add(values[i]);
 		}
 
 		// Write to the file
@@ -47,5 +47,5 @@ public class GSCollections_IntegerInteger_UnifiedMaps_Test extends AbstractJDKMa
 			}
 		}
 	}
-	
+
 }

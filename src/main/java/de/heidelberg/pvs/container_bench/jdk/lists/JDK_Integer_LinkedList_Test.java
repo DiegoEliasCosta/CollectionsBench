@@ -16,5 +16,6 @@ public class JDK_Integer_LinkedList_Test extends AbstractJDKListTest<Integer> {
 	protected List<Integer> copyList(List<Integer> fullList2) {
 		return new LinkedList<Integer>(fullList2);
 	}
+	
 
 }

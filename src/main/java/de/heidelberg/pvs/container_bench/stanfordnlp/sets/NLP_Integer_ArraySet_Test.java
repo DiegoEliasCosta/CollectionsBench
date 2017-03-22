@@ -1,36 +1,38 @@
-package de.heidelberg.pvs.container_bench.gscollections.maps;
+package de.heidelberg.pvs.container_bench.stanfordnlp.sets;
 
 import java.io.FileWriter;
 import java.io.IOException;
 import java.io.PrintWriter;
-import java.util.Map;
+import java.util.Set;
 
 import org.openjdk.jmh.annotations.Benchmark;
 import org.openjdk.jol.info.GraphLayout;
 
-import com.gs.collections.impl.map.mutable.UnifiedMap;
+import de.heidelberg.pvs.container_bench.abstracts.jdk.AbstractJDKSetTest;
+import edu.stanford.nlp.util.ArraySet;
 
-import de.heidelberg.pvs.container_bench.abstracts.jdk.AbstractJDKMapTest;
-
-public class GSCollections_IntegerInteger_UnifiedMaps_Test extends AbstractJDKMapTest<Integer, Integer>{
+public class NLP_Integer_ArraySet_Test extends AbstractJDKSetTest<Integer> {
 
 	@Override
-	protected Map<Integer, Integer> getNewMap() {
-		return new UnifiedMap<Integer, Integer>();
+	protected Set<Integer> getNewSet() {
+		return new ArraySet<>();
 	}
 
 	@Override
-	protected Map<Integer, Integer> copyMap(Map<Integer, Integer> fullMap2) {
-		return new UnifiedMap<Integer, Integer>(fullMap2);
+	protected Set<Integer> copySet(Set<Integer> fullSet2) {
+		// NLP ArraySet does not offer a copy constructor
+		ArraySet<Integer> arraySet = new ArraySet<>();
+		arraySet.addAll(fullSet2);
+		return arraySet;
 	}
-
+	
 	@Benchmark
 	public void reportBoundedCollectionFootprint() throws IOException {
-		Map<Integer, Integer> fullCollection;
-		fullCollection = new UnifiedMap<>(size);
+		Set<Integer> fullCollection;
+		fullCollection = new ArraySet<>(size);
 		
 		for (int i = 0; i < size; i++) {
-			fullCollection.put(keys[i], values[i]);
+			fullCollection.add(values[i]);
 		}
 
 		// Write to the file
@@ -47,5 +49,5 @@ public class GSCollections_IntegerInteger_UnifiedMaps_Test extends AbstractJDKMa
 			}
 		}
 	}
-	
+
 }

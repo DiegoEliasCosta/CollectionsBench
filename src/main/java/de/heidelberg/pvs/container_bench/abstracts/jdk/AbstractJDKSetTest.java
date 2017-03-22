@@ -16,7 +16,7 @@ import de.heidelberg.pvs.container_bench.abstracts.AbstractSetTest;
 public abstract class AbstractJDKSetTest<T> extends AbstractSetTest<T> {
 	
 	private Set<T> fullSet;
-	private T[] values;
+	protected T[] values;
 	private T[] newValues;
 	private int newValuesSize;
 	

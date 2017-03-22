@@ -4,18 +4,15 @@ import java.util.Map;
 import java.util.Map.Entry;
 
 import org.openjdk.jmh.annotations.Benchmark;
-import org.openjdk.jmh.annotations.BenchmarkMode;
-import org.openjdk.jmh.annotations.Mode;
-import org.openjdk.jol.info.GraphLayout;
 
 import de.heidelberg.pvs.container_bench.abstracts.AbstractMapTest;
 
 public abstract class AbstractJDKMapTest<K, V> extends AbstractMapTest<K, V> {
 
 	private Map<K, V> fullMap;
-	private K[] keys;
+	protected K[] keys;
 	private K[] newKeys;
-	private V[] values;
+	protected V[] values;
 		
 	protected abstract Map<K, V> getNewMap();
 	protected abstract Map<K, V> copyMap(Map<K, V> fullMap2);
