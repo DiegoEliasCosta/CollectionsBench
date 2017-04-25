@@ -2,7 +2,18 @@
 
 Collections-Bench is a benchmark suite built upon [JMH] (http://openjdk.java.net/projects/code-tools/jmh/) for performance evaluation of Java Collections libraries.
 
-## Usage
+
+
+### Prerequisites
+
+To build and run Collections-Bench you need:
+
+```
+Java >= 8
+Maven
+```
+
+### Usage
 
 To build Collections-bench you need [Maven] (https://maven.apache.org/) and Java version >= 8.
 
@@ -12,7 +23,11 @@ To build Collections-bench you need [Maven] (https://maven.apache.org/) and Java
 
 **Running a specific benchmark** The JMH allows regex when specifying the classes that will be executed during the benchmark. To facilitate, we design the classes name, to contain the configuration about the benchmark such as the library, collection type and data type:
 
-Each class has the following name structure: [LIBRARY]_[DATATYPE]_[COLLECTIONTYPE]_Test.java
+Each class has the following name structure: 
+
+```
+[LIBRARY]\_[DATATYPE]\_[COLLECTIONTYPE]\_Test.java
+```
 
 For instance, to run the benchmark of standard (JDK) ArrayList containing integers, you can execute the following command:
 
