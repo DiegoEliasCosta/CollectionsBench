@@ -1,6 +1,10 @@
 # Collections-Bench
 
-Collections-Bench is a benchmark suite built upon [JMH] (http://openjdk.java.net/projects/code-tools/jmh/) for performance evaluation of Java Collections libraries.
+Collections-Bench is a benchmark suite created to evaluate a variety of Java Collection Libraries under a homogenous set of test cases. 
+
+The Collections-Bench uses the [Open JMH] (http://openjdk.java.net/projects/code-tools/jmh/) for performance evaluation of Java Collections libraries.
+
+*This wiki is a work in progress, and parts of it may still be under construction.*
 
 ## Getting Started
 
@@ -79,4 +83,29 @@ We have implemented the benchmark for alternatives of the four most commonly use
 | Trove		| 3.0.3		|
  	
 
- 
+# Related Work
+
+Collections-Bench was initially created to be used in the ICPE paper "Empirical Study of Usage and Performance of Java Collections".
+
+Please refer to the paper below if you use Collections-Bench in your academic work.
+
+```
+@inproceedings{Costa:2017:ESU:3030207.3030221,
+ author = {Costa, Diego and Andrzejak, Artur and Seboek, Janos and Lo, David},
+ title = {Empirical Study of Usage and Performance of Java Collections},
+ booktitle = {Proceedings of the 8th ACM/SPEC on International Conference on Performance Engineering},
+ series = {ICPE '17},
+ year = {2017},
+ isbn = {978-1-4503-4404-3},
+ location = {L'Aquila, Italy},
+ pages = {389--400},
+ numpages = {12},
+ url = {http://doi.acm.org/10.1145/3030207.3030221},
+ doi = {10.1145/3030207.3030221},
+ acmid = {3030221},
+ publisher = {ACM},
+ address = {New York, NY, USA},
+ keywords = {collections, empirical study, execution time, java, memory, performance},
+}
+```
+
