@@ -1,8 +1,12 @@
 package de.heidelberg.pvs.container_bench.abstracts.jdk;
 
+import java.io.FileWriter;
+import java.io.IOException;
+import java.io.PrintWriter;
 import java.util.List;
 
 import org.openjdk.jmh.annotations.Benchmark;
+import org.openjdk.jol.info.GraphLayout;
 
 import de.heidelberg.pvs.container_bench.abstracts.AbstractListTest;
 
@@ -93,4 +97,20 @@ public abstract class AbstractJDKListTest<T> extends AbstractListTest<T> {
 		return fullList;
 	}
 
+	@Benchmark
+	public void reportBoundedCollectionFootprint() throws IOException {
+		List<T> fullCollection = getNewList();
+		
+		for (int i = 0; i < size; i++) {
+			fullCollection.add(values[i]);
+		}
+
+		// Write to the file
+		String footprint = String.format("%s\n%s", fullCollection.getClass().getName(),
+				GraphLayout.parseInstance(fullCollection).toFootprint());
+		
+		try(PrintWriter printWriter = new PrintWriter(new FileWriter(this.memoryFootprintFile, true))) {
+			printWriter.write(footprint);
+		}
+	}
 }

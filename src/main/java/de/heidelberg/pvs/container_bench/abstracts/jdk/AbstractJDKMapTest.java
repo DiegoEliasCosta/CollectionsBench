@@ -1,9 +1,13 @@
 package de.heidelberg.pvs.container_bench.abstracts.jdk;
 
+import java.io.FileWriter;
+import java.io.IOException;
+import java.io.PrintWriter;
 import java.util.Map;
 import java.util.Map.Entry;
 
 import org.openjdk.jmh.annotations.Benchmark;
+import org.openjdk.jol.info.GraphLayout;
 
 import de.heidelberg.pvs.container_bench.abstracts.AbstractMapTest;
 
@@ -96,5 +100,22 @@ public abstract class AbstractJDKMapTest<K, V> extends AbstractMapTest<K, V> {
 	protected Object getFullCollection() {
 		return fullMap;
 	}
-	
+
+	@Benchmark
+	public void reportBoundedCollectionFootprint() throws IOException {
+		Map<K, V> fullCollection;
+		fullCollection = getNewMap();
+		
+		for (int i = 0; i < size; i++) {
+			fullCollection.put(keys[i], values[i]);
+		}
+
+		// Write to the file
+		String footprint = String.format("%s\n%s", fullCollection.getClass().getName(),
+				GraphLayout.parseInstance(fullCollection).toFootprint());
+		
+		try (PrintWriter printWriter = new PrintWriter(new FileWriter(this.memoryFootprintFile, true))) {
+			printWriter.write(footprint);
+		}
+	}
 }

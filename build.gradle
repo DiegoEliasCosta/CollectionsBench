@@ -1,0 +1,267 @@
+buildscript {
+    ext.jmh_version = '1.20' // JMH version to use
+}
+
+plugins {
+  id 'java'
+  id 'maven'
+  id 'eclipse'
+  id 'idea'
+  // id 'me.champeau.gradle.jmh' version '0.4.5' // did not work
+  id 'com.github.johnrengelman.shadow' version '2.0.2'
+  // id 'com.github.ben-manes.versions' version '0.17.0' // for "gradlew dependencyUpdates"
+}
+
+repositories {
+    jcenter()
+    maven { url "https://plugins.gradle.org/m2/" } // for JMH plugin
+}
+
+group = 'de.heidelberg.pvs.container-bench'
+version = '1.0'
+
+description = """Benchmarks for Java containers"""
+
+sourceCompatibility = 1.8
+targetCompatibility = 1.8
+compileJava.options.encoding = 'UTF-8'
+
+shadowJar {
+    destinationDir = project.rootDir
+    archiveName = 'benchmarks.jar'
+    classifier = 'benchmarks'
+    manifest.attributes('Main-Class': 'org.openjdk.jmh.Main')
+}
+
+dependencies {
+    compile group: 'org.openjdk.jmh', name: 'jmh-core', version: jmh_version
+    compileOnly group: 'org.openjdk.jmh', name: 'jmh-generator-annprocess', version: jmh_version
+    compile group: 'org.openjdk.jol', name: 'jol-core', version:'0.9'
+
+	compile group: 'com.google.api-client', name: 'google-api-client', version: '1.23.0'
+    compile group: 'com.google.guava', name: 'guava', version:'24.1-jre'
+    compile group: 'net.openhft', name: 'koloboke-impl-jdk8', version:'0.6.8'
+    compile group: 'net.sf.trove4j', name: 'trove4j', version:'3.0.3'
+    compile group: 'it.unimi.dsi', name: 'fastutil', version:'8.1.1'
+    compile group: 'com.carrotsearch', name: 'hppc', version:'0.7.3'
+    compile group: 'org.eclipse.collections', name: 'eclipse-collections', version: '9.1.0'
+    compile group: 'org.apache.mahout', name: 'mahout-collections', version:'1.0'
+    compile group: 'edu.stanford.nlp', name: 'stanford-corenlp', version:'3.9.1'
+	compile group: 'org.agrona', name: 'Agrona', version: '0.9.1'
+
+    // compile group: 'in.jlibs', name: 'jlibs-core', version:'2.2.1'
+    // compile group: 'de.heidelberg.pvs.diego', name: 'collections-online-adapter', version:'0.0.1-SNAPSHOT'
+
+    testCompile group: 'junit', name: 'junit', version:'4.12'
+    testCompile group: 'com.goldmansachs', name: 'gs-collections-testutils', version:'7.0.3'
+}
+
+// Code generator using Groovy GString templates, because it is the easiest to use.
+def templateDir = new File(projectDir, "src/templates/java")
+def generatedSrcDir = new File(buildDir, "src/generated/java")
+ 
+sourceSets.main.java.srcDirs += generatedSrcDir
+
+// Simple code generator 
+def generate(File inp, File out, Map vals) {
+  if (out.exists() && out.lastModified() == inp.lastModified()) return;
+  if (out.getParentFile() != null) out.getParentFile().mkdirs()
+  try {
+    def eng = new groovy.text.GStringTemplateEngine();
+    out.text = eng.createTemplate(inp).make(vals);
+    out.setLastModified(inp.lastModified());
+  } catch(RuntimeException e) {
+    throw new RuntimeException("${e.getMessage()} when generating $out", e);
+  }
+}
+
+task generateCode(description: "Generate code from templates") {
+  def pkg = "de/heidelberg/pvs/container_bench/";
+  def out = new File(generatedSrcDir, pkg);
+  def inp = new File(templateDir, pkg);
+  def gen = {
+    // This will run every time (but we check timestamps)
+    // Because otherwise, it would not run in eclipse buildship at all.
+
+    def tpl = new File(inp, "TemplateMapTest.java")
+    ['Integer', 'Long', 'String'].each { keyclass ->
+      ['Integer'].each { valclass ->
+        def pkgname, dir, classname
+
+		// JDK
+        pkgname = "jdk.maps"
+        dir = new File(out, pkgname.replace(".","/"))
+        classname = "JDK_${keyclass}${valclass}_HashMap_Test"
+        generate(tpl, new File(dir, classname + ".java"),
+          [keyclass: keyclass, valclass: valclass, pkgname: pkgname, classname : classname,
+           implementation: "new HashMap<${keyclass},${valclass}>",
+           imports: "import java.util.HashMap;"])
+        classname = "JDK_${keyclass}${valclass}_LinkedHashMap_Test"
+        generate(tpl, new File(dir, classname + ".java"),
+          [keyclass: keyclass, valclass: valclass, pkgname: pkgname, classname : classname,
+           implementation: "new LinkedHashMap<${keyclass},${valclass}>",
+           imports: "import java.util.LinkedHashMap;"])
+
+		// GNU Trove3
+        pkgname = "trove.maps"
+        dir = new File(out, pkgname.replace(".","/"))
+        classname = "Trove_${keyclass}${valclass}_HashMap_Test"
+        generate(tpl, new File(dir, classname + ".java"),
+          [keyclass: keyclass, valclass: valclass, pkgname: pkgname, classname : classname,
+           implementation: "new THashMap<${keyclass},${valclass}>",
+           imports: "import gnu.trove.map.hash.THashMap;"])
+
+        // Koloboke
+        pkgname = "koloboke.maps"
+        dir = new File(out, pkgname.replace(".","/"))
+        classname = "Koloboke_${keyclass}${valclass}_HashMap_Test"
+        generate(tpl, new File(dir, classname + ".java"),
+          [keyclass: keyclass, valclass: valclass, pkgname: pkgname, classname : classname,
+           implementation: "HashObjObjMaps.newMutableMap",
+           imports: "import net.openhft.koloboke.collect.map.hash.HashObjObjMaps;"])
+
+        // Eclipse (formerly Goldman-Sachs Collections)
+        pkgname = "eclipse.maps"
+        dir = new File(out, pkgname.replace(".","/"))
+        classname = "Eclipse_${keyclass}${valclass}_HashMap_Test"
+        generate(tpl, new File(dir, classname + ".java"),
+          [keyclass: keyclass, valclass: valclass, pkgname: pkgname, classname : classname,
+           implementation: "new UnifiedMap<${keyclass},${valclass}>",
+           imports: "import org.eclipse.collections.impl.map.mutable.UnifiedMap;"])
+
+        // Fastutil
+        pkgname = "fastutil.maps"
+        dir = new File(out, pkgname.replace(".","/"))
+        classname = "Fastutil_${keyclass}${valclass}_HashMap_Test"
+        generate(tpl, new File(dir, classname + ".java"),
+          [keyclass: keyclass, valclass: valclass, pkgname: pkgname, classname : classname,
+           implementation: "new Object2ObjectOpenHashMap<${keyclass},${valclass}>",
+           imports: "import it.unimi.dsi.fastutil.objects.Object2ObjectOpenHashMap;"])
+        classname = "Fastutil_${keyclass}${valclass}_LinkedHashMap_Test"
+        generate(tpl, new File(dir, classname + ".java"),
+          [keyclass: keyclass, valclass: valclass, pkgname: pkgname, classname : classname,
+           implementation: "new Object2ObjectLinkedOpenHashMap<${keyclass},${valclass}>",
+           imports: "import it.unimi.dsi.fastutil.objects.Object2ObjectLinkedOpenHashMap;"])
+        classname = "Fastutil_${keyclass}${valclass}_ArrayMap_Test"
+        generate(tpl, new File(dir, classname + ".java"),
+          [keyclass: keyclass, valclass: valclass, pkgname: pkgname, classname : classname,
+           implementation: "new Object2ObjectArrayMap<${keyclass},${valclass}>",
+           imports: "import it.unimi.dsi.fastutil.objects.Object2ObjectArrayMap;"])
+      }
+    }
+
+    // Generate List templates
+    tpl = new File(inp, "TemplateListTest.java")
+    ['Integer', 'Long', 'String'].each { valclass ->
+        def pkgname, dir, classname
+
+		// JDK
+        pkgname = "jdk.lists"
+        dir = new File(out, pkgname.replace(".","/"))
+        classname = "JDK_${valclass}_ArrayList_Test"
+        generate(tpl, new File(dir, classname + ".java"),
+          [valclass: valclass, pkgname: pkgname, classname : classname,
+           implementation: "new ArrayList<${valclass}>",
+           imports: "import java.util.ArrayList;"])
+        classname = "JDK_${valclass}_LinkedList_Test"
+        generate(tpl, new File(dir, classname + ".java"),
+          [valclass: valclass, pkgname: pkgname, classname : classname,
+           implementation: "new LinkedList<${valclass}>",
+           imports: "import java.util.LinkedList;"])
+
+        // Eclipse (formerly Goldman-Sachs Collections)
+        pkgname = "eclipse.lists"
+        dir = new File(out, pkgname.replace(".","/"))
+        classname = "Eclipse_${valclass}_ArrayList_Test"
+        generate(tpl, new File(dir, classname + ".java"),
+          [valclass: valclass, pkgname: pkgname, classname : classname,
+           implementation: "new FastList<${valclass}>",
+           imports: "import org.eclipse.collections.impl.list.mutable.FastList;"])
+        // classname = "Eclipse_${valclass}_MultiList_Test"
+        // generate(tpl, new File(dir, classname + ".java"),
+        //   [valclass: valclass, pkgname: pkgname, classname : classname,
+        //    implementation: "new CompositeFastList<${valclass}>",
+        //    imports: "import org.eclipse.collections.impl.list.mutable.CompositeFastList;"])
+
+        // Fastutil
+        pkgname = "fastutil.lists"
+        dir = new File(out, pkgname.replace(".","/"))
+        classname = "Fastutil_${valclass}_ArrayList_Test"
+        generate(tpl, new File(dir, classname + ".java"),
+          [valclass: valclass, pkgname: pkgname, classname : classname,
+           implementation: "new ObjectArrayList<${valclass}>",
+           imports: "import it.unimi.dsi.fastutil.objects.ObjectArrayList;"])
+    }
+
+    // Generate Set templates
+    tpl = new File(inp, "TemplateSetTest.java")
+    ['Integer', 'Long', 'String'].each { valclass ->
+        def pkgname, dir, classname
+
+		// JDK
+        pkgname = "jdk.sets"
+        dir = new File(out, pkgname.replace(".","/"))
+        classname = "JDK_${valclass}_HashSet_Test"
+        generate(tpl, new File(dir, classname + ".java"),
+          [valclass: valclass, pkgname: pkgname, classname : classname,
+           implementation: "new HashSet<${valclass}>",
+           imports: "import java.util.HashSet;"])
+        classname = "JDK_${valclass}_LinkedHashSet_Test"
+        generate(tpl, new File(dir, classname + ".java"),
+          [valclass: valclass, pkgname: pkgname, classname : classname,
+           implementation: "new LinkedHashSet<${valclass}>",
+           imports: "import java.util.LinkedHashSet;"])
+
+		// GNU Trove3
+        pkgname = "trove.set"
+        dir = new File(out, pkgname.replace(".","/"))
+        classname = "Trove_${valclass}_HashSet_Test"
+        generate(tpl, new File(dir, classname + ".java"),
+          [valclass: valclass, pkgname: pkgname, classname : classname,
+           implementation: "new THashSet<${valclass}>",
+           imports: "import gnu.trove.set.hash.THashSet;"])
+
+        // Koloboke
+        pkgname = "koloboke.sets"
+        dir = new File(out, pkgname.replace(".","/"))
+        classname = "Koloboke_${valclass}_HashSet_Test"
+        generate(tpl, new File(dir, classname + ".java"),
+          [valclass: valclass, pkgname: pkgname, classname : classname,
+           implementation: "HashObjSets.newMutableSet",
+           imports: "import net.openhft.koloboke.collect.set.hash.HashObjSets;"])
+
+        // Eclipse (formerly Goldman-Sachs Collections)
+        pkgname = "eclipse.sets"
+        dir = new File(out, pkgname.replace(".","/"))
+        classname = "Eclipse_${valclass}_HashSet_Test"
+        generate(tpl, new File(dir, classname + ".java"),
+          [valclass: valclass, pkgname: pkgname, classname : classname,
+           implementation: "new UnifiedSet<${valclass}>",
+           imports: "import org.eclipse.collections.impl.set.mutable.UnifiedSet;"])
+
+        // Fastutil
+        pkgname = "fastutil.sets"
+        dir = new File(out, pkgname.replace(".","/"))
+        classname = "Fastutil_${valclass}_HashSet_Test"
+        generate(tpl, new File(dir, classname + ".java"),
+          [valclass: valclass, pkgname: pkgname, classname : classname,
+           implementation: "new ObjectOpenHashSet<${valclass}>",
+           imports: "import it.unimi.dsi.fastutil.objects.ObjectOpenHashSet;"])
+        classname = "Fastutil_${valclass}_LinkedHashSet_Test"
+        generate(tpl, new File(dir, classname + ".java"),
+          [valclass: valclass, pkgname: pkgname, classname : classname,
+           implementation: "new ObjectLinkedOpenHashSet<${valclass}>",
+           imports: "import it.unimi.dsi.fastutil.objects.ObjectLinkedOpenHashSet;"])
+        classname = "Fastutil_${valclass}_ArraySet_Test"
+        generate(tpl, new File(dir, classname + ".java"),
+          [valclass: valclass, pkgname: pkgname, classname : classname,
+           implementation: "new ObjectArraySet<${valclass}>",
+           imports: "import it.unimi.dsi.fastutil.objects.ObjectArraySet;"])
+    }
+  }
+  gen() // For eclipse buildship until supported: https://github.com/eclipse/buildship/issues/266
+  doLast gen // This is the better way, but does not work with eclipse.
+  inputs.files fileTree(inp)    
+  outputs.files fileTree(out)
+}
+tasks.compileJava.dependsOn generateCode
