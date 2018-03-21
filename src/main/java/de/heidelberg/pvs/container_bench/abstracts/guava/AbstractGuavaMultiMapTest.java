@@ -48,7 +48,7 @@ public abstract class AbstractGuavaMultiMapTest<K, V> extends AbstractMapTest<K,
 	@Override
 	@Benchmark
 	public void addElement() {
-		Integer index = this.keyGenerator.generateIndex(size);
+	  int index = this.keyGenerator.generateIndex(size);
 		blackhole.consume(this.fullMap.put(newKeys[index], values[index]));
 		blackhole.consume(this.fullMap.remove(newKeys[index], values[index]));
 	}
@@ -78,7 +78,7 @@ public abstract class AbstractGuavaMultiMapTest<K, V> extends AbstractMapTest<K,
 	@Override
 	@Benchmark
 	public void removeElement() {
-		Integer index = this.keyGenerator.generateIndex(size);
+	  int index = this.keyGenerator.generateIndex(size);
 		blackhole.consume(this.fullMap.remove(keys[index], values[index]));
 		blackhole.consume(this.fullMap.put(keys[index], values[index])); // Keeping the steady-state
 	}

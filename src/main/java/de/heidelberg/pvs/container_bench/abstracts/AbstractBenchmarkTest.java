@@ -50,8 +50,7 @@ public abstract class AbstractBenchmarkTest {
 	public int seed;
 
 	/**
-	 * Blackhole object responsible for consuming any return from our tested
-	 * methods
+	 * Blackhole object responsible for consuming any return from our tested methods
 	 */
 	protected Blackhole blackhole;
 
@@ -77,23 +76,14 @@ public abstract class AbstractBenchmarkTest {
 	@Benchmark
 	@BenchmarkMode(Mode.SingleShotTime)
 	public void reportCollectionFootprint() throws IOException {
-
 		Object fullCollection = getFullCollection();
 
 		// Write to the file
 		String footprint = String.format("%s\n%s", fullCollection.getClass().getName(),
 				GraphLayout.parseInstance(fullCollection).toFootprint());
-		
-		PrintWriter printWriter = null;
-		try {
-			printWriter = new PrintWriter(new FileWriter(this.memoryFootprintFile, true));
+
+		try (PrintWriter printWriter = new PrintWriter(new FileWriter(this.memoryFootprintFile, true))) {
 			printWriter.write(footprint);
-		} finally {
-			if(printWriter != null) {
-				printWriter.close();
-			}
 		}
-
 	}
-
 }

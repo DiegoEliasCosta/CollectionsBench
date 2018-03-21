@@ -37,14 +37,14 @@ public abstract class AbstractHPPCListTest<T> extends AbstractListTest<T> {
 	@Override
 	@Benchmark
 	public void getElement() {
-		Integer index = generator.generateIndex(size);
+		int index = generator.generateIndex(size);
 		blackhole.consume(fullList.get(index));
 	}
 
 	@Override
 	@Benchmark
 	public void containsElement() {
-		Integer index = generator.generateIndex(size);
+		int index = generator.generateIndex(size);
 		blackhole.consume(fullList.contains(values[index]));
 	}
 
@@ -68,7 +68,7 @@ public abstract class AbstractHPPCListTest<T> extends AbstractListTest<T> {
 	@Override
 	@Benchmark
 	public void addElement() {
-		Integer index = generator.generateIndex(size);
+		int index = generator.generateIndex(size);
 		fullList.add(values[index]);
 		blackhole.consume(fullList.remove(size)); 
 	}
@@ -76,7 +76,7 @@ public abstract class AbstractHPPCListTest<T> extends AbstractListTest<T> {
 	@Override
 	@Benchmark
 	public void removeElement() {
-		Integer index = generator.generateIndex(size);
+		int index = generator.generateIndex(size);
 		blackhole.consume(fullList.removeFirst(values[index]));
 		fullList.add(values[index]); // void
 	}

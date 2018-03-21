@@ -44,7 +44,7 @@ public abstract class AbstractJDKSetTest<T> extends AbstractSetTest<T> {
 	@Override
 	@Benchmark
 	public void containsElement() {
-		Integer index = generator.generateIndex(size);
+		int index = generator.generateIndex(size);
 		blackhole.consume(fullSet.contains(values[index]));
 	}
 
@@ -61,7 +61,7 @@ public abstract class AbstractJDKSetTest<T> extends AbstractSetTest<T> {
 	@Override
 	@Benchmark
 	public void addElement() {
-		Integer index = this.generator.generateIndex(newValuesSize);
+		int index = this.generator.generateIndex(newValuesSize);
 		blackhole.consume(this.fullSet.add(newValues[index]));
 		blackhole.consume(this.fullSet.remove(newValues[index]));
 	}
@@ -77,7 +77,7 @@ public abstract class AbstractJDKSetTest<T> extends AbstractSetTest<T> {
 	@Override
 	@Benchmark
 	public void removeElement() {
-		Integer index = this.generator.generateIndex(size);
+		int index = this.generator.generateIndex(size);
 		blackhole.consume(this.fullSet.remove(values[index]));
 		blackhole.consume(this.fullSet.add(values[index])); // Keeping the steady-state
 	}
