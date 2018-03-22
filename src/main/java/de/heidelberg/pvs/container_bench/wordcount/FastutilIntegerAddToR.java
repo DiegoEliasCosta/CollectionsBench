@@ -1,0 +1,33 @@
+package de.heidelberg.pvs.container_bench.wordcount;
+
+import org.openjdk.jmh.annotations.Param;
+
+import it.unimi.dsi.fastutil.objects.Object2IntRBTreeMap;
+
+/**
+ * Integer-valued better function call for fastutil.
+ * 
+ * The addTo method exists in the OpenHashMap, RBTree and AVLTree, but not in a
+ * shared interface. So we would need three copies of this class. :-(
+ * 
+ * @author Erich Schubert
+ */
+public class FastutilIntegerAddToR extends AbstractWordcountBenchmark<Object2IntRBTreeMap<Object>> {
+	@Param({ "FASTUTIL_O2I_RB" })
+	public String impl;
+
+	@Override
+	protected Object2IntRBTreeMap<Object> makeMap() {
+		return new Object2IntRBTreeMap<Object>();
+	}
+
+	@Override
+	protected int size(Object2IntRBTreeMap<Object> map) {
+		return map.size();
+	}
+
+	@Override
+	protected void count(Object2IntRBTreeMap<Object> map, Object object) {
+		map.addTo(object, 1);
+	}
+}

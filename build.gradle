@@ -53,7 +53,6 @@ dependencies {
     // compile group: 'de.heidelberg.pvs.diego', name: 'collections-online-adapter', version:'0.0.1-SNAPSHOT'
 
     testCompile group: 'junit', name: 'junit', version:'4.12'
-    testCompile group: 'com.goldmansachs', name: 'gs-collections-testutils', version:'7.0.3'
 }
 
 // Code generator using Groovy GString templates, because it is the easiest to use.
