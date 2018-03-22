@@ -1,1 +1,1 @@
-*00m.txt.gz filter=lfs diff=lfs merge=lfs -text
+src/main/resources/enwiki-100m.txt.gz filter=lfs diff=lfs merge=lfs -text
