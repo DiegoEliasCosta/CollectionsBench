@@ -17,6 +17,7 @@ import java.util.zip.GZIPInputStream;
 import org.openjdk.jmh.annotations.Benchmark;
 import org.openjdk.jmh.annotations.BenchmarkMode;
 import org.openjdk.jmh.annotations.Fork;
+import org.openjdk.jmh.annotations.Level;
 import org.openjdk.jmh.annotations.Measurement;
 import org.openjdk.jmh.annotations.Mode;
 import org.openjdk.jmh.annotations.OutputTimeUnit;
@@ -30,17 +31,15 @@ import org.openjdk.jmh.annotations.Warmup;
 
 @BenchmarkMode(Mode.AverageTime)
 @OutputTimeUnit(TimeUnit.MILLISECONDS)
-@Timeout(time = 60, timeUnit = TimeUnit.MINUTES)
-@Warmup(iterations = 2)
-@Measurement(iterations = 10)
+@Timeout(time = 1, timeUnit = TimeUnit.MINUTES)
+@Warmup(iterations = 2, time = 5, timeUnit = TimeUnit.SECONDS)
+@Measurement(iterations = 11, time = 15, timeUnit = TimeUnit.SECONDS)
 @Fork(1)
 @Threads(1)
 @State(Scope.Benchmark)
 public abstract class AbstractWordcountBenchmark<T> {
-	/** Number of words to process */
-	// @Param({ "100", "1000", "10000", "100000", "1000000" })
-	@Param({ "100000" })
-	public int size;
+	/** Number of words to load from the file. Must be large enough for your measurement time! */
+	public int sizelimit = 100_000;
 
 	/** -1: no random shuffling */
 	@Param({ "-1" })
@@ -52,14 +51,21 @@ public abstract class AbstractWordcountBenchmark<T> {
 	/** Word list */
 	protected List<String> words;
 
-	@Setup
+	@State(Scope.Thread)
+	public static class BenchState<T> {
+		T map;
+
+		int pos;
+	}
+
+	@Setup(Level.Trial)
 	public void setup() throws IOException {
 		// Load the Wikipedia word data.
 		try (InputStream is = ClassLoader.getSystemResourceAsStream(FILENAME);
 				InputStream gi = new GZIPInputStream(is);
 				Reader r = new InputStreamReader(gi);
 				BufferedReader reader = new BufferedReader(r)) {
-			final int stop = seed == -1 ? size : (size << 1);
+			final int stop = seed == -1 ? sizelimit : (sizelimit << 1);
 			words = new ArrayList<>(stop);
 			String line;
 			Matcher m = Pattern.compile("[\\w–-]+", Pattern.UNICODE_CHARACTER_CLASS).matcher("");
@@ -72,24 +78,27 @@ public abstract class AbstractWordcountBenchmark<T> {
 			if (seed != -1) {
 				Collections.shuffle(words, new Random(seed));
 			}
-			words.subList(size, words.size()).clear(); // Truncate
+			words.subList(sizelimit, words.size()).clear(); // Truncate
 		}
+	}
+
+	@Setup(Level.Trial)
+	public void setupState(BenchState<T> state) {
+		state.map = makeMap();
+		state.pos = 0;
 	}
 
 	/**
 	 * Class to benchmark a single adapter.
 	 * 
-	 * @param adapter
-	 *            Adapter to benchmark
+	 * @param state
+	 *            State
 	 * @return collection size
 	 */
 	@Benchmark
-	public int wordcount() {
-		T map = makeMap();
-		for (String word : words) {
-			count(map, word);
-		}
-		return size(map); // prevent elimination
+	public int wordcount(BenchState<T> state) {
+		count(state.map, words.get(state.pos++));
+		return size(state.map); // prevent elimination
 	}
 
 	/**
