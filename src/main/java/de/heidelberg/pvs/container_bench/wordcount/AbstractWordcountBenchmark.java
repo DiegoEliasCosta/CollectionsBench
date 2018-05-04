@@ -102,14 +102,13 @@ public abstract class AbstractWordcountBenchmark<T> {
 	 * 
 	 * @param data
 	 *            Data to process
-	 * @return collection size
 	 */
 	@Benchmark
-	public int wordcount(Data data) {
+	public void wordcount(Data data) {
 		count(map, data.words.get(pos));
 		++pos;
 		pos = pos == data.words.size() ? 0 : pos;
-		return size(map); // prevent elimination
+		bh.consume(map); // prevent elimination
 	}
 
 	/**
@@ -128,13 +127,4 @@ public abstract class AbstractWordcountBenchmark<T> {
 	 *            Object to count.
 	 */
 	abstract protected void count(T map, String object);
-
-	/**
-	 * Size of data structure.
-	 *
-	 * @param map
-	 *            data
-	 * @return Size
-	 */
-	abstract protected int size(T map);
 }

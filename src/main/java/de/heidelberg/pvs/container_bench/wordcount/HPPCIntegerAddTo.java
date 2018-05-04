@@ -1,12 +1,10 @@
 package de.heidelberg.pvs.container_bench.wordcount;
 
-import java.util.function.Supplier;
-
 import org.openjdk.jmh.annotations.Param;
 
-import com.carrotsearch.hppc.ObjectIntHashMap;
 import com.carrotsearch.hppc.ObjectIntMap;
-import com.carrotsearch.hppc.ObjectIntScatterMap;
+
+import de.heidelberg.pvs.container_bench.factories.HPPCMap2IntFactory;
 
 /**
  * Adapter using the HPPC primitive map
@@ -15,28 +13,11 @@ import com.carrotsearch.hppc.ObjectIntScatterMap;
  */
 public class HPPCIntegerAddTo extends AbstractWordcountBenchmark<ObjectIntMap<Object>> {
 	@Param
-	public ImplEnum impl;
-
-	public static enum ImplEnum {
-		HPPC_O2I_HASH(ObjectIntHashMap::new), //
-		HPPC_O2I_SCATTER(ObjectIntScatterMap::new), //
-		;
-
-		public final Supplier<ObjectIntMap<Object>> maker;
-
-		private ImplEnum(Supplier<ObjectIntMap<Object>> maker) {
-			this.maker = maker;
-		}
-	}
+	public HPPCMap2IntFactory impl;
 
 	@Override
 	protected ObjectIntMap<Object> makeMap() {
 		return impl.maker.get();
-	}
-
-	@Override
-	protected int size(ObjectIntMap<Object> map) {
-		return map.size();
 	}
 
 	@Override
