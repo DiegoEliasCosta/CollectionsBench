@@ -86,5 +86,4 @@ public abstract class AbstractJDKSetTest<T> extends AbstractSetTest<T> {
 	protected Object getFullCollection() {
 		return fullSet;
 	}
-	
 }

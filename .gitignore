@@ -1,0 +1,8 @@
+/target/
+/build/
+/bin/
+/.gradle/
+.classpath
+.project
+.settings
+benchmarks.jar

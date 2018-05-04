@@ -3,7 +3,6 @@ package de.heidelberg.pvs.container_bench.jdk.maps;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.io.PrintWriter;
-import java.util.HashMap;
 import java.util.LinkedHashMap;
 import java.util.Map;
 

@@ -96,5 +96,4 @@ public abstract class AbstractJDKMapTest<K, V> extends AbstractMapTest<K, V> {
 	protected Object getFullCollection() {
 		return fullMap;
 	}
-	
 }

@@ -1,12 +1,12 @@
-package de.heidelberg.pvs.container_bench.gscollections.sets_sorted;
+package de.heidelberg.pvs.container_bench.eclipse.sets_sorted;
 
 import java.util.Set;
 
-import com.gs.collections.impl.set.sorted.mutable.TreeSortedSet;
+import org.eclipse.collections.impl.set.sorted.mutable.TreeSortedSet;
 
 import de.heidelberg.pvs.container_bench.abstracts.jdk.AbstractJDKSetTest;
 
-public class GSCollections_String_TreeSortedSet_Test extends AbstractJDKSetTest<String> {
+public class Eclipse_String_TreeSortedSet_Test extends AbstractJDKSetTest<String> {
 
 	@Override
 	protected Set<String> getNewSet() {

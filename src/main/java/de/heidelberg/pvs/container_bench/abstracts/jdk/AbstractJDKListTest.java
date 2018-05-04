@@ -92,5 +92,4 @@ public abstract class AbstractJDKListTest<T> extends AbstractListTest<T> {
 	protected Object getFullCollection() {
 		return fullList;
 	}
-
 }

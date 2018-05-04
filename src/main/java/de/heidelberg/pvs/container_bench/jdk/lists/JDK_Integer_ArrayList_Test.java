@@ -9,8 +9,6 @@ import java.util.List;
 import org.openjdk.jmh.annotations.Benchmark;
 import org.openjdk.jol.info.GraphLayout;
 
-import com.gs.collections.impl.list.mutable.FastList;
-
 import de.heidelberg.pvs.container_bench.abstracts.jdk.AbstractJDKListTest;
 
 public class JDK_Integer_ArrayList_Test extends AbstractJDKListTest<Integer> {

@@ -1,12 +1,12 @@
-package de.heidelberg.pvs.container_bench.gscollections.maps_sorted;
+package de.heidelberg.pvs.container_bench.eclipse.maps_sorted;
 
 import java.util.Map;
 
-import com.gs.collections.impl.map.sorted.mutable.TreeSortedMap;
+import org.eclipse.collections.impl.map.sorted.mutable.TreeSortedMap;
 
 import de.heidelberg.pvs.container_bench.abstracts.jdk.AbstractJDKMapTest;
 
-public class GSCollections_IntegerInteger_TreeSortedMaps_Test extends AbstractJDKMapTest<Integer, Integer>{
+public class Eclipse_IntegerInteger_TreeSortedMaps_Test extends AbstractJDKMapTest<Integer, Integer>{
 
 	@Override
 	protected Map<Integer, Integer> getNewMap() {
