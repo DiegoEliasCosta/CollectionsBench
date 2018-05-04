@@ -2,18 +2,15 @@ package de.heidelberg.pvs.container_bench.wordaddremove;
 
 import org.openjdk.jmh.annotations.Param;
 
+import de.heidelberg.pvs.container_bench.factories.BlackholeFact;
+
 public class Blackhole extends AbstractWordAddRemoveBenchmark<Void> {
-	@Param({ "BLACKHOLE" })
-	public String impl;
+	@Param
+	public BlackholeFact impl;
 
 	@Override
 	protected Void makeSet() {
 		return null;
-	}
-
-	@Override
-	protected int size(Void map) {
-		return 0;
 	}
 
 	@Override
