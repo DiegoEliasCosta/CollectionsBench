@@ -19,7 +19,7 @@ public class EclipseIntegerAddTo extends AbstractWordcountBenchmark<MutableObjec
 	}
 
 	@Override
-	protected void count(MutableObjectIntMap<Object> map, Object object) {
+	protected void count(MutableObjectIntMap<Object> map, String object) {
 		map.addToValue(object, 1);
 	}
 }
