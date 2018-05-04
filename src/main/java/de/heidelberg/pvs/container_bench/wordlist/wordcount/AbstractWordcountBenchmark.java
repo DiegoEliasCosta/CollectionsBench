@@ -6,6 +6,7 @@ import java.util.concurrent.TimeUnit;
 
 import org.openjdk.jmh.annotations.Benchmark;
 import org.openjdk.jmh.annotations.BenchmarkMode;
+import org.openjdk.jmh.annotations.CompilerControl;
 import org.openjdk.jmh.annotations.Fork;
 import org.openjdk.jmh.annotations.Level;
 import org.openjdk.jmh.annotations.Measurement;
@@ -32,15 +33,22 @@ import de.heidelberg.pvs.container_bench.wordlist.Wordlist;
 @State(Scope.Thread)
 public abstract class AbstractWordcountBenchmark<T> {
 	/**
-	 * Number of words to load from the file. Must be large enough for your
-	 * measurement time!
+	 * Number of words to load from the file.
+	 *
+	 * Named zz to have this sort last.
 	 */
 	@Param({ "100000" })
-	public int size;
+	public int zzsize;
 
 	/** -1: no random shuffling */
 	@Param({ "-1" })
 	public int seed = -1;
+
+	/** Fake parameter, for uniform output */
+	@Param
+	public WorkloadEnum workload;
+
+	public static enum WorkloadEnum { WORDCOUNT };
 
 	Blackhole bh;
 
@@ -55,7 +63,7 @@ public abstract class AbstractWordcountBenchmark<T> {
 	@Setup(Level.Trial)
 	public void setupData(Blackhole b, Data data) throws IOException {
 		bh = b;
-		data.words = Wordlist.loadWords(b, size, seed);
+		data.words = Wordlist.loadWords(b, zzsize, seed);
 	}
 
 	@Setup(Level.Iteration)
@@ -72,10 +80,10 @@ public abstract class AbstractWordcountBenchmark<T> {
 	@Benchmark
 	public void wordcount(Data data) throws InterruptedException {
 		List<String> words = data.words;
-		for (int i = 0; i < size; i++) {
+		for (int i = 0, size = words.size(); i < size; i++) {
 			String word = words.get(i);
 			count(map, word);
-			bh.consume(word); // try to prevent loop unrolling
+			// bh.consume(word); // try to prevent loop unrolling
 			if (Thread.interrupted()) {
 				throw new InterruptedException();
 			}
@@ -98,5 +106,6 @@ public abstract class AbstractWordcountBenchmark<T> {
 	 * @param object
 	 *            Object to count.
 	 */
+	@CompilerControl(CompilerControl.Mode.DONT_INLINE)
 	abstract protected void count(T map, String object);
 }

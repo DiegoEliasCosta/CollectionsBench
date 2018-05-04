@@ -4,7 +4,12 @@ import org.openjdk.jmh.annotations.Param;
 
 import de.heidelberg.pvs.container_bench.factories.BlackholeFact;
 
-public class Blackhole extends AbstractWordAddRemoveBenchmark<Void> {
+/**
+ * Noop class - this is supposed to be as fast as blackhole.
+ *
+ * Otherwise, we may need to reenable blackholing in other benchmarks.
+ */
+public class Noop extends AbstractWordAddRemoveBenchmark<Void> {
 	@Param
 	public BlackholeFact impl;
 
@@ -15,11 +20,11 @@ public class Blackhole extends AbstractWordAddRemoveBenchmark<Void> {
 
 	@Override
 	protected void add(String object) {
-		bh.consume(object);
+		// Empty, not even blackhole
 	}
 
 	@Override
 	protected void remove(String object) {
-		bh.consume(object);
+		// Empty, not even blackhole
 	}
 }

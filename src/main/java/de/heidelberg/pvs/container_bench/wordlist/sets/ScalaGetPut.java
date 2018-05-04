@@ -16,12 +16,12 @@ public class ScalaGetPut extends AbstractWordAddRemoveBenchmark<Set<String>> {
 	}
 
 	@Override
-	protected void add(Set<String> map, String object) {
-		map.add(object);
+	protected void add(String object) {
+		set.add(object);
 	}
 
 	@Override
-	protected void remove(Set<String> map, String object) {
-		map.remove(object);
+	protected void remove(String object) {
+		set.remove(object);
 	}
 }

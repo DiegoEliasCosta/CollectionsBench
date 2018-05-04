@@ -6,6 +6,7 @@ import java.util.concurrent.TimeUnit;
 
 import org.openjdk.jmh.annotations.Benchmark;
 import org.openjdk.jmh.annotations.BenchmarkMode;
+import org.openjdk.jmh.annotations.CompilerControl;
 import org.openjdk.jmh.annotations.Fork;
 import org.openjdk.jmh.annotations.Level;
 import org.openjdk.jmh.annotations.Measurement;
@@ -31,88 +32,41 @@ import de.heidelberg.pvs.container_bench.wordlist.Wordlist;
 @Threads(1)
 @State(Scope.Thread)
 public abstract class AbstractWordAddRemoveBenchmark<T> {
+	/** Workload to process */
+	@Param
+	public Workload workload;
+
 	/**
-	 * Number of words to load from the file. Must be large enough for your
-	 * measurement time!
+	 * Number of words to load from the file.
+	 *
+	 * Named zz to have this sort last.
 	 */
 	@Param({ "100000" })
-	public int size = 100_000;
+	public int zzsize = 100_000;
 
 	/** -1: no random shuffling */
 	@Param({ "-1" })
 	public int seed = -1;
 
-	/** File name of our input data. */
-	public static final String FILENAME = "enwiki-100m.txt.gz";
-
 	Blackhole bh;
 
 	T set;
 
-	@State(Scope.Benchmark)
-	public static class Data {
-		/** Word list */
-		protected List<String> words;
-	}
-
-	@Setup(Level.Trial)
-	public void setupData(Blackhole b, Data data) throws IOException {
-		bh = b;
-		data.words = Wordlist.loadWords(b, size, seed);
-	}
+	/** Word list */
+	protected List<String> words;
 
 	@Setup(Level.Iteration)
-	public void setupState() {
-		set = makeSet();
+	public void setup(Blackhole b) throws IOException, InterruptedException {
+		bh = b;
+		if (words == null) {
+			words = Wordlist.loadWords(b, zzsize, seed);
+		}
+		workload.init(this);
 	}
 
-	/**
-	 * Class to benchmark a single adapter.
-	 * 
-	 * @param data
-	 *            Data to process
-	 */
 	@Benchmark
-	public void addRemove(Data data) throws InterruptedException {
-		List<String> words = data.words;
-		for (int i = 0; i < size; i++) {
-			{
-				String word = words.get(i);
-				add(set, word);
-				bh.consume(word); // try to prevent loop unrolling
-			}
-			if (++i >= size) {
-				break;
-			}
-			{
-				String word = words.get(i);
-				remove(set, word);
-				bh.consume(word); // try to prevent loop unrolling
-			}
-			if (Thread.interrupted()) {
-				throw new InterruptedException();
-			}
-		}
-		bh.consume(set); // prevent elimination
-	}
-
-	/**
-	 * Class to benchmark a single adapter.
-	 * 
-	 * @param data
-	 *            Data to process
-	 */
-	@Benchmark
-	public void add(Data data) throws InterruptedException {
-		List<String> words = data.words;
-		for (int i = 0; i < size; i++) {
-			String word = words.get(i);
-			add(set, word);
-			bh.consume(word); // try to prevent loop unrolling
-			if (Thread.interrupted()) {
-				throw new InterruptedException();
-			}
-		}
+	public void bench() throws InterruptedException {
+		workload.run(this);
 		bh.consume(set); // prevent elimination
 	}
 
@@ -126,20 +80,153 @@ public abstract class AbstractWordAddRemoveBenchmark<T> {
 	/**
 	 * Add a single object
 	 *
-	 * @param map
-	 *            data
 	 * @param object
 	 *            Object to add.
 	 */
-	abstract protected void add(T map, String object);
+	@CompilerControl(CompilerControl.Mode.DONT_INLINE)
+	abstract protected void add(String object);
 
 	/**
 	 * Remove a single object
 	 *
-	 * @param map
-	 *            data
 	 * @param object
 	 *            Object to remove.
 	 */
-	abstract protected void remove(T map, String object);
+	@CompilerControl(CompilerControl.Mode.DONT_INLINE)
+	abstract protected void remove(String object);
+
+	public enum Workload {
+		ADD {
+			@Override
+			public <T> void run(AbstractWordAddRemoveBenchmark<T> self) throws InterruptedException {
+				Blackhole bh = self.bh;
+				List<String> words = self.words;
+				for (int i = 0, size = words.size(); i < size; i++) {
+					String word = words.get(i);
+					self.add(word);
+					// bh.consume(word); // try to prevent loop unrolling
+					if (Thread.interrupted()) {
+						throw new InterruptedException();
+					}
+				}
+			}
+		}, //
+		REMOVE {
+			@Override
+			public <T> void run(AbstractWordAddRemoveBenchmark<T> self) throws InterruptedException {
+				Blackhole bh = self.bh;
+				List<String> words = self.words;
+				for (int i = 0, size = words.size(); i < size; i++) {
+					String word = words.get(i);
+					self.remove(word);
+					// bh.consume(word); // try to prevent loop unrolling
+					if (Thread.interrupted()) {
+						throw new InterruptedException();
+					}
+				}
+			}
+
+			@Override
+			public <T> void init(AbstractWordAddRemoveBenchmark<T> self) throws InterruptedException {
+				List<String> words = self.words;
+				self.set = self.makeSet();
+				for (int i = 0, size = words.size(); i < size; i++) {
+					self.add(words.get(i));
+					if ((i & 0xFF) == 0 && Thread.interrupted()) {
+						throw new InterruptedException();
+					}
+				}
+			}
+		}, //
+		ADD_OR_REMOVE {
+			@Override
+			public <T> void run(AbstractWordAddRemoveBenchmark<T> self) throws InterruptedException {
+				Blackhole bh = self.bh;
+				List<String> words = self.words;
+				for (int i = 0, size = words.size(); i < size;) {
+					{
+						String word = words.get(i++);
+						self.add(word);
+						// bh.consume(word); // try to prevent loop unrolling
+					}
+					if (i >= size) {
+						break;
+					}
+					{
+						String word = words.get(i++);
+						self.remove(word);
+						// bh.consume(word); // try to prevent loop unrolling
+					}
+					if (Thread.interrupted()) {
+						throw new InterruptedException();
+					}
+				}
+			}
+		}, //
+		ADD_THEN_REMOVE {
+			@Override
+			public <T> void run(AbstractWordAddRemoveBenchmark<T> self) throws InterruptedException {
+				Blackhole bh = self.bh;
+				List<String> words = self.words;
+				for (int i = 0, size = words.size(); i < size; i++) {
+					String word = words.get(i);
+					self.add(word);
+					// bh.consume(word); // try to prevent loop unrolling
+					if (Thread.interrupted()) {
+						throw new InterruptedException();
+					}
+				}
+				for (int i = 0, size = words.size(); i < size; i++) {
+					String word = words.get(i);
+					self.remove(word);
+					// bh.consume(word); // try to prevent loop unrolling
+					if (Thread.interrupted()) {
+						throw new InterruptedException();
+					}
+				}
+			}
+		}, //
+		REMOVE_THEN_ADD {
+			@Override
+			public <T> void run(AbstractWordAddRemoveBenchmark<T> self) throws InterruptedException {
+				Blackhole bh = self.bh;
+				List<String> words = self.words;
+				for (int i = 0, size = words.size(); i < size; i++) {
+					String word = words.get(i);
+					self.remove(word);
+					// bh.consume(word); // try to prevent loop unrolling
+					if (Thread.interrupted()) {
+						throw new InterruptedException();
+					}
+				}
+				for (int i = 0, size = words.size(); i < size; i++) {
+					String word = words.get(i);
+					self.add(word);
+					// bh.consume(word); // try to prevent loop unrolling
+					if (Thread.interrupted()) {
+						throw new InterruptedException();
+					}
+				}
+			}
+
+			@Override
+			public <T> void init(AbstractWordAddRemoveBenchmark<T> self) throws InterruptedException {
+				List<String> words = self.words;
+				self.set = self.makeSet();
+				for (int i = 0, size = words.size(); i < size; i++) {
+					self.add(words.get(i));
+					if ((i & 0xFF) == 0 && Thread.interrupted()) {
+						throw new InterruptedException();
+					}
+				}
+			}
+		}, //
+		;
+
+		abstract public <T> void run(AbstractWordAddRemoveBenchmark<T> self) throws InterruptedException;
+
+		public <T> void init(AbstractWordAddRemoveBenchmark<T> self) throws InterruptedException {
+			self.set = self.makeSet();
+		}
+	}
 }
