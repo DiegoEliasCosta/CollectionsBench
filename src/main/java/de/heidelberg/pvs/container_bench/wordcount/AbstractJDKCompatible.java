@@ -1,10 +1,13 @@
 package de.heidelberg.pvs.container_bench.wordcount;
 
 import java.util.HashMap;
+import java.util.LinkedHashMap;
 import java.util.Map;
 import java.util.TreeMap;
 import java.util.function.Supplier;
 
+import org.apache.commons.collections4.map.HashedMap;
+import org.apache.commons.collections4.map.LinkedMap;
 import org.eclipse.collections.impl.map.mutable.UnifiedMap;
 import org.eclipse.collections.impl.map.sorted.mutable.TreeSortedMap;
 import org.openjdk.jmh.annotations.Param;
@@ -22,9 +25,10 @@ import net.openhft.koloboke.collect.map.hash.HashObjObjMaps;
 public abstract class AbstractJDKCompatible extends AbstractWordcountBenchmark<Map<Object, Integer>> {
 	@Param
 	public ImplEnum impl;
-
+	
 	public static enum ImplEnum {
 		JDK_O2O_HASH(HashMap::new), //
+		JDK_O2O_LINKEDHASH(LinkedHashMap::new), //
 		JDK_O2O_TREE(TreeMap::new), //
 		FASTUTIL_O2O_HASH(Object2ObjectOpenHashMap::new), //
 		FASTUTIL_O2O_AVL(Object2ObjectAVLTreeMap::new), //
@@ -39,6 +43,8 @@ public abstract class AbstractJDKCompatible extends AbstractWordcountBenchmark<M
 		KOLOBOKE_O2I_HASH(HashObjIntMaps::newMutableMap), //
 		ECLIPSE_O2O_HASH(UnifiedMap::new), //
 		ECLIPSE_O2O_TREE(TreeSortedMap::new), //
+		APACHE_O2O_HASH(HashedMap::new), //
+		APACHE_O2O_LINKEDHASH(LinkedMap::new), //
 		;
 
 		public final Supplier<Map<Object, Integer>> maker;
