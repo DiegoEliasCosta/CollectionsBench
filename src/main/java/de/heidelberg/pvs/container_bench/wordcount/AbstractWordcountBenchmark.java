@@ -107,9 +107,8 @@ public abstract class AbstractWordcountBenchmark<T> {
 	@Benchmark
 	public int wordcount(Data data) {
 		count(map, data.words.get(pos));
-		if (++pos == data.words.size()) {
-			pos = 0;
-		}
+		++pos;
+		pos = pos == data.words.size() ? 0 : pos;
 		return size(map); // prevent elimination
 	}
 
