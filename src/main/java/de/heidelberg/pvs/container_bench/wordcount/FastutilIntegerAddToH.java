@@ -2,6 +2,7 @@ package de.heidelberg.pvs.container_bench.wordcount;
 
 import org.openjdk.jmh.annotations.Param;
 
+import de.heidelberg.pvs.container_bench.factories.FastutilMap2IntFact;
 import it.unimi.dsi.fastutil.objects.Object2IntOpenHashMap;
 
 /**
@@ -13,17 +14,13 @@ import it.unimi.dsi.fastutil.objects.Object2IntOpenHashMap;
  * @author Erich Schubert
  */
 public class FastutilIntegerAddToH extends AbstractWordcountBenchmark<Object2IntOpenHashMap<Object>> {
-	@Param({ "FASTUTIL_O2I_HASH" })
-	public String impl;
+	@Param({ "FASTUTIL_O2I_HASH" }) // The others do not work!
+	public FastutilMap2IntFact impl;
 
 	@Override
 	protected Object2IntOpenHashMap<Object> makeMap() {
-		return new Object2IntOpenHashMap<Object>();
-	}
-
-	@Override
-	protected int size(Object2IntOpenHashMap<Object> map) {
-		return map.size();
+		// For other "impl" values, this will fail. That is ok.
+		return (Object2IntOpenHashMap<Object>) impl.maker.get();
 	}
 
 	@Override

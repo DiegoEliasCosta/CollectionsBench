@@ -1,36 +1,17 @@
 package de.heidelberg.pvs.container_bench.wordcount;
 
-import java.util.function.Supplier;
-
 import org.eclipse.collections.api.map.MutableMapIterable;
-import org.eclipse.collections.impl.map.mutable.UnifiedMap;
-import org.eclipse.collections.impl.map.sorted.mutable.TreeSortedMap;
 import org.openjdk.jmh.annotations.Param;
+
+import de.heidelberg.pvs.container_bench.factories.EclipseMapFact;
 
 public class EclipseUpdateValue extends AbstractWordcountBenchmark<MutableMapIterable<Object, Integer>> {
 	@Param
-	public ImplEnum impl;
-
-	public static enum ImplEnum {
-		ECLIPSE_O2O_HASH(UnifiedMap::new), //
-		ECLIPSE_O2O_TREE(TreeSortedMap::new), //
-		;
-
-		public final Supplier<MutableMapIterable<Object, Integer>> maker;
-
-		private ImplEnum(Supplier<MutableMapIterable<Object, Integer>> maker) {
-			this.maker = maker;
-		}
-	}
+	public EclipseMapFact impl;
 
 	@Override
 	protected MutableMapIterable<Object, Integer> makeMap() {
 		return impl.maker.get();
-	}
-
-	@Override
-	protected int size(MutableMapIterable<Object, Integer> map) {
-		return map.size();
 	}
 
 	@Override

@@ -3,18 +3,15 @@ package de.heidelberg.pvs.container_bench.wordcount;
 import org.apache.mahout.math.map.OpenObjectIntHashMap;
 import org.openjdk.jmh.annotations.Param;
 
+import de.heidelberg.pvs.container_bench.factories.MahoutMap2IntFact;
+
 public class MahoutIntegerGetPut extends AbstractWordcountBenchmark<OpenObjectIntHashMap<Object>> {
-	@Param({"MAHOUT_O2I_HASH"})
-	public String impl;
+	@Param
+	public MahoutMap2IntFact impl;
 
 	@Override
 	protected OpenObjectIntHashMap<Object> makeMap() {
-		return new OpenObjectIntHashMap<Object>();
-	}
-
-	@Override
-	protected int size(OpenObjectIntHashMap<Object> map) {
-		return map.size();
+		return impl.maker.get();
 	}
 
 	@Override

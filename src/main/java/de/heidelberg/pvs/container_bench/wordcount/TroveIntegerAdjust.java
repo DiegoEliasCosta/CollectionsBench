@@ -2,21 +2,17 @@ package de.heidelberg.pvs.container_bench.wordcount;
 
 import org.openjdk.jmh.annotations.Param;
 
+import de.heidelberg.pvs.container_bench.factories.TroveMap2IntFact;
 import gnu.trove.map.TObjectIntMap;
 import gnu.trove.map.hash.TObjectIntHashMap;
 
 public class TroveIntegerAdjust extends AbstractWordcountBenchmark<TObjectIntMap<Object>> {
-	@Param({ "TROVE_O2I_HASH" })
-	public String impl;
+	@Param
+	public TroveMap2IntFact impl;
 
 	@Override
 	protected TObjectIntMap<Object> makeMap() {
 		return new TObjectIntHashMap<Object>();
-	}
-
-	@Override
-	protected int size(TObjectIntMap<Object> map) {
-		return map.size();
 	}
 
 	@Override
