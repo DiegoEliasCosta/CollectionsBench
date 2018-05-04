@@ -49,6 +49,7 @@ dependencies {
     compile group: 'edu.stanford.nlp', name: 'stanford-corenlp', version:'3.9.1'
     compile group: 'org.agrona', name: 'Agrona', version: '0.9.1'
     compile group: 'org.apache.commons', name: 'commons-collections4', version: '4.1'
+    compile group: 'org.javolution', name: 'javolution-core-java', version: '6.0.0'
     compile group: 'org.scala-lang', name: 'scala-library', version: '2.12.6'
 
     // compile group: 'in.jlibs', name: 'jlibs-core', version:'2.2.1'
