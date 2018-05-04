@@ -111,9 +111,8 @@ public abstract class AbstractWordAddRemoveBenchmark<T> {
 		} else {
 			remove(set, data.words.get(pos));
 		}
-		if (++pos == data.words.size()) {
-			pos = 0;
-		}
+		++pos;
+		pos = pos == data.words.size() ? 0 : pos;
 		return size(set); // prevent elimination
 	}
 
