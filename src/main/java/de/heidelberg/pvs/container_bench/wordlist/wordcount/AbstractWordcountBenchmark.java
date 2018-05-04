@@ -1,18 +1,8 @@
-package de.heidelberg.pvs.container_bench.wordcount;
+package de.heidelberg.pvs.container_bench.wordlist.wordcount;
 
-import java.io.BufferedReader;
 import java.io.IOException;
-import java.io.InputStream;
-import java.io.InputStreamReader;
-import java.io.Reader;
-import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
-import java.util.Random;
 import java.util.concurrent.TimeUnit;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
-import java.util.zip.GZIPInputStream;
 
 import org.openjdk.jmh.annotations.Benchmark;
 import org.openjdk.jmh.annotations.BenchmarkMode;
@@ -30,8 +20,10 @@ import org.openjdk.jmh.annotations.Timeout;
 import org.openjdk.jmh.annotations.Warmup;
 import org.openjdk.jmh.infra.Blackhole;
 
-@BenchmarkMode(Mode.AverageTime)
-@OutputTimeUnit(TimeUnit.NANOSECONDS)
+import de.heidelberg.pvs.container_bench.wordlist.Wordlist;
+
+@BenchmarkMode(Mode.SingleShotTime)
+@OutputTimeUnit(TimeUnit.MILLISECONDS)
 @Timeout(time = 1, timeUnit = TimeUnit.MINUTES)
 @Warmup(iterations = 2, time = 5, timeUnit = TimeUnit.SECONDS)
 @Measurement(iterations = 11, time = 10, timeUnit = TimeUnit.SECONDS)
@@ -43,20 +35,16 @@ public abstract class AbstractWordcountBenchmark<T> {
 	 * Number of words to load from the file. Must be large enough for your
 	 * measurement time!
 	 */
-	public int sizelimit = 100_000;
+	@Param({ "100000" })
+	public int size;
 
 	/** -1: no random shuffling */
 	@Param({ "-1" })
 	public int seed = -1;
 
-	/** File name of our input data. */
-	public static final String FILENAME = "enwiki-100m.txt.gz";
-
 	Blackhole bh;
 
 	T map;
-
-	int pos;
 
 	@State(Scope.Benchmark)
 	public static class Data {
@@ -67,34 +55,12 @@ public abstract class AbstractWordcountBenchmark<T> {
 	@Setup(Level.Trial)
 	public void setupData(Blackhole b, Data data) throws IOException {
 		bh = b;
-		// Load the Wikipedia word data.
-		try (InputStream is = ClassLoader.getSystemResourceAsStream(FILENAME);
-				InputStream gi = new GZIPInputStream(is);
-				Reader r = new InputStreamReader(gi);
-				BufferedReader reader = new BufferedReader(r)) {
-			final int stop = seed == -1 ? sizelimit : (sizelimit << 1);
-			List<String> words = data.words = new ArrayList<>(stop);
-			String line;
-			Matcher m = Pattern.compile("[\\w–-]+", Pattern.UNICODE_CHARACTER_CLASS).matcher("");
-			while ((line = reader.readLine()) != null && words.size() < stop) {
-				m.reset(line);
-				while (m.find()) {
-					String word = m.group();
-					b.consume(word.hashCode()); // Precompute hashcode
-					words.add(word);
-				}
-			}
-			if (seed != -1) {
-				Collections.shuffle(words, new Random(seed));
-			}
-			words.subList(sizelimit, words.size()).clear(); // Truncate
-		}
+		data.words = Wordlist.loadWords(b, size, seed);
 	}
 
 	@Setup(Level.Iteration)
 	public void setupState() {
 		map = makeMap();
-		pos = 0;
 	}
 
 	/**
@@ -105,9 +71,12 @@ public abstract class AbstractWordcountBenchmark<T> {
 	 */
 	@Benchmark
 	public void wordcount(Data data) {
-		count(map, data.words.get(pos));
-		++pos;
-		pos = pos == data.words.size() ? 0 : pos;
+		List<String> words = data.words;
+		for (int i = 0; i < size; i++) {
+			String word = words.get(i);
+			count(map, word);
+			bh.consume(word); // try to prevent loop unrolling
+		}
 		bh.consume(map); // prevent elimination
 	}
 

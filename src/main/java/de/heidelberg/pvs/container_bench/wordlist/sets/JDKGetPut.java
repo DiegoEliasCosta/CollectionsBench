@@ -1,14 +1,14 @@
-package de.heidelberg.pvs.container_bench.wordaddremove;
+package de.heidelberg.pvs.container_bench.wordlist.sets;
 
-import scala.collection.mutable.Set;
+import java.util.Set;
 
 import org.openjdk.jmh.annotations.Param;
 
-import de.heidelberg.pvs.container_bench.factories.ScalaSetFact;
+import de.heidelberg.pvs.container_bench.factories.JDKSetFact;
 
-public class ScalaGetPut extends AbstractWordAddRemoveBenchmark<Set<String>> {
+public class JDKGetPut extends AbstractWordAddRemoveBenchmark<Set<String>> {
 	@Param
-	public ScalaSetFact impl;
+	public JDKSetFact impl;
 
 	@Override
 	protected Set<String> makeSet() {

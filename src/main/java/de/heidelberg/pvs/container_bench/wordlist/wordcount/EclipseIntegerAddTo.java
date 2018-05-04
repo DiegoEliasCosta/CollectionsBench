@@ -1,4 +1,4 @@
-package de.heidelberg.pvs.container_bench.wordcount;
+package de.heidelberg.pvs.container_bench.wordlist.wordcount;
 
 import org.eclipse.collections.api.map.primitive.MutableObjectIntMap;
 import org.openjdk.jmh.annotations.Param;

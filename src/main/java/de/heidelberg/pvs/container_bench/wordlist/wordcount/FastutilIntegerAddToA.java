@@ -1,9 +1,9 @@
-package de.heidelberg.pvs.container_bench.wordcount;
+package de.heidelberg.pvs.container_bench.wordlist.wordcount;
 
 import org.openjdk.jmh.annotations.Param;
 
 import de.heidelberg.pvs.container_bench.factories.FastutilMap2IntFact;
-import it.unimi.dsi.fastutil.objects.Object2IntRBTreeMap;
+import it.unimi.dsi.fastutil.objects.Object2IntAVLTreeMap;
 
 /**
  * Integer-valued better function call for fastutil.
@@ -13,18 +13,18 @@ import it.unimi.dsi.fastutil.objects.Object2IntRBTreeMap;
  * 
  * @author Erich Schubert
  */
-public class FastutilIntegerAddToR extends AbstractWordcountBenchmark<Object2IntRBTreeMap<Object>> {
-	@Param({ "FASTUTIL_O2I_RB" }) // The others do not work!
+public class FastutilIntegerAddToA extends AbstractWordcountBenchmark<Object2IntAVLTreeMap<Object>> {
+	@Param({ "FASTUTIL_O2I_AVL" }) // The others do not work!
 	public FastutilMap2IntFact impl;
 
 	@Override
-	protected Object2IntRBTreeMap<Object> makeMap() {
+	protected Object2IntAVLTreeMap<Object> makeMap() {
 		// For other "impl" values, this will fail. That is ok.
-		return (Object2IntRBTreeMap<Object>) impl.maker.get();
+		return (Object2IntAVLTreeMap<Object>) impl.maker.get();
 	}
 
 	@Override
-	protected void count(Object2IntRBTreeMap<Object> map, String object) {
+	protected void count(Object2IntAVLTreeMap<Object> map, String object) {
 		map.addTo(object, 1);
 	}
 }

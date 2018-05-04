@@ -1,4 +1,4 @@
-package de.heidelberg.pvs.container_bench.wordaddremove;
+package de.heidelberg.pvs.container_bench.wordlist.sets;
 
 import org.openjdk.jmh.annotations.Param;
 

@@ -1,11 +1,11 @@
-package de.heidelberg.pvs.container_bench.wordcount;
+package de.heidelberg.pvs.container_bench.wordlist.wordcount;
 
 import org.apache.mahout.math.map.OpenObjectIntHashMap;
 import org.openjdk.jmh.annotations.Param;
 
 import de.heidelberg.pvs.container_bench.factories.MahoutMap2IntFact;
 
-public class MahoutIntegerAddTo extends AbstractWordcountBenchmark<OpenObjectIntHashMap<Object>> {
+public class MahoutIntegerGetPut extends AbstractWordcountBenchmark<OpenObjectIntHashMap<Object>> {
 	@Param
 	public MahoutMap2IntFact impl;
 
@@ -16,6 +16,6 @@ public class MahoutIntegerAddTo extends AbstractWordcountBenchmark<OpenObjectInt
 
 	@Override
 	protected void count(OpenObjectIntHashMap<Object> map, String object) {
-		map.adjustOrPutValue(object, 1, 1);
+		map.put(object, map.get(object) + 1);
 	}
 }

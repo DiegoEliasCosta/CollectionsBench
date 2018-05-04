@@ -1,4 +1,4 @@
-package de.heidelberg.pvs.container_bench.wordcount;
+package de.heidelberg.pvs.container_bench.wordlist.wordcount;
 
 import org.openjdk.jmh.annotations.Param;
 
@@ -7,11 +7,11 @@ import com.carrotsearch.hppc.ObjectObjectMap;
 import de.heidelberg.pvs.container_bench.factories.HPPCMapFactory;
 
 /**
- * Adapter using the HPPC equivalents of the JCF API
+ * Adapter using the index-based operations
  * 
  * @author Erich Schubert
  */
-public class HPPCGetPut extends AbstractWordcountBenchmark<ObjectObjectMap<Object, Integer>> {
+public class HPPCIndexOf extends AbstractWordcountBenchmark<ObjectObjectMap<Object, Integer>> {
 	@Param
 	public HPPCMapFactory impl;
 
@@ -22,7 +22,11 @@ public class HPPCGetPut extends AbstractWordcountBenchmark<ObjectObjectMap<Objec
 
 	@Override
 	protected void count(ObjectObjectMap<Object, Integer> map, String object) {
-		Integer old = map.get(object);
-		map.put(object, old != null ? old + 1 : 1);
+		int idx = map.indexOf(object);
+		if (idx >= 0) {
+			map.indexReplace(idx, map.indexGet(idx) + 1);
+		} else {
+			map.indexInsert(idx, object, 1);
+		}
 	}
 }
