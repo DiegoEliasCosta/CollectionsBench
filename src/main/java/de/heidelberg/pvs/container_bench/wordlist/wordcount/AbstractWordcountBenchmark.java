@@ -70,12 +70,15 @@ public abstract class AbstractWordcountBenchmark<T> {
 	 *            Data to process
 	 */
 	@Benchmark
-	public void wordcount(Data data) {
+	public void wordcount(Data data) throws InterruptedException {
 		List<String> words = data.words;
 		for (int i = 0; i < size; i++) {
 			String word = words.get(i);
 			count(map, word);
 			bh.consume(word); // try to prevent loop unrolling
+			if (Thread.interrupted()) {
+				throw new InterruptedException();
+			}
 		}
 		bh.consume(map); // prevent elimination
 	}

@@ -73,7 +73,7 @@ public abstract class AbstractWordAddRemoveBenchmark<T> {
 	 *            Data to process
 	 */
 	@Benchmark
-	public void addRemove(Data data) {
+	public void addRemove(Data data) throws InterruptedException {
 		List<String> words = data.words;
 		for (int i = 0; i < size; i++) {
 			{
@@ -89,6 +89,9 @@ public abstract class AbstractWordAddRemoveBenchmark<T> {
 				remove(set, word);
 				bh.consume(word); // try to prevent loop unrolling
 			}
+			if (Thread.interrupted()) {
+				throw new InterruptedException();
+			}
 		}
 		bh.consume(set); // prevent elimination
 	}
@@ -100,12 +103,15 @@ public abstract class AbstractWordAddRemoveBenchmark<T> {
 	 *            Data to process
 	 */
 	@Benchmark
-	public void add(Data data) {
+	public void add(Data data) throws InterruptedException {
 		List<String> words = data.words;
 		for (int i = 0; i < size; i++) {
 			String word = words.get(i);
 			add(set, word);
 			bh.consume(word); // try to prevent loop unrolling
+			if (Thread.interrupted()) {
+				throw new InterruptedException();
+			}
 		}
 		bh.consume(set); // prevent elimination
 	}
