@@ -26,6 +26,8 @@ public abstract class AbstractJDKCompatible extends AbstractWordcountBenchmark<M
 		ECLIPSE_O2O_TREE(org.eclipse.collections.impl.map.sorted.mutable.TreeSortedMap::new), //
 		APACHE_O2O_HASH(org.apache.commons.collections4.map.HashedMap::new), //
 		APACHE_O2O_LINKEDHASH(org.apache.commons.collections4.map.LinkedMap::new), //
+		MAHOUT_O2O_HASH(org.apache.mahout.math.map.OpenHashMap::new), //
+		// These will be very slow:
 		FASTUTIL_O2O_ARRAY(it.unimi.dsi.fastutil.objects.Object2ObjectArrayMap::new), //
 		FASTUTIL_O2I_ARRAY(it.unimi.dsi.fastutil.objects.Object2IntArrayMap::new), //
 		GOOGLE_O2O_ARRAY(com.google.api.client.util.ArrayMap::new), //
