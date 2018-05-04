@@ -18,7 +18,7 @@ public class MahoutIntegerAddTo extends AbstractWordcountBenchmark<OpenObjectInt
 	}
 
 	@Override
-	protected void count(OpenObjectIntHashMap<Object> map, Object object) {
+	protected void count(OpenObjectIntHashMap<Object> map, String object) {
 		map.adjustOrPutValue(object, 1, 1);
 	}
 }

@@ -40,7 +40,7 @@ public class HPPCGetPut extends AbstractWordcountBenchmark<ObjectObjectMap<Objec
 	}
 
 	@Override
-	protected void count(ObjectObjectMap<Object, Integer> map, Object object) {
+	protected void count(ObjectObjectMap<Object, Integer> map, String object) {
 		Integer old = map.get(object);
 		map.put(object, old != null ? old + 1 : 1);
 	}

@@ -128,7 +128,7 @@ public abstract class AbstractWordcountBenchmark<T> {
 	 * @param object
 	 *            Object to count.
 	 */
-	abstract protected void count(T map, Object object);
+	abstract protected void count(T map, String object);
 
 	/**
 	 * Size of data structure.

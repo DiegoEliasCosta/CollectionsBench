@@ -34,7 +34,7 @@ public class EclipseUpdateValue extends AbstractWordcountBenchmark<MutableMapIte
 	}
 
 	@Override
-	protected void count(MutableMapIterable<Object, Integer> map, Object object) {
+	protected void count(MutableMapIterable<Object, Integer> map, String object) {
 		map.updateValue(object, () -> 0, x -> x + 1);
 	}
 }

@@ -40,7 +40,7 @@ public class HPPCIndexOf extends AbstractWordcountBenchmark<ObjectObjectMap<Obje
 	}
 
 	@Override
-	protected void count(ObjectObjectMap<Object, Integer> map, Object object) {
+	protected void count(ObjectObjectMap<Object, Integer> map, String object) {
 		int idx = map.indexOf(object);
 		if (idx >= 0) {
 			map.indexReplace(idx, map.indexGet(idx) + 1);

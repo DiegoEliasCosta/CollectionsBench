@@ -38,7 +38,7 @@ public class FastutilIntegerGetPut extends AbstractWordcountBenchmark<Object2Int
 	}
 
 	@Override
-	protected void count(Object2IntMap<Object> map, Object object) {
+	protected void count(Object2IntMap<Object> map, String object) {
 		map.put(object, map.getInt(object) + 1);
 	}
 }
