@@ -102,10 +102,9 @@ public abstract class AbstractWordAddRemoveBenchmark<T> {
 	 * 
 	 * @param data
 	 *            Data to process
-	 * @return collection size
 	 */
 	@Benchmark
-	public int addRemove(Data data) {
+	public void addRemove(Data data) {
 		if ((pos & 1) == 0) {
 			add(set, data.words.get(pos));
 		} else {
@@ -113,7 +112,7 @@ public abstract class AbstractWordAddRemoveBenchmark<T> {
 		}
 		++pos;
 		pos = pos == data.words.size() ? 0 : pos;
-		return size(set); // prevent elimination
+		bh.consume(set); // prevent elimination
 	}
 
 	/**
@@ -142,13 +141,4 @@ public abstract class AbstractWordAddRemoveBenchmark<T> {
 	 *            Object to remove.
 	 */
 	abstract protected void remove(T map, String object);
-
-	/**
-	 * Size of data structure.
-	 *
-	 * @param map
-	 *            data
-	 * @return Size
-	 */
-	abstract protected int size(T map);
 }
