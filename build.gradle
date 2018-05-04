@@ -8,8 +8,8 @@ plugins {
   id 'eclipse'
   id 'idea'
   // id 'me.champeau.gradle.jmh' version '0.4.5' // did not work
-  id 'com.github.johnrengelman.shadow' version '2.0.2'
-  // id 'com.github.ben-manes.versions' version '0.17.0' // for "gradlew dependencyUpdates"
+  id 'com.github.johnrengelman.shadow' version '2.0.4'
+  id 'com.github.ben-manes.versions' version '0.17.0' // for "gradlew dependencyUpdates"
 }
 
 repositories {
@@ -48,6 +48,7 @@ dependencies {
     compile group: 'org.apache.mahout', name: 'mahout-collections', version:'1.0'
     compile group: 'edu.stanford.nlp', name: 'stanford-corenlp', version:'3.9.1'
     compile group: 'org.agrona', name: 'Agrona', version: '0.9.1'
+    compile group: 'org.apache.commons', name: 'commons-collections4', version: '4.1'
 
     // compile group: 'in.jlibs', name: 'jlibs-core', version:'2.2.1'
     // compile group: 'de.heidelberg.pvs.diego', name: 'collections-online-adapter', version:'0.0.1-SNAPSHOT'
