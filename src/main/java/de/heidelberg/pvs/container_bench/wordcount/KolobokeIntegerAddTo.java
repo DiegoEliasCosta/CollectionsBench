@@ -1,17 +1,32 @@
 package de.heidelberg.pvs.container_bench.wordcount;
 
+import java.util.function.Supplier;
+
 import org.openjdk.jmh.annotations.Param;
 
 import net.openhft.koloboke.collect.map.hash.HashObjIntMap;
-import net.openhft.koloboke.collect.map.hash.HashObjIntMaps;
 
 public class KolobokeIntegerAddTo extends AbstractWordcountBenchmark<HashObjIntMap<Object>> {
-	@Param({ "KOLOBOKE_O2I_HASH" })
-	public String impl;
+	@Param
+	public ImplEnum impl;
+
+	private static final net.openhft.koloboke.collect.map.hash.HashObjIntMapFactory<Object> KOLOBOKEQ = new net.openhft.koloboke.collect.impl.hash.QHashSeparateKVObjIntMapFactoryImpl<>();
+
+	public static enum ImplEnum {
+		KOLOBOKE_O2I_HASH(net.openhft.koloboke.collect.map.hash.HashObjIntMaps::newMutableMap), //
+		KOLOBOKE_O2I_QHASH(() -> KOLOBOKEQ.newMutableMap()), //
+		;
+
+		public final Supplier<HashObjIntMap<Object>> maker;
+
+		private ImplEnum(Supplier<HashObjIntMap<Object>> maker) {
+			this.maker = maker;
+		}
+	}
 
 	@Override
 	protected HashObjIntMap<Object> makeMap() {
-		return HashObjIntMaps.newMutableMap();
+		return impl.maker.get();
 	}
 
 	@Override
