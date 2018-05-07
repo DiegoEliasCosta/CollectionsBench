@@ -201,17 +201,17 @@ public abstract class AbstractWordSetBenchmark<T> {
 		}, //
 		;
 
-		private static boolean failIfInterrupted() throws InterruptedException {
-			if (Thread.interrupted()) {
-				throw new InterruptedException();
-			}
-			return false;
+		public <T> void init(AbstractWordSetBenchmark<T> self) throws InterruptedException {
+			self.set = self.makeSet();
 		}
 
 		abstract public <T> void run(AbstractWordSetBenchmark<T> self) throws InterruptedException;
 
-		public <T> void init(AbstractWordSetBenchmark<T> self) throws InterruptedException {
-			self.set = self.makeSet();
+		private static boolean failIfInterrupted() throws InterruptedException {
+			if (Thread.interrupted()) {
+				throw new InterruptedException();
+			}
+			return true;
 		}
 	}
 }
