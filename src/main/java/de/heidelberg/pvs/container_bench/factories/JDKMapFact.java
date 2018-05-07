@@ -7,6 +7,7 @@ public enum JDKMapFact {
 	JDK_O2O_HASH(java.util.HashMap::new), //
 	JDK_O2O_LINKEDHASH(java.util.LinkedHashMap::new), //
 	JDK_O2O_TREE(java.util.TreeMap::new), //
+	JDK_O2O_HASHTABLE(java.util.Hashtable::new), //
 
 	KOLOBOKE_O2O_HASH(net.openhft.koloboke.collect.map.hash.HashObjObjMaps::newMutableMap), //
 	KOLOBOKE_O2I_HASH(net.openhft.koloboke.collect.map.hash.HashObjIntMaps::newMutableMap), //
