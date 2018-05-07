@@ -25,9 +25,9 @@ import de.heidelberg.pvs.container_bench.wordlist.Wordlist;
 
 @BenchmarkMode(Mode.SingleShotTime)
 @OutputTimeUnit(TimeUnit.MILLISECONDS)
-@Timeout(time = 1, timeUnit = TimeUnit.MINUTES)
-@Warmup(iterations = 2, time = 1, timeUnit = TimeUnit.SECONDS)
-@Measurement(iterations = 11, time = 1, timeUnit = TimeUnit.SECONDS)
+@Timeout(time = 10, timeUnit = TimeUnit.MINUTES)
+@Warmup(iterations = 5)
+@Measurement(iterations = 11)
 @Fork(1)
 @Threads(1)
 @State(Scope.Thread)
@@ -107,89 +107,62 @@ public abstract class AbstractWordSetBenchmark<T> {
 			@Override
 			public <T> void run(AbstractWordSetBenchmark<T> self) throws InterruptedException {
 				List<String> words = self.words;
-				for (int i = 0, size = words.size(); i < size; i++) {
-					String word = words.get(i);
-					self.add(word);
-					if (Thread.interrupted()) {
-						throw new InterruptedException();
-					}
+				for (int i = 0, size = words.size(); i < size && failIfInterrupted(); i++) {
+					self.add(words.get(i));
 				}
 			}
 		}, //
 		REMOVE {
 			@Override
-			public <T> void run(AbstractWordSetBenchmark<T> self) throws InterruptedException {
+			public <T> void init(AbstractWordSetBenchmark<T> self) throws InterruptedException {
+				self.set = self.makeSet(); // Same as super()
 				List<String> words = self.words;
-				for (int i = 0, size = words.size(); i < size; i++) {
-					String word = words.get(i);
-					self.remove(word);
-					if (Thread.interrupted()) {
-						throw new InterruptedException();
-					}
+				for (int i = 0, size = words.size(); i < size && failIfInterrupted(); i++) {
+					self.add(words.get(i));
 				}
 			}
 
 			@Override
-			public <T> void init(AbstractWordSetBenchmark<T> self) throws InterruptedException {
+			public <T> void run(AbstractWordSetBenchmark<T> self) throws InterruptedException {
 				List<String> words = self.words;
-				self.set = self.makeSet();
-				for (int i = 0, size = words.size(); i < size; i++) {
-					self.add(words.get(i));
-					if ((i & 0xFF) == 0 && Thread.interrupted()) {
-						throw new InterruptedException();
-					}
+				for (int i = 0, size = words.size(); i < size && failIfInterrupted(); i++) {
+					self.remove(words.get(i));
 				}
 			}
 		}, //
 		CONTAINS {
 			@Override
-			public <T> void run(AbstractWordSetBenchmark<T> self) throws InterruptedException {
+			public <T> void init(AbstractWordSetBenchmark<T> self) throws InterruptedException {
+				self.set = self.makeSet(); // Same as super()
 				List<String> words = self.words;
-				int found = 0;
-				for (int i = 0, size = words.size(); i < size; i++) {
-					String word = words.get(i);
-					if (self.contains(word)) {
-						++found;
-					}
-					if (Thread.interrupted()) {
-						throw new InterruptedException();
-					}
+				for (int i = 0, size = words.size(); i < size && failIfInterrupted(); i++) {
+					self.add(words.get(i));
+					++i; // Skip every other word for the contains benchmark.
 				}
-				self.bh.consume(found); // Prevent elimination
 			}
 
 			@Override
-			public <T> void init(AbstractWordSetBenchmark<T> self) throws InterruptedException {
+			public <T> void run(AbstractWordSetBenchmark<T> self) throws InterruptedException {
 				List<String> words = self.words;
-				self.set = self.makeSet();
-				for (int i = 0, size = words.size(); i < size; i++) {
-					self.add(words.get(i));
-					if ((i & 0xFF) == 0 && Thread.interrupted()) {
-						throw new InterruptedException();
+				int found = 0;
+				for (int i = 0, size = words.size(); i < size && failIfInterrupted(); i++) {
+					if (self.contains(words.get(i))) {
+						++found;
 					}
-					++i; // Skip every other word for the contains benchmark.
 				}
+				self.bh.consume(found); // Prevent elimination
 			}
 		}, //
 		ADD_OR_REMOVE {
 			@Override
 			public <T> void run(AbstractWordSetBenchmark<T> self) throws InterruptedException {
 				List<String> words = self.words;
-				for (int i = 0, size = words.size(); i < size;) {
-					{
-						String word = words.get(i++);
-						self.add(word);
-					}
+				for (int i = 0, size = words.size(); i < size && failIfInterrupted();) {
+					self.add(words.get(i++));
 					if (i >= size) {
 						break;
 					}
-					{
-						String word = words.get(i++);
-						self.remove(word);
-					}
-					if (Thread.interrupted()) {
-						throw new InterruptedException();
-					}
+					self.remove(words.get(i++));
 				}
 			}
 		}, //
@@ -197,55 +170,43 @@ public abstract class AbstractWordSetBenchmark<T> {
 			@Override
 			public <T> void run(AbstractWordSetBenchmark<T> self) throws InterruptedException {
 				List<String> words = self.words;
-				for (int i = 0, size = words.size(); i < size; i++) {
-					String word = words.get(i);
-					self.add(word);
-					if (Thread.interrupted()) {
-						throw new InterruptedException();
-					}
+				for (int i = 0, size = words.size(); i < size && failIfInterrupted(); i++) {
+					self.add(words.get(i));
 				}
-				for (int i = 0, size = words.size(); i < size; i++) {
-					String word = words.get(i);
-					self.remove(word);
-					if (Thread.interrupted()) {
-						throw new InterruptedException();
-					}
+				for (int i = 0, size = words.size(); i < size && failIfInterrupted(); i++) {
+					self.remove(words.get(i));
 				}
 			}
 		}, //
 		REMOVE_THEN_ADD {
 			@Override
-			public <T> void run(AbstractWordSetBenchmark<T> self) throws InterruptedException {
+			public <T> void init(AbstractWordSetBenchmark<T> self) throws InterruptedException {
+				self.set = self.makeSet(); // same as super();
 				List<String> words = self.words;
-				for (int i = 0, size = words.size(); i < size; i++) {
-					String word = words.get(i);
-					self.remove(word);
-					if (Thread.interrupted()) {
-						throw new InterruptedException();
-					}
-				}
-				for (int i = 0, size = words.size(); i < size; i++) {
-					String word = words.get(i);
-					self.add(word);
-					if (Thread.interrupted()) {
-						throw new InterruptedException();
-					}
+				for (int i = 0, size = words.size(); i < size && failIfInterrupted(); i++) {
+					self.add(words.get(i));
 				}
 			}
 
 			@Override
-			public <T> void init(AbstractWordSetBenchmark<T> self) throws InterruptedException {
+			public <T> void run(AbstractWordSetBenchmark<T> self) throws InterruptedException {
 				List<String> words = self.words;
-				self.set = self.makeSet();
-				for (int i = 0, size = words.size(); i < size; i++) {
+				for (int i = 0, size = words.size(); i < size && failIfInterrupted(); i++) {
+					self.remove(words.get(i));
+				}
+				for (int i = 0, size = words.size(); i < size && failIfInterrupted(); i++) {
 					self.add(words.get(i));
-					if ((i & 0xFF) == 0 && Thread.interrupted()) {
-						throw new InterruptedException();
-					}
 				}
 			}
 		}, //
 		;
+
+		private static boolean failIfInterrupted() throws InterruptedException {
+			if (Thread.interrupted()) {
+				throw new InterruptedException();
+			}
+			return false;
+		}
 
 		abstract public <T> void run(AbstractWordSetBenchmark<T> self) throws InterruptedException;
 
