@@ -9,7 +9,7 @@ import de.heidelberg.pvs.container_bench.factories.BlackholeFact;
  *
  * Otherwise, we may need to reenable blackholing in other benchmarks.
  */
-public class Noop extends AbstractWordAddRemoveBenchmark<Void> {
+public class Noop extends AbstractWordSetBenchmark<Void> {
 	@Param
 	public BlackholeFact impl;
 

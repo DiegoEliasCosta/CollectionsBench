@@ -31,7 +31,7 @@ import de.heidelberg.pvs.container_bench.wordlist.Wordlist;
 @Fork(1)
 @Threads(1)
 @State(Scope.Thread)
-public abstract class AbstractWordAddRemoveBenchmark<T> {
+public abstract class AbstractWordSetBenchmark<T> {
 	/** Workload to process */
 	@Param
 	public Workload workload;
@@ -105,7 +105,7 @@ public abstract class AbstractWordAddRemoveBenchmark<T> {
 	public enum Workload {
 		ADD {
 			@Override
-			public <T> void run(AbstractWordAddRemoveBenchmark<T> self) throws InterruptedException {
+			public <T> void run(AbstractWordSetBenchmark<T> self) throws InterruptedException {
 				List<String> words = self.words;
 				for (int i = 0, size = words.size(); i < size; i++) {
 					String word = words.get(i);
@@ -118,7 +118,7 @@ public abstract class AbstractWordAddRemoveBenchmark<T> {
 		}, //
 		REMOVE {
 			@Override
-			public <T> void run(AbstractWordAddRemoveBenchmark<T> self) throws InterruptedException {
+			public <T> void run(AbstractWordSetBenchmark<T> self) throws InterruptedException {
 				List<String> words = self.words;
 				for (int i = 0, size = words.size(); i < size; i++) {
 					String word = words.get(i);
@@ -130,7 +130,7 @@ public abstract class AbstractWordAddRemoveBenchmark<T> {
 			}
 
 			@Override
-			public <T> void init(AbstractWordAddRemoveBenchmark<T> self) throws InterruptedException {
+			public <T> void init(AbstractWordSetBenchmark<T> self) throws InterruptedException {
 				List<String> words = self.words;
 				self.set = self.makeSet();
 				for (int i = 0, size = words.size(); i < size; i++) {
@@ -143,7 +143,7 @@ public abstract class AbstractWordAddRemoveBenchmark<T> {
 		}, //
 		CONTAINS {
 			@Override
-			public <T> void run(AbstractWordAddRemoveBenchmark<T> self) throws InterruptedException {
+			public <T> void run(AbstractWordSetBenchmark<T> self) throws InterruptedException {
 				List<String> words = self.words;
 				int found = 0;
 				for (int i = 0, size = words.size(); i < size; i++) {
@@ -159,7 +159,7 @@ public abstract class AbstractWordAddRemoveBenchmark<T> {
 			}
 
 			@Override
-			public <T> void init(AbstractWordAddRemoveBenchmark<T> self) throws InterruptedException {
+			public <T> void init(AbstractWordSetBenchmark<T> self) throws InterruptedException {
 				List<String> words = self.words;
 				self.set = self.makeSet();
 				for (int i = 0, size = words.size(); i < size; i++) {
@@ -173,7 +173,7 @@ public abstract class AbstractWordAddRemoveBenchmark<T> {
 		}, //
 		ADD_OR_REMOVE {
 			@Override
-			public <T> void run(AbstractWordAddRemoveBenchmark<T> self) throws InterruptedException {
+			public <T> void run(AbstractWordSetBenchmark<T> self) throws InterruptedException {
 				List<String> words = self.words;
 				for (int i = 0, size = words.size(); i < size;) {
 					{
@@ -195,7 +195,7 @@ public abstract class AbstractWordAddRemoveBenchmark<T> {
 		}, //
 		ADD_THEN_REMOVE {
 			@Override
-			public <T> void run(AbstractWordAddRemoveBenchmark<T> self) throws InterruptedException {
+			public <T> void run(AbstractWordSetBenchmark<T> self) throws InterruptedException {
 				List<String> words = self.words;
 				for (int i = 0, size = words.size(); i < size; i++) {
 					String word = words.get(i);
@@ -215,7 +215,7 @@ public abstract class AbstractWordAddRemoveBenchmark<T> {
 		}, //
 		REMOVE_THEN_ADD {
 			@Override
-			public <T> void run(AbstractWordAddRemoveBenchmark<T> self) throws InterruptedException {
+			public <T> void run(AbstractWordSetBenchmark<T> self) throws InterruptedException {
 				List<String> words = self.words;
 				for (int i = 0, size = words.size(); i < size; i++) {
 					String word = words.get(i);
@@ -234,7 +234,7 @@ public abstract class AbstractWordAddRemoveBenchmark<T> {
 			}
 
 			@Override
-			public <T> void init(AbstractWordAddRemoveBenchmark<T> self) throws InterruptedException {
+			public <T> void init(AbstractWordSetBenchmark<T> self) throws InterruptedException {
 				List<String> words = self.words;
 				self.set = self.makeSet();
 				for (int i = 0, size = words.size(); i < size; i++) {
@@ -247,9 +247,9 @@ public abstract class AbstractWordAddRemoveBenchmark<T> {
 		}, //
 		;
 
-		abstract public <T> void run(AbstractWordAddRemoveBenchmark<T> self) throws InterruptedException;
+		abstract public <T> void run(AbstractWordSetBenchmark<T> self) throws InterruptedException;
 
-		public <T> void init(AbstractWordAddRemoveBenchmark<T> self) throws InterruptedException {
+		public <T> void init(AbstractWordSetBenchmark<T> self) throws InterruptedException {
 			self.set = self.makeSet();
 		}
 	}

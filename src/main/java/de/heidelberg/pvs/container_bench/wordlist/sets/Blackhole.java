@@ -4,7 +4,7 @@ import org.openjdk.jmh.annotations.Param;
 
 import de.heidelberg.pvs.container_bench.factories.BlackholeFact;
 
-public class Blackhole extends AbstractWordAddRemoveBenchmark<Void> {
+public class Blackhole extends AbstractWordSetBenchmark<Void> {
 	@Param
 	public BlackholeFact impl;
 

@@ -6,7 +6,7 @@ import org.openjdk.jmh.annotations.Param;
 
 import de.heidelberg.pvs.container_bench.factories.ScalaSetFact;
 
-public class ScalaGetPut extends AbstractWordAddRemoveBenchmark<Set<String>> {
+public class ScalaGetPut extends AbstractWordSetBenchmark<Set<String>> {
 	@Param
 	public ScalaSetFact impl;
 

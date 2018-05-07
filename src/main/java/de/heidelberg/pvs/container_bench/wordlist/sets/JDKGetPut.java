@@ -6,7 +6,7 @@ import org.openjdk.jmh.annotations.Param;
 
 import de.heidelberg.pvs.container_bench.factories.JDKSetFact;
 
-public class JDKGetPut extends AbstractWordAddRemoveBenchmark<Set<String>> {
+public class JDKGetPut extends AbstractWordSetBenchmark<Set<String>> {
 	@Param
 	public JDKSetFact impl;
 
