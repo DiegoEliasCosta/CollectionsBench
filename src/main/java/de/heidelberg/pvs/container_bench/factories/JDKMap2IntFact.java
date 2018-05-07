@@ -3,7 +3,7 @@ package de.heidelberg.pvs.container_bench.factories;
 import java.util.Map;
 import java.util.function.Supplier;
 
-public enum JDKMapFact {
+public enum JDKMap2IntFact {
 	JDK_O2O_HASH(java.util.HashMap::new), //
 	JDK_O2O_LINKEDHASH(java.util.LinkedHashMap::new), //
 	JDK_O2O_TREE(java.util.TreeMap::new), //
@@ -47,11 +47,11 @@ public enum JDKMapFact {
 
 	public final boolean slow;
 
-	private JDKMapFact(Supplier<Map<Object, Integer>> maker) {
+	private JDKMap2IntFact(Supplier<Map<Object, Integer>> maker) {
 		this(maker, false);
 	}
 
-	private JDKMapFact(Supplier<Map<Object, Integer>> maker, boolean slow) {
+	private JDKMap2IntFact(Supplier<Map<Object, Integer>> maker, boolean slow) {
 		this.maker = maker;
 		this.slow = slow;
 	}

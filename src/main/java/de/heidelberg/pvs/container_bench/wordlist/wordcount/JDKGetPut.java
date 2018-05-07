@@ -4,11 +4,11 @@ import java.util.Map;
 
 import org.openjdk.jmh.annotations.Param;
 
-import de.heidelberg.pvs.container_bench.factories.JDKMapFact;
+import de.heidelberg.pvs.container_bench.factories.JDKMap2IntFact;
 
 public class JDKGetPut extends AbstractWordcountBenchmark<Map<Object, Integer>> {
 	@Param
-	public JDKMapFact impl;
+	public JDKMap2IntFact impl;
 
 	@Override
 	protected Map<Object, Integer> makeMap() {
