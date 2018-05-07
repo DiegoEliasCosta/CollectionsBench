@@ -2,6 +2,7 @@ package de.heidelberg.pvs.container_bench.factories;
 
 import net.openhft.koloboke.collect.map.hash.HashObjIntMap;
 import net.openhft.koloboke.collect.map.hash.HashObjObjMap;
+import net.openhft.koloboke.collect.set.hash.HashIntSet;
 import net.openhft.koloboke.collect.set.hash.HashObjSet;
 
 public class KolobokeQHash {
@@ -17,6 +18,14 @@ public class KolobokeQHash {
 		private static final net.openhft.koloboke.collect.set.hash.HashObjSetFactory<Object> FACTORY = new net.openhft.koloboke.collect.impl.hash.QHashObjSetFactoryImpl<>();
 
 		public static final <K> HashObjSet<K> newMutableSet() {
+			return FACTORY.newMutableSet();
+		}
+	}
+
+	public static class IntSets {
+		private static final net.openhft.koloboke.collect.set.hash.HashIntSetFactory FACTORY = new net.openhft.koloboke.collect.impl.hash.QHashIntSetFactoryImpl();
+
+		public static final HashIntSet newMutableSet() {
 			return FACTORY.newMutableSet();
 		}
 	}

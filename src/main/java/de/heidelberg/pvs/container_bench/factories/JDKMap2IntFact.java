@@ -18,13 +18,13 @@ public enum JDKMap2IntFact {
 	FASTUTIL_O2O_LINKEDHASH(it.unimi.dsi.fastutil.objects.Object2ObjectLinkedOpenHashMap::new), //
 	FASTUTIL_O2O_AVL(it.unimi.dsi.fastutil.objects.Object2ObjectAVLTreeMap::new), //
 	FASTUTIL_O2O_RB(it.unimi.dsi.fastutil.objects.Object2ObjectRBTreeMap::new), //
-	FASTUTIL_O2O_ARRAY(it.unimi.dsi.fastutil.objects.Object2ObjectArrayMap::new, true), //
+	FASTUTIL_O2O_ARRAY(it.unimi.dsi.fastutil.objects.Object2ObjectArrayMap::new), //
 	// Fastutil primitive-valued
 	FASTUTIL_O2I_HASH(it.unimi.dsi.fastutil.objects.Object2IntOpenHashMap::new), //
 	FASTUTIL_O2I_LINKEDHASH(it.unimi.dsi.fastutil.objects.Object2IntLinkedOpenHashMap::new), //
 	FASTUTIL_O2I_AVL(it.unimi.dsi.fastutil.objects.Object2IntAVLTreeMap::new), //
 	FASTUTIL_O2I_RB(it.unimi.dsi.fastutil.objects.Object2IntRBTreeMap::new), //
-	FASTUTIL_O2I_ARRAY(it.unimi.dsi.fastutil.objects.Object2IntArrayMap::new, true), //
+	FASTUTIL_O2I_ARRAY(it.unimi.dsi.fastutil.objects.Object2IntArrayMap::new), //
 
 	TROVE_O2O_HASH(gnu.trove.map.hash.THashMap::new), //
 
@@ -39,20 +39,13 @@ public enum JDKMap2IntFact {
 	JAVOLUTION_HASH(javolution.util.FastMap::new), //
 	JAVOLUTION_SORTED(javolution.util.FastSortedMap::new), //
 
-	GOOGLE_O2O_ARRAY(com.google.api.client.util.ArrayMap::new, true), //
-	CORENLP_ARRAY(edu.stanford.nlp.util.ArrayMap::new, true); //
+	GOOGLE_O2O_ARRAY(com.google.api.client.util.ArrayMap::new), //
+	CORENLP_ARRAY(edu.stanford.nlp.util.ArrayMap::new); //
 	;
 
 	public final Supplier<Map<Object, Integer>> maker;
 
-	public final boolean slow;
-
 	private JDKMap2IntFact(Supplier<Map<Object, Integer>> maker) {
-		this(maker, false);
-	}
-
-	private JDKMap2IntFact(Supplier<Map<Object, Integer>> maker, boolean slow) {
 		this.maker = maker;
-		this.slow = slow;
 	}
 }

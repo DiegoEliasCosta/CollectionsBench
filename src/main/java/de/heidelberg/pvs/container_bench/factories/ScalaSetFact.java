@@ -10,9 +10,9 @@ public enum ScalaSetFact {
 	SCALA_LINKED(scala.collection.mutable.LinkedHashSet::new), //
 	;
 
-	public final Supplier<Set<String>> maker;
+	public final Supplier<Set<?>> maker;
 
-	private ScalaSetFact(Supplier<Set<String>> maker) {
+	private ScalaSetFact(Supplier<Set<?>> maker) {
 		this.maker = maker;
 	}
 }

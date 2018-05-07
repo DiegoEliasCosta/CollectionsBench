@@ -10,9 +10,10 @@ public class ScalaGetPut extends AbstractWordSetBenchmark<Set<String>> {
 	@Param
 	public ScalaSetFact impl;
 
+	@SuppressWarnings("unchecked")
 	@Override
 	protected Set<String> makeSet() {
-		return impl.maker.get();
+		return (Set<String>) impl.maker.get();
 	}
 
 	@Override
