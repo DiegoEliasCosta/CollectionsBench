@@ -45,4 +45,12 @@ public class Wordlist {
 		}
 	}
 
+	public static int[] loadInts(Blackhole b, int size, int seed, int mask) throws IOException {
+		List<String> words = loadWords(b, size, seed);
+		int[] data = new int[words.size()];
+		for (int i = 0; i < data.length; i++) {
+			data[i] = words.get(i).hashCode() & mask;
+		}
+		return data;
+	}
 }
