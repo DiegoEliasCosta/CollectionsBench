@@ -58,9 +58,7 @@ public abstract class AbstractWordAddRemoveBenchmark<T> {
 	@Setup(Level.Iteration)
 	public void setup(Blackhole b) throws IOException, InterruptedException {
 		bh = b;
-		if (words == null) {
-			words = Wordlist.loadWords(b, zzsize, seed);
-		}
+		words = words != null ? words : Wordlist.loadWords(b, zzsize, seed);
 		workload.init(this);
 	}
 
@@ -87,6 +85,15 @@ public abstract class AbstractWordAddRemoveBenchmark<T> {
 	abstract protected void add(String object);
 
 	/**
+	 * Test for containment.
+	 *
+	 * @param object
+	 *            Object to check.
+	 */
+	@CompilerControl(CompilerControl.Mode.DONT_INLINE)
+	abstract protected boolean contains(String object);
+
+	/**
 	 * Remove a single object
 	 *
 	 * @param object
@@ -99,12 +106,10 @@ public abstract class AbstractWordAddRemoveBenchmark<T> {
 		ADD {
 			@Override
 			public <T> void run(AbstractWordAddRemoveBenchmark<T> self) throws InterruptedException {
-				Blackhole bh = self.bh;
 				List<String> words = self.words;
 				for (int i = 0, size = words.size(); i < size; i++) {
 					String word = words.get(i);
 					self.add(word);
-					// bh.consume(word); // try to prevent loop unrolling
 					if (Thread.interrupted()) {
 						throw new InterruptedException();
 					}
@@ -114,12 +119,10 @@ public abstract class AbstractWordAddRemoveBenchmark<T> {
 		REMOVE {
 			@Override
 			public <T> void run(AbstractWordAddRemoveBenchmark<T> self) throws InterruptedException {
-				Blackhole bh = self.bh;
 				List<String> words = self.words;
 				for (int i = 0, size = words.size(); i < size; i++) {
 					String word = words.get(i);
 					self.remove(word);
-					// bh.consume(word); // try to prevent loop unrolling
 					if (Thread.interrupted()) {
 						throw new InterruptedException();
 					}
@@ -138,16 +141,44 @@ public abstract class AbstractWordAddRemoveBenchmark<T> {
 				}
 			}
 		}, //
+		CONTAINS {
+			@Override
+			public <T> void run(AbstractWordAddRemoveBenchmark<T> self) throws InterruptedException {
+				List<String> words = self.words;
+				int found = 0;
+				for (int i = 0, size = words.size(); i < size; i++) {
+					String word = words.get(i);
+					if (self.contains(word)) {
+						++found;
+					}
+					if (Thread.interrupted()) {
+						throw new InterruptedException();
+					}
+				}
+				self.bh.consume(found); // Prevent elimination
+			}
+
+			@Override
+			public <T> void init(AbstractWordAddRemoveBenchmark<T> self) throws InterruptedException {
+				List<String> words = self.words;
+				self.set = self.makeSet();
+				for (int i = 0, size = words.size(); i < size; i++) {
+					self.add(words.get(i));
+					if ((i & 0xFF) == 0 && Thread.interrupted()) {
+						throw new InterruptedException();
+					}
+					++i; // Skip every other word for the contains benchmark.
+				}
+			}
+		}, //
 		ADD_OR_REMOVE {
 			@Override
 			public <T> void run(AbstractWordAddRemoveBenchmark<T> self) throws InterruptedException {
-				Blackhole bh = self.bh;
 				List<String> words = self.words;
 				for (int i = 0, size = words.size(); i < size;) {
 					{
 						String word = words.get(i++);
 						self.add(word);
-						// bh.consume(word); // try to prevent loop unrolling
 					}
 					if (i >= size) {
 						break;
@@ -155,7 +186,6 @@ public abstract class AbstractWordAddRemoveBenchmark<T> {
 					{
 						String word = words.get(i++);
 						self.remove(word);
-						// bh.consume(word); // try to prevent loop unrolling
 					}
 					if (Thread.interrupted()) {
 						throw new InterruptedException();
@@ -166,12 +196,10 @@ public abstract class AbstractWordAddRemoveBenchmark<T> {
 		ADD_THEN_REMOVE {
 			@Override
 			public <T> void run(AbstractWordAddRemoveBenchmark<T> self) throws InterruptedException {
-				Blackhole bh = self.bh;
 				List<String> words = self.words;
 				for (int i = 0, size = words.size(); i < size; i++) {
 					String word = words.get(i);
 					self.add(word);
-					// bh.consume(word); // try to prevent loop unrolling
 					if (Thread.interrupted()) {
 						throw new InterruptedException();
 					}
@@ -179,7 +207,6 @@ public abstract class AbstractWordAddRemoveBenchmark<T> {
 				for (int i = 0, size = words.size(); i < size; i++) {
 					String word = words.get(i);
 					self.remove(word);
-					// bh.consume(word); // try to prevent loop unrolling
 					if (Thread.interrupted()) {
 						throw new InterruptedException();
 					}
@@ -189,12 +216,10 @@ public abstract class AbstractWordAddRemoveBenchmark<T> {
 		REMOVE_THEN_ADD {
 			@Override
 			public <T> void run(AbstractWordAddRemoveBenchmark<T> self) throws InterruptedException {
-				Blackhole bh = self.bh;
 				List<String> words = self.words;
 				for (int i = 0, size = words.size(); i < size; i++) {
 					String word = words.get(i);
 					self.remove(word);
-					// bh.consume(word); // try to prevent loop unrolling
 					if (Thread.interrupted()) {
 						throw new InterruptedException();
 					}
@@ -202,7 +227,6 @@ public abstract class AbstractWordAddRemoveBenchmark<T> {
 				for (int i = 0, size = words.size(); i < size; i++) {
 					String word = words.get(i);
 					self.add(word);
-					// bh.consume(word); // try to prevent loop unrolling
 					if (Thread.interrupted()) {
 						throw new InterruptedException();
 					}

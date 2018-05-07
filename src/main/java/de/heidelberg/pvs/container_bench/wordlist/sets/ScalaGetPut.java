@@ -21,6 +21,11 @@ public class ScalaGetPut extends AbstractWordAddRemoveBenchmark<Set<String>> {
 	}
 
 	@Override
+	protected boolean contains(String object) {
+		return ((scala.collection.Set<String>) set).contains(object);
+	}
+
+	@Override
 	protected void remove(String object) {
 		set.remove(object);
 	}

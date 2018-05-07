@@ -24,6 +24,11 @@ public class Noop extends AbstractWordAddRemoveBenchmark<Void> {
 	}
 
 	@Override
+	protected boolean contains(String object) {
+		return false;
+	}
+
+	@Override
 	protected void remove(String object) {
 		// Empty, not even blackhole
 	}

@@ -21,6 +21,11 @@ public class JDKGetPut extends AbstractWordAddRemoveBenchmark<Set<String>> {
 	}
 
 	@Override
+	protected boolean contains(String object) {
+		return set.contains(object);
+	}
+
+	@Override
 	protected void remove(String object) {
 		set.remove(object);
 	}

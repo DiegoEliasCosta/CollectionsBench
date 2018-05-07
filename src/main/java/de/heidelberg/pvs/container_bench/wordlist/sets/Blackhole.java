@@ -17,6 +17,11 @@ public class Blackhole extends AbstractWordAddRemoveBenchmark<Void> {
 	protected void add(String object) {
 		bh.consume(object);
 	}
+	
+	@Override
+	protected boolean contains(String object) {
+		return false;
+	}
 
 	@Override
 	protected void remove(String object) {
