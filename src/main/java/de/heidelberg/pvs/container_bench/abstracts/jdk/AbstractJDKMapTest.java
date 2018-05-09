@@ -15,7 +15,13 @@ public abstract class AbstractJDKMapTest<K, V> extends AbstractMapTest<K, V> {
 	protected V[] values;
 		
 	protected abstract Map<K, V> getNewMap();
-	protected abstract Map<K, V> copyMap(Map<K, V> fullMap2);
+	
+	// Moved this back to the abstract 
+	protected Map<K, V> copyMap(Map<K, V> fullMap2) {
+		Map<K, V> map = this.getNewMap();
+		map.putAll(fullMap2);
+		return map;
+	}
 	
 	@Override
 	public void testSetup() {
@@ -96,4 +102,6 @@ public abstract class AbstractJDKMapTest<K, V> extends AbstractMapTest<K, V> {
 	protected Object getFullCollection() {
 		return fullMap;
 	}
+	
+
 }

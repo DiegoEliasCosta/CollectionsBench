@@ -10,14 +10,15 @@ public enum JDKIntSetFact {
 
 	KOLOBOKE_HASH(net.openhft.koloboke.collect.set.hash.HashObjSets::newMutableSet), //
 	KOLOBOKE_QHASH(KolobokeQHash.ObjSets::newMutableSet), //
-	KOLOBOKE_I_HASH(net.openhft.koloboke.collect.set.hash.HashIntSets::newMutableSet), //
+	KOLOBOKE_I_HASH(net.openhft.koloboke.collect.set.hash.HashIntSets::newMutableSet), //), //
 	KOLOBOKE_I_QHASH(KolobokeQHash.IntSets::newMutableSet), //
 
 	FASTUTIL_HASH(it.unimi.dsi.fastutil.objects.ObjectOpenHashSet::new), //
 	FASTUTIL_LINKEDHASH(it.unimi.dsi.fastutil.objects.ObjectLinkedOpenHashSet::new), //
-	FASTUTIL_AVL(it.unimi.dsi.fastutil.objects.ObjectAVLTreeSet::new), //
+	FASTUTIL_AVL(it.unimi.dsi.fastutil.objects.ObjectAVLTreeSet::new), //), //
 	FASTUTIL_RB(it.unimi.dsi.fastutil.objects.ObjectRBTreeSet::new), //
 	FASTUTIL_ARRAY(it.unimi.dsi.fastutil.objects.ObjectArraySet::new), //
+
 	// Fastutil primitive-valued
 	FASTUTIL_I_HASH(it.unimi.dsi.fastutil.ints.IntOpenHashSet::new), //
 	FASTUTIL_I_LINKEDHASH(it.unimi.dsi.fastutil.ints.IntLinkedOpenHashSet::new), //

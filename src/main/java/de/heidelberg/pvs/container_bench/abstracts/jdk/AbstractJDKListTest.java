@@ -21,7 +21,11 @@ public abstract class AbstractJDKListTest<T> extends AbstractListTest<T> {
 
 	protected abstract List<T> getNewList();
 
-	protected abstract List<T> copyList(List<T> fullList2);
+	protected List<T> copyList(List<T> fullList2) {
+		List<T> list = this.getNewList();
+		list.addAll(fullList2);
+		return list;
+	}
 
 	@Override
 	public void testSetup() {

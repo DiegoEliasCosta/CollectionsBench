@@ -23,7 +23,7 @@ public enum JDKSetFact {
 	ECLIPSE_TREE(org.eclipse.collections.impl.set.sorted.mutable.TreeSortedSet::new), //
 
 	APACHE_HASH(() -> org.apache.commons.collections4.set.MapBackedSet.mapBackedSet(//
-			new org.apache.commons.collections4.map.HashedMap<String, String>())), //
+			new org.apache.commons.collections4.map.HashedMap<>())), //
 	APACHE_LINKEDHASH(org.apache.commons.collections4.set.ListOrderedSet::new), //
 	MAHOUT_HASH(org.apache.mahout.math.set.OpenHashSet::new), //
 
@@ -35,7 +35,7 @@ public enum JDKSetFact {
 	CORENLP_ARRAY(edu.stanford.nlp.util.ArraySet::new); //
 	;
 
-	public final Supplier<Set<String>> maker;
+	public Supplier<Set<String>> maker;
 
 	private JDKSetFact(Supplier<Set<String>> maker) {
 		this.maker = maker;

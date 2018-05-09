@@ -31,7 +31,12 @@ public abstract class AbstractJDKSetTest<T> extends AbstractSetTest<T> {
 	}
 	
 	protected abstract Set<T> getNewSet();
-	protected abstract Set<T> copySet(Set<T> fullSet2);
+	
+	protected Set<T> copySet(Set<T> fullSet2) {
+		Set<T> set = this.getNewSet();
+		set.addAll(fullSet2);
+		return set;
+	}
 	
 	@Override
 	@Benchmark
