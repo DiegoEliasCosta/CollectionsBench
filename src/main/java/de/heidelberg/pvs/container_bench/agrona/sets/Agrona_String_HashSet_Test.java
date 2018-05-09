@@ -4,14 +4,14 @@ import java.util.Set;
 
 import org.agrona.collections.ObjectHashSet;
 
-import de.heidelberg.pvs.container_bench.abstracts.jdk.AbstractJDKSetTest;
+import de.heidelberg.pvs.container_bench.abstracts.jdk.AbstractJDKSetBench;
 
 /**
  * Test for new ObjectHashSet<String> as Set<String>.
  * 
  * Generated from TemplateSetTest
  */
-public class Agrona_String_HashSet_Test extends AbstractJDKSetTest<String> {
+public class Agrona_String_HashSet_Test extends AbstractJDKSetBench<String> {
 	@Override
 	protected Set<String> getNewSet() {
 		return new ObjectHashSet<String>();

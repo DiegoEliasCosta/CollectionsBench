@@ -5,9 +5,9 @@ import org.openjdk.jmh.annotations.Benchmark;
 import com.carrotsearch.hppc.ObjectArrayList;
 import com.carrotsearch.hppc.cursors.ObjectCursor;
 
-import de.heidelberg.pvs.container_bench.abstracts.AbstractListTest;
+import de.heidelberg.pvs.container_bench.abstracts.AbstractListBench;
 
-public abstract class AbstractHPPCListTest<T> extends AbstractListTest<T> {
+public abstract class AbstractHPPCListTest<T> extends AbstractListBench<T> {
 
 	ObjectArrayList<T> fullList;
 	T[] values;

@@ -7,7 +7,7 @@ import com.google.common.reflect.TypeToken;
 import de.heidelberg.pvs.container_bench.random.RandomFactory;
 import de.heidelberg.pvs.container_bench.random.RandomGenerator;
 
-public abstract class AbstractMapTest<K, V> extends AbstractBenchmarkTest {
+public abstract class AbstractMapBench<K, V> extends AbstractBench {
 
 	@Param({ "100" })
 	public int percentageRangeKeys;

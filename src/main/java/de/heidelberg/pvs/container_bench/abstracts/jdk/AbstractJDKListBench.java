@@ -4,7 +4,7 @@ import java.util.List;
 
 import org.openjdk.jmh.annotations.Benchmark;
 
-import de.heidelberg.pvs.container_bench.abstracts.AbstractListTest;
+import de.heidelberg.pvs.container_bench.abstracts.AbstractListBench;
 
 /**
  * Abstract class for every test with JDK Lists implementation
@@ -14,7 +14,7 @@ import de.heidelberg.pvs.container_bench.abstracts.AbstractListTest;
  * @param <T>
  *            The held type of the {@link List} implementation
  */
-public abstract class AbstractJDKListTest<T> extends AbstractListTest<T> {
+public abstract class AbstractJDKListBench<T> extends AbstractListBench<T> {
 
 	private List<T> fullList;
 	protected T[] values;

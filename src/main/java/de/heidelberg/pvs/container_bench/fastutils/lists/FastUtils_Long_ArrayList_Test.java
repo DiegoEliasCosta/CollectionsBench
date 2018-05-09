@@ -2,10 +2,10 @@ package de.heidelberg.pvs.container_bench.fastutils.lists;
 
 import java.util.List;
 
-import de.heidelberg.pvs.container_bench.abstracts.jdk.AbstractJDKListTest;
+import de.heidelberg.pvs.container_bench.abstracts.jdk.AbstractJDKListBench;
 import it.unimi.dsi.fastutil.objects.ObjectArrayList;
 
-public class FastUtils_Long_ArrayList_Test extends AbstractJDKListTest<Long> {
+public class FastUtils_Long_ArrayList_Test extends AbstractJDKListBench<Long> {
 
 	@Override
 	protected List<Long> getNewList() {

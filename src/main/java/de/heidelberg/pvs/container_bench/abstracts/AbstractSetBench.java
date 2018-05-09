@@ -5,7 +5,7 @@ import com.google.common.reflect.TypeToken;
 import de.heidelberg.pvs.container_bench.random.RandomFactory;
 import de.heidelberg.pvs.container_bench.random.RandomGenerator;
 
-public abstract class AbstractSetTest<T> extends AbstractBenchmarkTest {
+public abstract class AbstractSetBench<T> extends AbstractBench {
 
 	/**
 	 * Implementation of our Randomness

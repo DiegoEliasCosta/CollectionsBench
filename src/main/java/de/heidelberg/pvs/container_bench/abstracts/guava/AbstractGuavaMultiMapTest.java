@@ -6,9 +6,9 @@ import org.openjdk.jmh.annotations.Benchmark;
 
 import com.google.common.collect.Multimap;
 
-import de.heidelberg.pvs.container_bench.abstracts.AbstractMapTest;
+import de.heidelberg.pvs.container_bench.abstracts.AbstractMapBench;
 
-public abstract class AbstractGuavaMultiMapTest<K, V> extends AbstractMapTest<K, V> {
+public abstract class AbstractGuavaMultiMapTest<K, V> extends AbstractMapBench<K, V> {
 
 	private K[] keys;
 	private K[] newKeys;

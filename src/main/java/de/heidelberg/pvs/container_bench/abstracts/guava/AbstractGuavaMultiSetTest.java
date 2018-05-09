@@ -4,9 +4,9 @@ import org.openjdk.jmh.annotations.Benchmark;
 
 import com.google.common.collect.Multiset;
 
-import de.heidelberg.pvs.container_bench.abstracts.AbstractSetTest;
+import de.heidelberg.pvs.container_bench.abstracts.AbstractSetBench;
 
-public abstract class AbstractGuavaMultiSetTest<T> extends AbstractSetTest<T> {
+public abstract class AbstractGuavaMultiSetTest<T> extends AbstractSetBench<T> {
 
 	private T[] values;
 	private T[] newValues;

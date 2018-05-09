@@ -4,7 +4,7 @@ import org.openjdk.jmh.annotations.Param;
 
 import com.carrotsearch.hppc.ObjectObjectMap;
 
-import de.heidelberg.pvs.container_bench.factories.HPPCMapFactory;
+import de.heidelberg.pvs.container_bench.factories.HPPCMapFact;
 
 /**
  * Adapter using the index-based operations
@@ -13,7 +13,7 @@ import de.heidelberg.pvs.container_bench.factories.HPPCMapFactory;
  */
 public class HPPCIndexOf extends AbstractWordcountBenchmark<ObjectObjectMap<Object, Integer>> {
 	@Param
-	public HPPCMapFactory impl;
+	public HPPCMapFact impl;
 
 	@Override
 	protected ObjectObjectMap<Object, Integer> makeMap() {

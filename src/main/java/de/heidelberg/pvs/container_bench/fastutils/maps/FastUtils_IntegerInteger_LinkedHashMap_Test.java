@@ -2,10 +2,10 @@ package de.heidelberg.pvs.container_bench.fastutils.maps;
 
 import java.util.Map;
 
-import de.heidelberg.pvs.container_bench.abstracts.jdk.AbstractJDKMapTest;
+import de.heidelberg.pvs.container_bench.abstracts.jdk.AbstractJDKMapBench;
 import it.unimi.dsi.fastutil.objects.Object2ObjectLinkedOpenHashMap;
 
-public class FastUtils_IntegerInteger_LinkedHashMap_Test extends AbstractJDKMapTest<Integer, Integer> {
+public class FastUtils_IntegerInteger_LinkedHashMap_Test extends AbstractJDKMapBench<Integer, Integer> {
 
 	@Override
 	protected Map<Integer, Integer> getNewMap() {

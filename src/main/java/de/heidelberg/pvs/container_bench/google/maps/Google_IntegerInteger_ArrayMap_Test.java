@@ -4,9 +4,9 @@ import java.util.Map;
 
 import com.google.api.client.util.ArrayMap;
 
-import de.heidelberg.pvs.container_bench.abstracts.jdk.AbstractJDKMapTest;
+import de.heidelberg.pvs.container_bench.abstracts.jdk.AbstractJDKMapBench;
 
-public class Google_IntegerInteger_ArrayMap_Test extends AbstractJDKMapTest<Integer, Integer> {
+public class Google_IntegerInteger_ArrayMap_Test extends AbstractJDKMapBench<Integer, Integer> {
 
 	@Override
 	protected Map<Integer, Integer> getNewMap() {

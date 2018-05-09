@@ -5,9 +5,9 @@ import java.util.Map.Entry;
 
 import org.openjdk.jmh.annotations.Benchmark;
 
-import de.heidelberg.pvs.container_bench.abstracts.AbstractMapTest;
+import de.heidelberg.pvs.container_bench.abstracts.AbstractMapBench;
 
-public abstract class AbstractJDKMapTest<K, V> extends AbstractMapTest<K, V> {
+public abstract class AbstractJDKMapBench<K, V> extends AbstractMapBench<K, V> {
 
 	private Map<K, V> fullMap;
 	protected K[] keys;

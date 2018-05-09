@@ -7,7 +7,7 @@ import org.openjdk.jmh.annotations.Benchmark;
 import com.carrotsearch.hppc.ObjectHashSet;
 import com.carrotsearch.hppc.cursors.ObjectCursor;
 
-import de.heidelberg.pvs.container_bench.abstracts.AbstractSetTest;
+import de.heidelberg.pvs.container_bench.abstracts.AbstractSetBench;
 
 /**
  * Abstract class for every test with JDK Sets implementation
@@ -16,7 +16,7 @@ import de.heidelberg.pvs.container_bench.abstracts.AbstractSetTest;
  * @param <T>
  * 		The held type of the {@link Set} implementation
  */
-public abstract class AbstractHPPCSetTest<T> extends AbstractSetTest<T> {
+public abstract class AbstractHPPCSetTest<T> extends AbstractSetBench<T> {
 	
 	private ObjectHashSet<T> fullSet;
 	private T[] values;

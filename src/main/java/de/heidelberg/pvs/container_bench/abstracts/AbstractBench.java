@@ -29,7 +29,7 @@ import org.openjdk.jol.info.GraphLayout;
 @Threads(1)
 @Fork(2)
 @State(Scope.Benchmark)
-public abstract class AbstractBenchmarkTest {
+public abstract class AbstractBench {
 
 	/**
 	 * From 10K - 100M

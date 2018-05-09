@@ -2,11 +2,11 @@ package de.heidelberg.pvs.container_bench.fastutils.sets_sorted;
 
 import java.util.Set;
 
-import de.heidelberg.pvs.container_bench.abstracts.jdk.AbstractJDKSetTest;
+import de.heidelberg.pvs.container_bench.abstracts.jdk.AbstractJDKSetBench;
 import it.unimi.dsi.fastutil.objects.ObjectAVLTreeSet;
 import it.unimi.dsi.fastutil.objects.ObjectRBTreeSet;
 
-public class FastUtils_String_AVLTreeSet_Test extends AbstractJDKSetTest<String> {
+public class FastUtils_String_AVLTreeSet_Test extends AbstractJDKSetBench<String> {
 
 	@Override
 	protected Set<String> getNewSet() {

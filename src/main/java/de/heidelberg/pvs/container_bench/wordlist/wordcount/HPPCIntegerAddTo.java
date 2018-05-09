@@ -4,7 +4,7 @@ import org.openjdk.jmh.annotations.Param;
 
 import com.carrotsearch.hppc.ObjectIntMap;
 
-import de.heidelberg.pvs.container_bench.factories.HPPCMap2IntFactory;
+import de.heidelberg.pvs.container_bench.factories.HPPCMap2IntFact;
 
 /**
  * Adapter using the HPPC primitive map
@@ -13,7 +13,7 @@ import de.heidelberg.pvs.container_bench.factories.HPPCMap2IntFactory;
  */
 public class HPPCIntegerAddTo extends AbstractWordcountBenchmark<ObjectIntMap<Object>> {
 	@Param
-	public HPPCMap2IntFactory impl;
+	public HPPCMap2IntFact impl;
 
 	@Override
 	protected ObjectIntMap<Object> makeMap() {

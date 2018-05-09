@@ -5,9 +5,9 @@ import org.openjdk.jmh.annotations.Benchmark;
 import com.carrotsearch.hppc.ObjectObjectHashMap;
 import com.carrotsearch.hppc.cursors.ObjectObjectCursor;
 
-import de.heidelberg.pvs.container_bench.abstracts.AbstractMapTest;
+import de.heidelberg.pvs.container_bench.abstracts.AbstractMapBench;
 
-public abstract class AbstractHPPCMapTest<K, V> extends AbstractMapTest<K, V> {
+public abstract class AbstractHPPCMapTest<K, V> extends AbstractMapBench<K, V> {
 
 	private ObjectObjectHashMap<K, V> fullMap;
 	private K[] keys;

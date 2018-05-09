@@ -4,7 +4,7 @@ import java.util.Set;
 
 import org.openjdk.jmh.annotations.Benchmark;
 
-import de.heidelberg.pvs.container_bench.abstracts.AbstractSetTest;
+import de.heidelberg.pvs.container_bench.abstracts.AbstractSetBench;
 
 /**
  * Abstract class for every test with JDK Sets implementation
@@ -13,7 +13,7 @@ import de.heidelberg.pvs.container_bench.abstracts.AbstractSetTest;
  * @param <T>
  * 		The held type of the {@link Set} implementation
  */
-public abstract class AbstractJDKSetTest<T> extends AbstractSetTest<T> {
+public abstract class AbstractJDKSetBench<T> extends AbstractSetBench<T> {
 	
 	private Set<T> fullSet;
 	protected T[] values;
