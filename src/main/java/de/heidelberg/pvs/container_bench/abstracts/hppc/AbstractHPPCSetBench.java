@@ -16,7 +16,7 @@ import de.heidelberg.pvs.container_bench.abstracts.AbstractSetBench;
  * @param <T>
  * 		The held type of the {@link Set} implementation
  */
-public abstract class AbstractHPPCSetTest<T> extends AbstractSetBench<T> {
+public abstract class AbstractHPPCSetBench<T> extends AbstractSetBench<T> {
 	
 	private ObjectHashSet<T> fullSet;
 	private T[] values;

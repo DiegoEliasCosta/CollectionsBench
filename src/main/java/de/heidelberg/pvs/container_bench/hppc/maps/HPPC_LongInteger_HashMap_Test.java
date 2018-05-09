@@ -2,9 +2,9 @@ package de.heidelberg.pvs.container_bench.hppc.maps;
 
 import com.carrotsearch.hppc.ObjectObjectHashMap;
 
-import de.heidelberg.pvs.container_bench.abstracts.hppc.AbstractHPPCMapTest;
+import de.heidelberg.pvs.container_bench.abstracts.hppc.AbstractHPPCMapBench;
 
-public class HPPC_LongInteger_HashMap_Test extends AbstractHPPCMapTest<Long, Integer>{
+public class HPPC_LongInteger_HashMap_Test extends AbstractHPPCMapBench<Long, Integer>{
 
 	@Override
 	protected ObjectObjectHashMap<Long, Integer> getNewMap(int size, int range) {

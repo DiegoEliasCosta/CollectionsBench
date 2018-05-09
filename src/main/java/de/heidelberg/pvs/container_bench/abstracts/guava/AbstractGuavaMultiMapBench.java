@@ -8,7 +8,7 @@ import com.google.common.collect.Multimap;
 
 import de.heidelberg.pvs.container_bench.abstracts.AbstractMapBench;
 
-public abstract class AbstractGuavaMultiMapTest<K, V> extends AbstractMapBench<K, V> {
+public abstract class AbstractGuavaMultiMapBench<K, V> extends AbstractMapBench<K, V> {
 
 	private K[] keys;
 	private K[] newKeys;

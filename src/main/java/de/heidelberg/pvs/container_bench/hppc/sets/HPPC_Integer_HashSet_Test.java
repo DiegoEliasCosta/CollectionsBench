@@ -2,9 +2,9 @@ package de.heidelberg.pvs.container_bench.hppc.sets;
 
 import com.carrotsearch.hppc.ObjectHashSet;
 
-import de.heidelberg.pvs.container_bench.abstracts.hppc.AbstractHPPCSetTest;
+import de.heidelberg.pvs.container_bench.abstracts.hppc.AbstractHPPCSetBench;
 
-public class HPPC_Integer_HashSet_Test extends AbstractHPPCSetTest<Integer> {
+public class HPPC_Integer_HashSet_Test extends AbstractHPPCSetBench<Integer> {
 
 	@Override
 	protected ObjectHashSet<Integer> getNewSet(int size) {

@@ -6,7 +6,7 @@ import com.google.common.collect.Multiset;
 
 import de.heidelberg.pvs.container_bench.abstracts.AbstractSetBench;
 
-public abstract class AbstractGuavaMultiSetTest<T> extends AbstractSetBench<T> {
+public abstract class AbstractGuavaMultiSetBench<T> extends AbstractSetBench<T> {
 
 	private T[] values;
 	private T[] newValues;

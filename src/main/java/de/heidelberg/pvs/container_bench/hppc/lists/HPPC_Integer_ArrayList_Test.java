@@ -2,9 +2,9 @@ package de.heidelberg.pvs.container_bench.hppc.lists;
 
 import com.carrotsearch.hppc.ObjectArrayList;
 
-import de.heidelberg.pvs.container_bench.abstracts.hppc.AbstractHPPCListTest;
+import de.heidelberg.pvs.container_bench.abstracts.hppc.AbstractHPPCListBench;
 
-public class HPPC_Integer_ArrayList_Test extends AbstractHPPCListTest<Integer> {
+public class HPPC_Integer_ArrayList_Test extends AbstractHPPCListBench<Integer> {
 
 	@Override
 	protected ObjectArrayList<Integer> getNewList(int size) {
