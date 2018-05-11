@@ -1,8 +1,11 @@
 /target/
 /build/
 /bin/
+/out/
 /.gradle/
 .classpath
 .project
 .settings
 benchmarks.jar
+
+*.class
