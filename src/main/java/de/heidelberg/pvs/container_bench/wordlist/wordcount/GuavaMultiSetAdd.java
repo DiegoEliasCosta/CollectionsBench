@@ -1,19 +1,26 @@
 package de.heidelberg.pvs.container_bench.wordlist.wordcount;
 
+import org.openjdk.jmh.annotations.Param;
+
 import com.google.common.collect.Multiset;
+
+import de.heidelberg.pvs.container_bench.factories.GuavaMultiSetFact;
 
 public class GuavaMultiSetAdd extends AbstractWordcountBenchmark<Multiset<Object>> {
 
+	@Param
+	GuavaMultiSetFact impl;
+	
 	@Override
 	protected Multiset<Object> makeMap() {
-		// TODO Auto-generated method stub
-		return null;
+		return impl.maker.get();
 	}
 
 	@Override
 	protected void count(Multiset<Object> map, String object) {
-		// TODO Auto-generated method stub
-		
+		// Adding an element to a Multiset which already
+		// implements the counting
+		map.add(object);
 	}
 
 }
