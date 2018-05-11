@@ -5,12 +5,13 @@ import java.util.Set;
 import org.openjdk.jmh.annotations.Benchmark;
 
 import com.carrotsearch.hppc.ObjectHashSet;
+import com.carrotsearch.hppc.ObjectSet;
 import com.carrotsearch.hppc.cursors.ObjectCursor;
 
 import de.heidelberg.pvs.container_bench.abstracts.AbstractSetBench;
 
 /**
- * Abstract class for every test with JDK Sets implementation
+ * Abstract class for every test with HPPC Sets implementation
  * @author Diego
  *
  * @param <T>
@@ -18,18 +19,19 @@ import de.heidelberg.pvs.container_bench.abstracts.AbstractSetBench;
  */
 public abstract class AbstractHPPCSetBench<T> extends AbstractSetBench<T> {
 	
-	private ObjectHashSet<T> fullSet;
+	private ObjectSet<T> fullSet;
 	private T[] values;
 	private T[] newValues;
 	private int newValuesSize;
 	
-	protected abstract ObjectHashSet<T> getNewSet(int size);
-	protected abstract ObjectHashSet<T> copySet(ObjectHashSet<T> original);
+	protected abstract ObjectSet<T> getNewSet();
+	
+	protected abstract ObjectSet<T> copySet(ObjectSet<T> original);
 	
 	
 	public void testSetup() {
 		newValuesSize = 2 * size; // 50% of colision
-		fullSet = this.getNewSet(size);
+		fullSet = this.getNewSet();
 		values = generator.generateArray(size);
 		newValues = generator.generateArray(2 * size);
 		for(int i = 0; i < size; i++) {
@@ -54,7 +56,7 @@ public abstract class AbstractHPPCSetBench<T> extends AbstractSetBench<T> {
 
 	@Benchmark
 	public void populate() {
-		ObjectHashSet<T> newSet = this.getNewSet(size);
+		ObjectSet<T> newSet = this.getNewSet();
 		for(int i = 0; i < size; i++) {
 			newSet.add(values[i]);
 		}
@@ -65,12 +67,13 @@ public abstract class AbstractHPPCSetBench<T> extends AbstractSetBench<T> {
 	public void addElement() {
 		int index = this.generator.generateIndex(newValuesSize);
 		blackhole.consume(this.fullSet.add(newValues[index]));
-		blackhole.consume(this.fullSet.remove(newValues[index]));
+		// Had to use removeAll from HPPC API
+		blackhole.consume(this.fullSet.removeAll(newValues[index])); 
 	}
 
 	@Benchmark
 	public void copy() {
-		ObjectHashSet<T> newSet = this.copySet(fullSet);
+		ObjectSet<T> newSet = this.copySet(fullSet);
 		blackhole.consume(newSet);
 	}
 	
@@ -78,7 +81,8 @@ public abstract class AbstractHPPCSetBench<T> extends AbstractSetBench<T> {
 	@Benchmark
 	public void removeElement() {
 		int index = this.generator.generateIndex(size);
-		blackhole.consume(this.fullSet.remove(values[index]));
+		// Had to use removeAll from HPPC API
+		blackhole.consume(this.fullSet.removeAll(values[index]));
 		blackhole.consume(this.fullSet.add(values[index])); // Keeping the steady-state
 	}
 	

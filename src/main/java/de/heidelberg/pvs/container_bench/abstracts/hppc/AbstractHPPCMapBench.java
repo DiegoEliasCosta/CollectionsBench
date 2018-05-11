@@ -3,25 +3,29 @@ package de.heidelberg.pvs.container_bench.abstracts.hppc;
 import org.openjdk.jmh.annotations.Benchmark;
 
 import com.carrotsearch.hppc.ObjectObjectHashMap;
+import com.carrotsearch.hppc.ObjectObjectMap;
 import com.carrotsearch.hppc.cursors.ObjectObjectCursor;
 
 import de.heidelberg.pvs.container_bench.abstracts.AbstractMapBench;
 
 public abstract class AbstractHPPCMapBench<K, V> extends AbstractMapBench<K, V> {
 
-	private ObjectObjectHashMap<K, V> fullMap;
+	private ObjectObjectMap<K, V> fullMap;
 	private K[] keys;
 	private K[] newKeys;
 	private V[] values;
 
-	protected abstract ObjectObjectHashMap<K, V> getNewMap(int size, int range);
+	protected abstract ObjectObjectMap<K, V> getNewMap();
 
-	protected abstract ObjectObjectHashMap<K, V> copyMap(ObjectObjectHashMap<K, V> fullMap2);
+	protected ObjectObjectMap<K, V> copyMap(ObjectObjectMap<K, V> fullMap2){
+		ObjectObjectMap<K, V> map = this.getNewMap();
+		map.putAll(fullMap2);
+		return map;
+	}
 
 	@Override
 	public void testSetup() {
-		int varietyOfKeys = (int) (size * ((double) percentageRangeKeys / 100));
-		fullMap = this.getNewMap(size, varietyOfKeys);
+		fullMap = this.getNewMap();
 
 		keys = keyGenerator.generateArray(size);
 		newKeys = keyGenerator.generateArrayInRange(size, 2 * size);
@@ -37,7 +41,7 @@ public abstract class AbstractHPPCMapBench<K, V> extends AbstractMapBench<K, V> 
 	@Override
 	@Benchmark
 	public void populate() {
-		ObjectObjectHashMap<K, V> newMap = this.getNewMap(size, percentageRangeKeys);
+		ObjectObjectMap<K, V> newMap = this.getNewMap();
 		for (int i = 0; i < size; i++) {
 			newMap.put(keys[i], values[i]);
 		}
@@ -70,7 +74,7 @@ public abstract class AbstractHPPCMapBench<K, V> extends AbstractMapBench<K, V> 
 	@Override
 	@Benchmark
 	public void copy() {
-		ObjectObjectHashMap<K, V> newMap = this.copyMap(fullMap);
+		ObjectObjectMap<K, V> newMap = this.copyMap(fullMap);
 		blackhole.consume(newMap);
 	}
 

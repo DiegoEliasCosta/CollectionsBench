@@ -3,21 +3,26 @@ package de.heidelberg.pvs.container_bench.abstracts.hppc;
 import org.openjdk.jmh.annotations.Benchmark;
 
 import com.carrotsearch.hppc.ObjectArrayList;
+import com.carrotsearch.hppc.ObjectIndexedContainer;
 import com.carrotsearch.hppc.cursors.ObjectCursor;
 
 import de.heidelberg.pvs.container_bench.abstracts.AbstractListBench;
 
 public abstract class AbstractHPPCListBench<T> extends AbstractListBench<T> {
 
-	ObjectArrayList<T> fullList;
+	ObjectIndexedContainer<T> fullList;
+
 	T[] values;
 
-	protected abstract ObjectArrayList<T> getNewList(int size);
-	protected abstract ObjectArrayList<T> copyList(ObjectArrayList<T> original);
+	protected abstract ObjectIndexedContainer<T> getNewList();
+	
+	// We need to delegate the copy to the factory enum
+	// Unfortunately, no interface from HPPC has the addAll method
+	protected abstract ObjectIndexedContainer<T> copyList(ObjectIndexedContainer<T> original);
 	
 	@Override
 	public void testSetup() {
-		fullList = this.getNewList(size);
+		fullList = this.getNewList();
 		values = this.generator.generateArray(size);
 		for (int i = 0; i < size; i++) {
 			fullList.add(values[i]);
