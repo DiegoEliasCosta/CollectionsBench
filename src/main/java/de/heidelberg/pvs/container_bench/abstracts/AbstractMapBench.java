@@ -1,40 +1,43 @@
 package de.heidelberg.pvs.container_bench.abstracts;
 
+import java.io.IOException;
+
 import org.openjdk.jmh.annotations.Param;
 
 import com.google.common.reflect.TypeToken;
 
-import de.heidelberg.pvs.container_bench.random.RandomFactory;
-import de.heidelberg.pvs.container_bench.random.RandomGenerator;
+import de.heidelberg.pvs.container_bench.generators.ElementGenerator;
+import de.heidelberg.pvs.container_bench.generators.RandomFactory;
 
 public abstract class AbstractMapBench<K, V> extends AbstractBench {
 
 	@Param({ "100" })
 	public int percentageRangeKeys;
 
-	protected RandomGenerator<K> keyGenerator = this.instantiateRandomKeyGenerator();
-	protected RandomGenerator<V> valueGenerator = this.instantiateRandomValueGenerator();
+	protected ElementGenerator<K> keyGenerator = this.instantiateRandomKeyGenerator();
+	protected ElementGenerator<V> valueGenerator = this.instantiateRandomValueGenerator();
 
 	/**
 	 * Implementation of our Randomness 
+	 * @throws IOException 
 	 */
 	@Override
-	public void randomnessSetup() {
-		keyGenerator.setSeed(seed);	
-		valueGenerator.setSeed(seed);
+	public void randomnessSetup() throws IOException {
+		keyGenerator.init(size, seed);	
+		valueGenerator.init(size, seed);
 		this.testSetup();
 	}
 	
 	@SuppressWarnings({ "serial", "unchecked" })
-	private RandomGenerator<V> instantiateRandomValueGenerator() {
+	private ElementGenerator<V> instantiateRandomValueGenerator() {
 		TypeToken<V> type = new TypeToken<V>(getClass()) {};
-		return (RandomGenerator<V>) RandomFactory.buildRandomGenerator(type);
+		return (ElementGenerator<V>) RandomFactory.buildRandomGenerator(type);
 	}
 
 	@SuppressWarnings({ "serial", "unchecked" })
-	private RandomGenerator<K> instantiateRandomKeyGenerator() {
+	private ElementGenerator<K> instantiateRandomKeyGenerator() {
 		TypeToken<K> type = new TypeToken<K>(getClass()) {};
-		return (RandomGenerator<K>) RandomFactory.buildRandomGenerator(type);
+		return (ElementGenerator<K>) RandomFactory.buildRandomGenerator(type);
 	}
 
 	/**

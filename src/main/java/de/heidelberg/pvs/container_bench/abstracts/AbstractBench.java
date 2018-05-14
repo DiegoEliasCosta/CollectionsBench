@@ -1,11 +1,8 @@
 package de.heidelberg.pvs.container_bench.abstracts;
 
-import java.io.FileWriter;
 import java.io.IOException;
-import java.io.PrintWriter;
 import java.util.concurrent.TimeUnit;
 
-import org.openjdk.jmh.annotations.Benchmark;
 import org.openjdk.jmh.annotations.BenchmarkMode;
 import org.openjdk.jmh.annotations.Fork;
 import org.openjdk.jmh.annotations.Measurement;
@@ -19,7 +16,8 @@ import org.openjdk.jmh.annotations.Threads;
 import org.openjdk.jmh.annotations.Timeout;
 import org.openjdk.jmh.annotations.Warmup;
 import org.openjdk.jmh.infra.Blackhole;
-import org.openjdk.jol.info.GraphLayout;
+
+import de.heidelberg.pvs.container_bench.generators.ElementType;
 
 @BenchmarkMode(Mode.AverageTime)
 @OutputTimeUnit(TimeUnit.NANOSECONDS)
@@ -36,12 +34,12 @@ public abstract class AbstractBench {
 	 */
 	@Param({ "100", "1000", "10000", "100000", "1000000" })
 	public int size;
-
+	
 	/**
-	 * Output file for the memory check
+	 * Type of the payload object
 	 */
-	@Param({ "memory-footprint.log" })
-	public String memoryFootprintFile;
+	@Param()
+	public ElementType elementType;
 
 	/**
 	 * Random seed generated using https://www.random.org/ Number between 1 - 1M
@@ -56,13 +54,14 @@ public abstract class AbstractBench {
 
 	/**
 	 * Setup method of the benchmark
+	 * @throws IOException 
 	 */
-	public abstract void randomnessSetup();
+	public abstract void randomnessSetup() throws IOException;
 
 	public abstract void testSetup();
 
 	@Setup
-	public void initializeSetup(Blackhole blackhole) {
+	public void initializeSetup(Blackhole blackhole) throws IOException {
 		this.blackhole = blackhole;
 		// Initialize the seed
 		this.randomnessSetup();
@@ -73,17 +72,4 @@ public abstract class AbstractBench {
 
 	protected abstract Object getFullCollection();
 
-	@Benchmark
-	@BenchmarkMode(Mode.SingleShotTime)
-	public void reportCollectionFootprint() throws IOException {
-		Object fullCollection = getFullCollection();
-
-		// Write to the file
-		String footprint = String.format("%s\n%s", fullCollection.getClass().getName(),
-				GraphLayout.parseInstance(fullCollection).toFootprint());
-
-		try (PrintWriter printWriter = new PrintWriter(new FileWriter(this.memoryFootprintFile, true))) {
-			printWriter.write(footprint);
-		}
-	}
 }

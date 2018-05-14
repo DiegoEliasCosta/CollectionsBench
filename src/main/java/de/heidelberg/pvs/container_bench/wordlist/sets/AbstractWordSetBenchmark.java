@@ -58,7 +58,7 @@ public abstract class AbstractWordSetBenchmark<T> {
 	@Setup(Level.Iteration)
 	public void setup(Blackhole b) throws IOException, InterruptedException {
 		bh = b;
-		words = words != null ? words : Wordlist.loadWords(b, zzsize, seed);
+		words = words != null ? words : Wordlist.loadWords(zzsize, seed);
 		workload.init(this);
 	}
 

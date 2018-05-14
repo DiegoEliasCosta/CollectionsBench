@@ -11,6 +11,7 @@ public abstract class AbstractGuavaMultiSetBench<T> extends AbstractSetBench<T> 
 	private T[] values;
 	private T[] newValues;
 	private Multiset<T> fullSet;
+	private int newSize;
 	
 	protected abstract Multiset<T> getNewMultiSet();
 	
@@ -18,9 +19,12 @@ public abstract class AbstractGuavaMultiSetBench<T> extends AbstractSetBench<T> 
 	
 	@Override
 	public void testSetup() {
+		
+		newSize = 2 * size; // 50% of collision
+		
 		fullSet = this.getNewMultiSet();
 		values = this.generator.generateArray(size);
-		newValues = this.generator.generateArrayInRange(size, 2 * size);
+		newValues = this.generator.generateArrayFromPool(size, newSize);
 		for (int i = 0; i < values.length; i++) {
 			fullSet.add(values[i]);
 		}
@@ -55,7 +59,7 @@ public abstract class AbstractGuavaMultiSetBench<T> extends AbstractSetBench<T> 
 	@Override
 	@Benchmark
 	public void addElement() {
-		int index = this.generator.generateIndex(size);
+		int index = this.generator.generateIndex(newSize);
 		blackhole.consume(this.fullSet.add(newValues[index]));
 		blackhole.consume(this.fullSet.remove(newValues[index]));
 	}

@@ -63,7 +63,7 @@ public abstract class AbstractWordcountBenchmark<T> {
 	@Setup(Level.Trial)
 	public void setupData(Blackhole b, Data data) throws IOException {
 		bh = b;
-		data.words = Wordlist.loadWords(b, zzsize, seed);
+		data.words = Wordlist.loadWords(zzsize, seed);
 	}
 
 	@Setup(Level.Iteration)

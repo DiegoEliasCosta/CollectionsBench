@@ -29,7 +29,7 @@ public abstract class AbstractJDKMapBench<K, V> extends AbstractMapBench<K, V> {
 		fullMap = this.getNewMap();
 
 		keys = keyGenerator.generateArray(size);
-		newKeys = keyGenerator.generateArrayInRange(size, 2 * varietyOfKeys);
+		newKeys = keyGenerator.generateArray(varietyOfKeys);
 		
 		values = valueGenerator.generateArray(size);
 

@@ -28,7 +28,7 @@ public abstract class AbstractHPPCMapBench<K, V> extends AbstractMapBench<K, V> 
 		fullMap = this.getNewMap();
 
 		keys = keyGenerator.generateArray(size);
-		newKeys = keyGenerator.generateArrayInRange(size, 2 * size);
+		newKeys = keyGenerator.generateArrayFromPool(size, 2 * size);
 
 		values = valueGenerator.generateArray(size);
 

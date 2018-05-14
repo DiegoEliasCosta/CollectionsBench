@@ -26,7 +26,7 @@ public abstract class AbstractGuavaMultiMapBench<K, V> extends AbstractMapBench<
 		fullMap = this.getNewMultiMap(size, varietyOfKeys);
 
 		keys = keyGenerator.generateArray(size);
-		newKeys = keyGenerator.generateArrayInRange(size, 2 * varietyOfKeys); // 50 % of colision
+		newKeys = keyGenerator.generateArrayFromPool(size, 2 * varietyOfKeys); // 50 % of colision
 		values = valueGenerator.generateArray(size);
 
 		for (int i = 0; i < size; i++) {
@@ -48,7 +48,7 @@ public abstract class AbstractGuavaMultiMapBench<K, V> extends AbstractMapBench<
 	@Override
 	@Benchmark
 	public void addElement() {
-	  int index = this.keyGenerator.generateIndex(size);
+	  int index = this.keyGenerator.generateIndex(newKeys.length);
 		blackhole.consume(this.fullMap.put(newKeys[index], values[index]));
 		blackhole.consume(this.fullMap.remove(newKeys[index], values[index]));
 	}

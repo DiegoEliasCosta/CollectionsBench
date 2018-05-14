@@ -60,7 +60,7 @@ public abstract class AbstractIntSetBenchmark<T> {
 	@Setup(Level.Iteration)
 	public void setup(Blackhole b) throws IOException, InterruptedException {
 		bh = b;
-		words = words != null ? words : Wordlist.loadInts(b, zzsize, seed, mask);
+		words = words != null ? words : Wordlist.loadInts(zzsize, seed, mask);
 		workload.init(this);
 	}
 
