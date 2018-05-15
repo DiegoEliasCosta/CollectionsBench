@@ -14,7 +14,7 @@ import de.heidelberg.pvs.container_bench.factories.HPPCSetFact;
  * @author Diego
  *
  */
-public abstract class AbstractHPPCSetBench extends AbstractSetBench<Object> {
+public class AbstractHPPCSetBench extends AbstractSetBench<Object> {
 
 	private ObjectSet<Object> fullSet;
 	private Object[] values;

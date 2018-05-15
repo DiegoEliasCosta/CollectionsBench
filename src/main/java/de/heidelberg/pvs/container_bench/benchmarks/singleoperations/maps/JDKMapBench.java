@@ -8,7 +8,7 @@ import org.openjdk.jmh.annotations.Param;
 
 import de.heidelberg.pvs.container_bench.factories.JDKMap2IntFact;
 
-public abstract class JDKMapBench extends AbstractMapBench<Object, Integer> {
+public class JDKMapBench extends AbstractMapBench<Object, Integer> {
 
 	private Map<Object, Integer> fullMap;
 	protected Object[] keys;
@@ -51,6 +51,7 @@ public abstract class JDKMapBench extends AbstractMapBench<Object, Integer> {
 	@Benchmark
 	public void bench() {
 		workload.run(this);
+		blackhole.consume(fullMap);
 	}
 	
 	private enum SingleOperationWorkload {

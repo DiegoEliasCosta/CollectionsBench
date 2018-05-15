@@ -7,7 +7,7 @@ import com.carrotsearch.hppc.cursors.ObjectCursor;
 
 import de.heidelberg.pvs.container_bench.factories.HPPCListFact;
 
-public abstract class HPPCListBench extends AbstractListBench<Object> {
+public class HPPCListBench extends AbstractListBench<Object> {
 
 	ObjectIndexedContainer<Object> fullList;
 	Object[] values;

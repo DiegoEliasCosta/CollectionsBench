@@ -7,7 +7,7 @@ import com.carrotsearch.hppc.cursors.ObjectObjectCursor;
 
 import de.heidelberg.pvs.container_bench.factories.HPPCMapFact;
 
-public abstract class HPPCMapBench extends AbstractMapBench<Object, Integer> {
+public class HPPCMapBench extends AbstractMapBench<Object, Integer> {
 
 	private ObjectObjectMap<Object, Integer> fullMap;
 	private Object[] keys;

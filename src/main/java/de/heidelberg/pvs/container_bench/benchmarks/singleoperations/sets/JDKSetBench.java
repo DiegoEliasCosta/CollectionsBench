@@ -2,12 +2,13 @@ package de.heidelberg.pvs.container_bench.benchmarks.singleoperations.sets;
 
 import java.util.Set;
 
+import org.openjdk.jmh.annotations.Benchmark;
 import org.openjdk.jmh.annotations.Param;
 
 import de.heidelberg.pvs.container_bench.factories.JDKSetFact;
 
 
-public abstract class JDKSetBench extends AbstractSetBench<Object> {
+public class JDKSetBench extends AbstractSetBench<Object> {
 	
 	private Set<Object> fullSet;
 	protected Object[] values;
@@ -23,6 +24,12 @@ public abstract class JDKSetBench extends AbstractSetBench<Object> {
 	protected Set<Object> getNewSet() {
 		// FIXME: Find a better way to avoid this casting
 		return (Set<Object>) impl.maker.get();
+	}
+	
+	@Benchmark
+	public void bench() {
+		workload.run(this);
+		blackhole.consume(fullSet);
 	}
 	
 	protected Set<Object> copySet(Set<Object> fullSet2) {

@@ -61,10 +61,6 @@ public abstract class AbstractSingleOperationsBench {
 	 */
 	protected Blackhole blackhole;
 
-	/**
-	 * Setup method of the benchmark
-	 * @throws IOException 
-	 */
 	public abstract void generatorSetup() throws IOException;
 
 	public abstract void testSetup();

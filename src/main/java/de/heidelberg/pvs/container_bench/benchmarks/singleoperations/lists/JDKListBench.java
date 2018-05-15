@@ -12,7 +12,7 @@ import de.heidelberg.pvs.container_bench.factories.JDKListFact;
  * 
  * @author Diego
  */
-public abstract class JDKListBench extends AbstractListBench<Object> {
+public class JDKListBench extends AbstractListBench<Object> {
 
 	private List<Object> fullList;
 	protected Object[] values;
@@ -39,6 +39,7 @@ public abstract class JDKListBench extends AbstractListBench<Object> {
 	@Benchmark
 	public void bench() {
 		workload.run(this);
+		blackhole.consume(fullList);
 	}
 
 	protected List<Object> copyList(List<Object> fullList2) {
