@@ -36,13 +36,7 @@ public abstract class HPPCListBench extends AbstractListBench<Object> {
 
 	}
 	
-	/**
-	 * SingleOperation Workloads
-	 * 
-	 * @author diego.costa
-	 *
-	 */
-	public enum SingleOperationWorkload {
+	private enum SingleOperationWorkload {
 
 		ITERATE {
 			@Override

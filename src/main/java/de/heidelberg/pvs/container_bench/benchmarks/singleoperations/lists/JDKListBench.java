@@ -47,13 +47,7 @@ public abstract class JDKListBench extends AbstractListBench<Object> {
 		return list;
 	}
 	
-	/**
-	 * SingleOperation Workloads
-	 * 
-	 * @author diego.costa
-	 *
-	 */
-	public enum SingleOperationWorkload {
+	private enum SingleOperationWorkload {
 
 		ITERATE {
 			@Override
