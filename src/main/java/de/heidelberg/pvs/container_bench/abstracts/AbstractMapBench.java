@@ -7,37 +7,31 @@ import org.openjdk.jmh.annotations.Param;
 import com.google.common.reflect.TypeToken;
 
 import de.heidelberg.pvs.container_bench.generators.ElementGenerator;
-import de.heidelberg.pvs.container_bench.generators.RandomFactory;
+import de.heidelberg.pvs.container_bench.generators.GeneratorFactory;
+import de.heidelberg.pvs.container_bench.generators.PayloadType;
 
 public abstract class AbstractMapBench<K, V> extends AbstractBench {
 
 	@Param({ "100" })
 	public int percentageRangeKeys;
 
-	protected ElementGenerator<K> keyGenerator = this.instantiateRandomKeyGenerator();
-	protected ElementGenerator<V> valueGenerator = this.instantiateRandomValueGenerator();
+	protected ElementGenerator<K> keyGenerator;
+	protected ElementGenerator<V> valueGenerator;
 
 	/**
 	 * Implementation of our Randomness 
 	 * @throws IOException 
 	 */
+	@SuppressWarnings("unchecked")
 	@Override
-	public void randomnessSetup() throws IOException {
+	public void elementGenerationSetup() throws IOException {
+		
+		keyGenerator = (ElementGenerator<K>) GeneratorFactory.buildRandomGenerator(payloadType);
+		// default value generator
+		valueGenerator = (ElementGenerator<V>) GeneratorFactory.buildRandomGenerator(PayloadType.INTEGER_UNIFORM);
+		
 		keyGenerator.init(size, seed);	
 		valueGenerator.init(size, seed);
-		this.testSetup();
-	}
-	
-	@SuppressWarnings({ "serial", "unchecked" })
-	private ElementGenerator<V> instantiateRandomValueGenerator() {
-		TypeToken<V> type = new TypeToken<V>(getClass()) {};
-		return (ElementGenerator<V>) RandomFactory.buildRandomGenerator(type);
-	}
-
-	@SuppressWarnings({ "serial", "unchecked" })
-	private ElementGenerator<K> instantiateRandomKeyGenerator() {
-		TypeToken<K> type = new TypeToken<K>(getClass()) {};
-		return (ElementGenerator<K>) RandomFactory.buildRandomGenerator(type);
 	}
 
 	/**

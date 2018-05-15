@@ -2,36 +2,21 @@ package de.heidelberg.pvs.container_bench.abstracts;
 
 import java.io.IOException;
 
-import com.google.common.reflect.TypeToken;
-
 import de.heidelberg.pvs.container_bench.generators.ElementGenerator;
-import de.heidelberg.pvs.container_bench.generators.RandomFactory;
+import de.heidelberg.pvs.container_bench.generators.GeneratorFactory;
 
 public abstract class AbstractSetBench<T> extends AbstractBench {
 
 	/**
 	 * Implementation of our Randomness
 	 */
-	protected ElementGenerator<T> generator = this.instantiateRandomGenerator();
+	protected ElementGenerator<T> generator;
 
-	/**
-	 * Builds and returns the correct generator {@link ElementGenerator}. In
-	 * order to find the generator type we use TypeToken from Guava, which uses
-	 * reflection to infer the subclass type.
-	 * 
-	 * @return
-	 */
-	@SuppressWarnings({ "serial", "unchecked" })
-	private ElementGenerator<T> instantiateRandomGenerator() {
-		TypeToken<T> type = new TypeToken<T>(getClass()) {
-		};
-		return (ElementGenerator<T>) RandomFactory.buildRandomGenerator(type);
-	}
-
+	@SuppressWarnings("unchecked")
 	@Override
-	public void randomnessSetup() throws IOException {
+	public void elementGenerationSetup() throws IOException {
+		generator = (ElementGenerator<T>) GeneratorFactory.buildRandomGenerator(payloadType);
 		generator.init(size, seed);
-		this.testSetup();
 	}
 
 	/**

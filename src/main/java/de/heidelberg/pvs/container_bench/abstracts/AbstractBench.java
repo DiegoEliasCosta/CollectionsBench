@@ -17,7 +17,7 @@ import org.openjdk.jmh.annotations.Timeout;
 import org.openjdk.jmh.annotations.Warmup;
 import org.openjdk.jmh.infra.Blackhole;
 
-import de.heidelberg.pvs.container_bench.generators.ElementType;
+import de.heidelberg.pvs.container_bench.generators.PayloadType;
 
 @BenchmarkMode(Mode.AverageTime)
 @OutputTimeUnit(TimeUnit.NANOSECONDS)
@@ -39,7 +39,7 @@ public abstract class AbstractBench {
 	 * Type of the payload object
 	 */
 	@Param()
-	public ElementType elementType;
+	public PayloadType payloadType;
 
 	/**
 	 * Random seed generated using https://www.random.org/ Number between 1 - 1M
@@ -56,7 +56,7 @@ public abstract class AbstractBench {
 	 * Setup method of the benchmark
 	 * @throws IOException 
 	 */
-	public abstract void randomnessSetup() throws IOException;
+	public abstract void elementGenerationSetup() throws IOException;
 
 	public abstract void testSetup();
 
@@ -64,7 +64,7 @@ public abstract class AbstractBench {
 	public void initializeSetup(Blackhole blackhole) throws IOException {
 		this.blackhole = blackhole;
 		// Initialize the seed
-		this.randomnessSetup();
+		this.elementGenerationSetup();
 		// Test Setup
 		this.testSetup();
 
