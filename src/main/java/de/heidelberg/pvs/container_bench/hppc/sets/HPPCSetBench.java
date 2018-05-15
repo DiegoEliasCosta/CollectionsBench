@@ -4,7 +4,7 @@ import org.openjdk.jmh.annotations.Param;
 
 import com.carrotsearch.hppc.ObjectSet;
 
-import de.heidelberg.pvs.container_bench.abstracts.hppc.AbstractHPPCSetBench;
+import de.heidelberg.pvs.container_bench.benchmarks.singleoperations.sets.AbstractHPPCSetBench;
 import de.heidelberg.pvs.container_bench.factories.HPPCSetFact;
 
 public class HPPCSetBench extends AbstractHPPCSetBench<Object>{

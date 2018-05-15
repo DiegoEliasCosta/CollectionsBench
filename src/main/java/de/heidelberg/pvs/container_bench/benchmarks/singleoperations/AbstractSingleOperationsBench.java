@@ -1,4 +1,4 @@
-package de.heidelberg.pvs.container_bench.abstracts;
+package de.heidelberg.pvs.container_bench.benchmarks.singleoperations;
 
 import java.io.IOException;
 import java.util.concurrent.TimeUnit;
@@ -27,7 +27,7 @@ import de.heidelberg.pvs.container_bench.generators.PayloadType;
 @Threads(1)
 @Fork(2)
 @State(Scope.Benchmark)
-public abstract class AbstractBench {
+public abstract class AbstractSingleOperationsBench {
 
 	/**
 	 * From 10K - 100M

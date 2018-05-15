@@ -1,11 +1,12 @@
-package de.heidelberg.pvs.container_bench.abstracts;
+package de.heidelberg.pvs.container_bench.benchmarks.singleoperations.sets;
 
 import java.io.IOException;
 
+import de.heidelberg.pvs.container_bench.benchmarks.singleoperations.AbstractSingleOperationsBench;
 import de.heidelberg.pvs.container_bench.generators.ElementGenerator;
 import de.heidelberg.pvs.container_bench.generators.GeneratorFactory;
 
-public abstract class AbstractListBench<T> extends AbstractBench {
+public abstract class AbstractSetBench<T> extends AbstractSingleOperationsBench {
 
 	/**
 	 * Implementation of our Randomness
@@ -22,39 +23,25 @@ public abstract class AbstractListBench<T> extends AbstractBench {
 	/**
 	 * Benchmark GetAll
 	 * 
-	 * This benchmark measure the time spent in traversing the list. <br>
+	 * This benchmark measure the time spent in traversing the set. <br>
 	 * <code> 
 	 * <pre>
 	 * for(;;) 
-	 *     list.get(i) 
+	 *     set.get(i) 
 	 * </pre> 
 	 * </code>
 	 */
 	abstract public void iterate();
 
 	/**
-	 * Benchmark GetAt
-	 * 
-	 * This benchmark measure the time spent in getting an element in a
-	 * <b>random</b> position of the list <br>
-	 * <br>
-	 * <code>
-	 * index = random() <br>
-	 * list.get(index); <br>
-	 * </code>
-	 * 
-	 */
-	abstract public void getElement();
-
-	/**
 	 * Benchmark Contains
 	 * 
 	 * This benchmark measure the time spent executing a contain to a
-	 * <b>random</b> element in the list <br>
+	 * <b>random</b> element in the set <br>
 	 * <br>
 	 * <code>
 	 * randomElement = random()
-	 * list.contains(randomElement)
+	 * set.contains(randomElement)
 	 * </code>
 	 * 
 	 */
@@ -64,37 +51,43 @@ public abstract class AbstractListBench<T> extends AbstractBench {
 	 * Benchmark AddAll
 	 * 
 	 * This benchmark measure the time spent by adding <b>random</b> elements
-	 * into the list, until it reaches its specified size <code> 
+	 * into the set, until it reaches its specified size <code> 
 	 * <pre>
 	 * for(;;) 
-	 *     list.add(random())
+	 *     set.add(random())
+	 * </pre>    
 	 * </code>
 	 * 
 	 */
 	abstract public void populate();
 
 	/**
+	 * Benchmark AddElement
+	 * 
+	 * This benchmark measure the time spent by one <b>random</b> element into a
+	 * full set. The element has 50% of chance of collision. <code> 
+	 * <pre>
+	 *     set.add(random(2 * range))
+	 *   </pre>  
+	 * </code>
+	 * 
+	 */
+	abstract public void addElement();
+
+	/**
 	 * Benchmark Copy
 	 * 
-	 * This benchmark measure the time spent by copying the entire list to a new
+	 * This benchmark measure the time spent by copying the entire set to a new
 	 * instance <code>
 	 * <pre>
-	 * newlist = copy(oldList)
+	 * newset = copy(oldSet)
 	 * </pre>
 	 * </code>
 	 * 
 	 */
 	abstract public void copy();
 
-	/**
-	 * Steady-State performance solution for testing addElement
-	 * 
-	 * TODO
-	 */
-	abstract public void addElement();
-
 	abstract public void removeElement();
-	
 
-	
+
 }

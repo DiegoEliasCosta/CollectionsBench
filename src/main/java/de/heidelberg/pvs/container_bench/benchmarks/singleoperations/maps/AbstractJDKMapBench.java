@@ -1,11 +1,9 @@
-package de.heidelberg.pvs.container_bench.abstracts.jdk;
+package de.heidelberg.pvs.container_bench.benchmarks.singleoperations.maps;
 
 import java.util.Map;
 import java.util.Map.Entry;
 
 import org.openjdk.jmh.annotations.Benchmark;
-
-import de.heidelberg.pvs.container_bench.abstracts.AbstractMapBench;
 
 public abstract class AbstractJDKMapBench<K, V> extends AbstractMapBench<K, V> {
 

@@ -1,47 +1,40 @@
-package de.heidelberg.pvs.container_bench.abstracts.jdk;
-
-import java.util.List;
+package de.heidelberg.pvs.container_bench.benchmarks.singleoperations.lists;
 
 import org.openjdk.jmh.annotations.Benchmark;
 
-import de.heidelberg.pvs.container_bench.abstracts.AbstractListBench;
+import com.carrotsearch.hppc.ObjectArrayList;
+import com.carrotsearch.hppc.ObjectIndexedContainer;
+import com.carrotsearch.hppc.cursors.ObjectCursor;
 
-/**
- * Abstract class for every test with JDK Lists implementation
- * 
- * @author Diego
- *
- * @param <T>
- *            The held type of the {@link List} implementation
- */
-public abstract class AbstractJDKListBench<T> extends AbstractListBench<T> {
+public abstract class AbstractHPPCListBench<T> extends AbstractListBench<T> {
 
-	private List<T> fullList;
-	protected T[] values;
+	ObjectIndexedContainer<T> fullList;
 
-	protected abstract List<T> getNewList();
+	T[] values;
 
-	protected List<T> copyList(List<T> fullList2) {
-		List<T> list = this.getNewList();
-		list.addAll(fullList2);
-		return list;
-	}
-
+	protected abstract ObjectIndexedContainer<T> getNewList();
+	
+	// We need to delegate the copy to the factory enum
+	// Unfortunately, no interface from HPPC has the addAll method
+	protected abstract ObjectIndexedContainer<T> copyList(ObjectIndexedContainer<T> original);
+	
 	@Override
 	public void testSetup() {
 		fullList = this.getNewList();
-		values = generator.generateArray(size);
+		values = this.generator.generateArray(size);
 		for (int i = 0; i < size; i++) {
 			fullList.add(values[i]);
 		}
+
 	}
 
 	@Override
 	@Benchmark
 	public void iterate() {
-		for (T element : fullList) {
+		for (ObjectCursor<T> element : fullList) {
 			blackhole.consume(element);
 		}
+
 	}
 
 	@Override
@@ -61,9 +54,9 @@ public abstract class AbstractJDKListBench<T> extends AbstractListBench<T> {
 	@Override
 	@Benchmark
 	public void populate() {
-		List<T> newList = this.getNewList();
+		ObjectArrayList<T> newList = new ObjectArrayList<>();
 		for (int i = 0; i < size; i++) {
-			newList.add(values[i]);
+			newList.add(values[i]); // void
 		}
 		blackhole.consume(newList);
 	}
@@ -71,29 +64,29 @@ public abstract class AbstractJDKListBench<T> extends AbstractListBench<T> {
 	@Override
 	@Benchmark
 	public void copy() {
-		List<T> newList = this.copyList(fullList);
+		ObjectArrayList<T> newList = new ObjectArrayList<>(fullList);
 		blackhole.consume(newList);
 	}
-
+	
 	@Override
 	@Benchmark
 	public void addElement() {
 		int index = generator.generateIndex(size);
-		blackhole.consume(fullList.add(values[index]));
-		blackhole.consume(fullList.remove(size));
+		fullList.add(values[index]);
+		blackhole.consume(fullList.remove(size)); 
 	}
-
+	
 	@Override
 	@Benchmark
 	public void removeElement() {
 		int index = generator.generateIndex(size);
-		blackhole.consume(fullList.remove(values[index]));
-		blackhole.consume(fullList.add(values[index]));
-
+		blackhole.consume(fullList.removeFirst(values[index]));
+		fullList.add(values[index]); // void
 	}
-	
+
 	@Override
 	protected Object getFullCollection() {
 		return fullList;
 	}
+
 }

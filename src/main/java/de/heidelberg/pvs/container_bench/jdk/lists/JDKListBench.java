@@ -4,7 +4,7 @@ import java.util.List;
 
 import org.openjdk.jmh.annotations.Param;
 
-import de.heidelberg.pvs.container_bench.abstracts.jdk.AbstractJDKListBench;
+import de.heidelberg.pvs.container_bench.benchmarks.singleoperations.lists.AbstractJDKListBench;
 import de.heidelberg.pvs.container_bench.factories.JDKListFact;
 
 public class JDKListBench extends AbstractJDKListBench<Object> {

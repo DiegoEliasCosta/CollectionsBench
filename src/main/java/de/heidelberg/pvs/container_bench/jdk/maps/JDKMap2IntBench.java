@@ -4,7 +4,7 @@ import java.util.Map;
 
 import org.openjdk.jmh.annotations.Param;
 
-import de.heidelberg.pvs.container_bench.abstracts.jdk.AbstractJDKMapBench;
+import de.heidelberg.pvs.container_bench.benchmarks.singleoperations.maps.AbstractJDKMapBench;
 import de.heidelberg.pvs.container_bench.factories.JDKMap2IntFact;
 
 public class JDKMap2IntBench extends AbstractJDKMapBench<Object, Integer> {

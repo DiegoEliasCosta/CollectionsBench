@@ -1,12 +1,10 @@
-package de.heidelberg.pvs.container_bench.abstracts.hppc;
+package de.heidelberg.pvs.container_bench.benchmarks.singleoperations.maps;
 
 import org.openjdk.jmh.annotations.Benchmark;
 
 import com.carrotsearch.hppc.ObjectObjectHashMap;
 import com.carrotsearch.hppc.ObjectObjectMap;
 import com.carrotsearch.hppc.cursors.ObjectObjectCursor;
-
-import de.heidelberg.pvs.container_bench.abstracts.AbstractMapBench;
 
 public abstract class AbstractHPPCMapBench<K, V> extends AbstractMapBench<K, V> {
 

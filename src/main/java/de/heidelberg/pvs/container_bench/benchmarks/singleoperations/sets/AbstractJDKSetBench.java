@@ -1,33 +1,22 @@
-package de.heidelberg.pvs.container_bench.abstracts.hppc;
+package de.heidelberg.pvs.container_bench.benchmarks.singleoperations.sets;
 
 import java.util.Set;
 
 import org.openjdk.jmh.annotations.Benchmark;
 
-import com.carrotsearch.hppc.ObjectHashSet;
-import com.carrotsearch.hppc.ObjectSet;
-import com.carrotsearch.hppc.cursors.ObjectCursor;
-
-import de.heidelberg.pvs.container_bench.abstracts.AbstractSetBench;
-
 /**
- * Abstract class for every test with HPPC Sets implementation
+ * Abstract class for every test with JDK Sets implementation
  * @author Diego
  *
  * @param <T>
  * 		The held type of the {@link Set} implementation
  */
-public abstract class AbstractHPPCSetBench<T> extends AbstractSetBench<T> {
+public abstract class AbstractJDKSetBench<T> extends AbstractSetBench<T> {
 	
-	private ObjectSet<T> fullSet;
-	private T[] values;
+	private Set<T> fullSet;
+	protected T[] values;
 	private T[] newValues;
 	private int newValuesSize;
-	
-	protected abstract ObjectSet<T> getNewSet();
-	
-	protected abstract ObjectSet<T> copySet(ObjectSet<T> original);
-	
 	
 	public void testSetup() {
 		newValuesSize = 2 * size; // 50% of colision
@@ -39,50 +28,60 @@ public abstract class AbstractHPPCSetBench<T> extends AbstractSetBench<T> {
 		}
 	}
 	
+	protected abstract Set<T> getNewSet();
+	
+	protected Set<T> copySet(Set<T> fullSet2) {
+		Set<T> set = this.getNewSet();
+		set.addAll(fullSet2);
+		return set;
+	}
+	
+	@Override
 	@Benchmark
 	public void iterate() { 
-		for(ObjectCursor<T> element : fullSet) {
+		for(T element : fullSet) {
 			blackhole.consume(element);
 		}
 	}
 	
-	
+	@Override
 	@Benchmark
 	public void containsElement() {
 		int index = generator.generateIndex(size);
 		blackhole.consume(fullSet.contains(values[index]));
 	}
 
-
+	@Override
 	@Benchmark
 	public void populate() {
-		ObjectSet<T> newSet = this.getNewSet();
+		Set<T> newSet = this.getNewSet();
 		for(int i = 0; i < size; i++) {
 			newSet.add(values[i]);
 		}
 		blackhole.consume(newSet);
 	}
 	
+	@Override
 	@Benchmark
 	public void addElement() {
 		int index = this.generator.generateIndex(newValuesSize);
 		blackhole.consume(this.fullSet.add(newValues[index]));
-		// Had to use removeAll from HPPC API
-		blackhole.consume(this.fullSet.removeAll(newValues[index])); 
+		blackhole.consume(this.fullSet.remove(newValues[index]));
 	}
 
+	@Override
 	@Benchmark
 	public void copy() {
-		ObjectSet<T> newSet = this.copySet(fullSet);
+		Set<T> newSet = this.copySet(fullSet);
 		blackhole.consume(newSet);
 	}
+	
 	
 	@Override
 	@Benchmark
 	public void removeElement() {
 		int index = this.generator.generateIndex(size);
-		// Had to use removeAll from HPPC API
-		blackhole.consume(this.fullSet.removeAll(values[index]));
+		blackhole.consume(this.fullSet.remove(values[index]));
 		blackhole.consume(this.fullSet.add(values[index])); // Keeping the steady-state
 	}
 	

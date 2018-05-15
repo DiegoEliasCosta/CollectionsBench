@@ -1,4 +1,4 @@
-package de.heidelberg.pvs.container_bench.abstracts;
+package de.heidelberg.pvs.container_bench.benchmarks.singleoperations.maps;
 
 import java.io.IOException;
 
@@ -6,11 +6,12 @@ import org.openjdk.jmh.annotations.Param;
 
 import com.google.common.reflect.TypeToken;
 
+import de.heidelberg.pvs.container_bench.benchmarks.singleoperations.AbstractSingleOperationsBench;
 import de.heidelberg.pvs.container_bench.generators.ElementGenerator;
 import de.heidelberg.pvs.container_bench.generators.GeneratorFactory;
 import de.heidelberg.pvs.container_bench.generators.PayloadType;
 
-public abstract class AbstractMapBench<K, V> extends AbstractBench {
+public abstract class AbstractMapBench<K, V> extends AbstractSingleOperationsBench {
 
 	@Param({ "100" })
 	public int percentageRangeKeys;

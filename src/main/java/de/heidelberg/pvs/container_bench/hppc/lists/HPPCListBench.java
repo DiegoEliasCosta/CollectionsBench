@@ -4,7 +4,7 @@ import org.openjdk.jmh.annotations.Param;
 
 import com.carrotsearch.hppc.ObjectIndexedContainer;
 
-import de.heidelberg.pvs.container_bench.abstracts.hppc.AbstractHPPCListBench;
+import de.heidelberg.pvs.container_bench.benchmarks.singleoperations.lists.AbstractHPPCListBench;
 import de.heidelberg.pvs.container_bench.factories.HPPCListFact;
 
 public class HPPCListBench extends AbstractHPPCListBench<Object>{
