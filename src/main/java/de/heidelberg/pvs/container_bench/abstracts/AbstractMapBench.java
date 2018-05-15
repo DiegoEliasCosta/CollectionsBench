@@ -24,7 +24,7 @@ public abstract class AbstractMapBench<K, V> extends AbstractBench {
 	 */
 	@SuppressWarnings("unchecked")
 	@Override
-	public void elementGenerationSetup() throws IOException {
+	public void generatorSetup() throws IOException {
 		
 		keyGenerator = (ElementGenerator<K>) GeneratorFactory.buildRandomGenerator(payloadType);
 		// default value generator

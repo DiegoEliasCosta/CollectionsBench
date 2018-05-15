@@ -56,7 +56,7 @@ public abstract class AbstractBench {
 	 * Setup method of the benchmark
 	 * @throws IOException 
 	 */
-	public abstract void elementGenerationSetup() throws IOException;
+	public abstract void generatorSetup() throws IOException;
 
 	public abstract void testSetup();
 
@@ -64,7 +64,7 @@ public abstract class AbstractBench {
 	public void initializeSetup(Blackhole blackhole) throws IOException {
 		this.blackhole = blackhole;
 		// Initialize the seed
-		this.elementGenerationSetup();
+		this.generatorSetup();
 		// Test Setup
 		this.testSetup();
 

@@ -14,7 +14,7 @@ public abstract class AbstractSetBench<T> extends AbstractBench {
 
 	@SuppressWarnings("unchecked")
 	@Override
-	public void elementGenerationSetup() throws IOException {
+	public void generatorSetup() throws IOException {
 		generator = (ElementGenerator<T>) GeneratorFactory.buildRandomGenerator(payloadType);
 		generator.init(size, seed);
 	}
