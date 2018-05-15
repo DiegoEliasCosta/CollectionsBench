@@ -2,86 +2,90 @@ package de.heidelberg.pvs.container_bench.benchmarks.singleoperations.sets;
 
 import java.util.Set;
 
-import org.openjdk.jmh.annotations.Benchmark;
+import org.openjdk.jmh.annotations.Param;
 
-import com.carrotsearch.hppc.ObjectHashSet;
 import com.carrotsearch.hppc.ObjectSet;
-import com.carrotsearch.hppc.cursors.ObjectCursor;
+
+import de.heidelberg.pvs.container_bench.factories.HPPCSetFact;
 
 /**
  * Abstract class for every test with HPPC Sets implementation
+ * 
  * @author Diego
  *
- * @param <T>
- * 		The held type of the {@link Set} implementation
  */
-public abstract class AbstractHPPCSetBench<T> extends AbstractSetBench<T> {
-	
-	private ObjectSet<T> fullSet;
-	private T[] values;
-	private T[] newValues;
+public abstract class AbstractHPPCSetBench extends AbstractSetBench<Object> {
+
+	private ObjectSet<Object> fullSet;
+	private Object[] values;
+	private Object[] newValues;
 	private int newValuesSize;
+
+	@Param
+	HPPCSetFact impl;
 	
-	protected abstract ObjectSet<T> getNewSet();
-	
-	protected abstract ObjectSet<T> copySet(ObjectSet<T> original);
-	
-	
+	@Param
+	SingleOperationWorkload workload;
+
+	protected ObjectSet<Object> getNewSet() {
+		return impl.maker.get();
+	}
+
+	protected ObjectSet<Object> copySet(ObjectSet<Object> original) {
+		return impl.copyMaker.apply(original);
+	}
+
 	public void testSetup() {
 		newValuesSize = 2 * size; // 50% of colision
 		fullSet = this.getNewSet();
 		values = generator.generateArray(size);
 		newValues = generator.generateArray(2 * size);
-		for(int i = 0; i < size; i++) {
+		for (int i = 0; i < size; i++) {
 			fullSet.add(values[i]);
 		}
 	}
-	
-	@Benchmark
-	public void iterate() { 
-		for(ObjectCursor<T> element : fullSet) {
-			blackhole.consume(element);
-		}
-	}
-	
-	
-	@Benchmark
-	public void containsElement() {
-		int index = generator.generateIndex(size);
-		blackhole.consume(fullSet.contains(values[index]));
+
+	private enum SingleOperationWorkload {
+
+		POPULATE {
+			@Override
+			void run(AbstractHPPCSetBench self) {
+				ObjectSet<Object> newSet = self.getNewSet();
+				for (int i = 0; i < self.size; i++) {
+					newSet.add(self.values[i]);
+				}
+				self.blackhole.consume(newSet);
+			}
+		}, //
+
+		ITERATE {
+			@Override
+			void run(AbstractHPPCSetBench self) {
+				for (Object element : self.fullSet) {
+					self.blackhole.consume(element);
+				}
+			}
+		},
+
+		COPY {
+			@Override
+			void run(AbstractHPPCSetBench self) {
+				ObjectSet<Object> newSet = self.copySet(self.fullSet);
+				self.blackhole.consume(newSet);
+			}
+		},
+
+		CONTAINS {
+
+			@Override
+			void run(AbstractHPPCSetBench self) {
+				int index = self.generator.generateIndex(self.size);
+				self.blackhole.consume(self.fullSet.contains(self.values[index]));
+			}
+		};
+
+		abstract void run(AbstractHPPCSetBench self);
+
 	}
 
-
-	@Benchmark
-	public void populate() {
-		ObjectSet<T> newSet = this.getNewSet();
-		for(int i = 0; i < size; i++) {
-			newSet.add(values[i]);
-		}
-		blackhole.consume(newSet);
-	}
-	
-	@Benchmark
-	public void addElement() {
-		int index = this.generator.generateIndex(newValuesSize);
-		blackhole.consume(this.fullSet.add(newValues[index]));
-		// Had to use removeAll from HPPC API
-		blackhole.consume(this.fullSet.removeAll(newValues[index])); 
-	}
-
-	@Benchmark
-	public void copy() {
-		ObjectSet<T> newSet = this.copySet(fullSet);
-		blackhole.consume(newSet);
-	}
-	
-	@Override
-	@Benchmark
-	public void removeElement() {
-		int index = this.generator.generateIndex(size);
-		// Had to use removeAll from HPPC API
-		blackhole.consume(this.fullSet.removeAll(values[index]));
-		blackhole.consume(this.fullSet.add(values[index])); // Keeping the steady-state
-	}
-	
 }

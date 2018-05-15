@@ -11,8 +11,10 @@ public class JDKGetPut extends AbstractWordSetBenchmark<Set<String>> {
 	public JDKSetFact impl;
 
 	@Override
+	@SuppressWarnings("unchecked")
 	protected Set<String> makeSet() {
-		return impl.maker.get();
+		// FIXME: Find a better way to avoid this cast 
+		return (Set<String>) impl.maker.get();
 	}
 
 	@Override

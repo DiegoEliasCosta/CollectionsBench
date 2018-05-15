@@ -35,9 +35,9 @@ public enum JDKSetFact {
 	CORENLP_ARRAY(edu.stanford.nlp.util.ArraySet::new); //
 	;
 
-	public Supplier<Set<String>> maker;
+	public Supplier<Set<?>> maker;
 
-	private JDKSetFact(Supplier<Set<String>> maker) {
+	private JDKSetFact(Supplier<Set<?>> maker) {
 		this.maker = maker;
 	}
 }
