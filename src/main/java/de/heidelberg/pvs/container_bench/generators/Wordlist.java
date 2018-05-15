@@ -1,4 +1,4 @@
-package de.heidelberg.pvs.container_bench.wordlist;
+package de.heidelberg.pvs.container_bench.generators;
 
 import java.io.BufferedReader;
 import java.io.IOException;

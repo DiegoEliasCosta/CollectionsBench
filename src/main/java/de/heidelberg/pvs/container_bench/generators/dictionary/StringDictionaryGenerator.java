@@ -9,7 +9,7 @@ import org.apache.commons.math3.random.Well44497b;
 import org.eclipse.collections.impl.set.mutable.UnifiedSet;
 
 import de.heidelberg.pvs.container_bench.generators.ElementGenerator;
-import de.heidelberg.pvs.container_bench.wordlist.Wordlist;
+import de.heidelberg.pvs.container_bench.generators.Wordlist;
 
 public class StringDictionaryGenerator implements ElementGenerator<String> {
 	
