@@ -96,10 +96,4 @@ public abstract class AbstractJDKMapBench<K, V> extends AbstractMapBench<K, V> {
 	}
 	
 
-	@Override
-	protected Object getFullCollection() {
-		return fullMap;
-	}
-	
-
 }

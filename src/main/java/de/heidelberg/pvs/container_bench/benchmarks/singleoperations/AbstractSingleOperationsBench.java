@@ -1,6 +1,7 @@
 package de.heidelberg.pvs.container_bench.benchmarks.singleoperations;
 
 import java.io.IOException;
+
 import java.util.concurrent.TimeUnit;
 
 import org.openjdk.jmh.annotations.BenchmarkMode;
@@ -19,6 +20,14 @@ import org.openjdk.jmh.infra.Blackhole;
 
 import de.heidelberg.pvs.container_bench.generators.PayloadType;
 
+/**
+ * Abstract class of Single Operation benchmarks.
+ * Each workload is composed by one or multiple calls of a single collection
+ * operation.
+ * 
+ * @author diego.costa
+ *
+ */
 @BenchmarkMode(Mode.AverageTime)
 @OutputTimeUnit(TimeUnit.NANOSECONDS)
 @Timeout(time = 5, timeUnit = TimeUnit.SECONDS)
@@ -30,7 +39,7 @@ import de.heidelberg.pvs.container_bench.generators.PayloadType;
 public abstract class AbstractSingleOperationsBench {
 
 	/**
-	 * From 10K - 100M
+	 * From 100 - 1M
 	 */
 	@Param({ "100", "1000", "10000", "100000", "1000000" })
 	public int size;
@@ -69,7 +78,5 @@ public abstract class AbstractSingleOperationsBench {
 		this.testSetup();
 
 	}
-
-	protected abstract Object getFullCollection();
 
 }

@@ -84,8 +84,4 @@ public abstract class AbstractHPPCSetBench<T> extends AbstractSetBench<T> {
 		blackhole.consume(this.fullSet.add(values[index])); // Keeping the steady-state
 	}
 	
-	@Override
-	protected Object getFullCollection() {
-		return fullSet;
-	}
 }

@@ -92,9 +92,5 @@ public abstract class AbstractHPPCMapBench<K, V> extends AbstractMapBench<K, V> 
 		}
 	}
 
-	@Override
-	protected Object getFullCollection() {
-		return fullMap;
-	}
 	
 }
