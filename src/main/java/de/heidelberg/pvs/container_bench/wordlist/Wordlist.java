@@ -18,20 +18,20 @@ import org.openjdk.jmh.infra.Blackhole;
 public class Wordlist {
 	
 	private static final int DEFAULT_SEED = -1;
-	public static final int READ_ALL = -1;
-	
+
 	/** File name of our input data. */
 	public static final String FILENAME = "enwiki-100m.txt.gz";
 
 	public static List<String> loadWords(int size, int seed) throws IOException {
+		
 		// Load the Wikipedia word data.
 		try (InputStream is = ClassLoader.getSystemResourceAsStream(FILENAME);
 				InputStream gi = new GZIPInputStream(is);
 				Reader r = new InputStreamReader(gi);
 				BufferedReader reader = new BufferedReader(r)) {
 			
-			// If default -> read all words 
-			final int stop = seed == READ_ALL ? size : (size << 1);
+			// Always read twice as much the size
+			final int stop = size << 1;
 			List<String> words = new ArrayList<>(stop);
 			
 			String line;

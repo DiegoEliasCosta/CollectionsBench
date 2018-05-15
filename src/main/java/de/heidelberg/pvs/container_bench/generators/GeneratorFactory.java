@@ -16,7 +16,7 @@ public class GeneratorFactory {
 		case STRING_UNIFORM:
 			return new StringUniformGenerator();
 			
-		case DICTIONARY_STRING:
+		case STRING_DICTIONARY:
 			return new StringDictionaryGenerator();
 		
 		default:

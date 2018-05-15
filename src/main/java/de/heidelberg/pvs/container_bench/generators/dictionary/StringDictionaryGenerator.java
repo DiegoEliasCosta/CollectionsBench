@@ -14,20 +14,20 @@ import de.heidelberg.pvs.container_bench.wordlist.Wordlist;
 public class StringDictionaryGenerator implements ElementGenerator<String> {
 	
 	protected List<String> words;
-	protected Set<String> uniqueWords;
 	
 	protected Well44497b generator;
 
 	protected int seed; 
+	protected int size;
 	
 	@Override
 	public void init(int size, int seed) throws IOException {
 		this.seed = seed;
+		this.size = size;
+		
 		generator = new Well44497b(seed);
-		// Reading it all might be a bit too expensive (I will check this out)
-		// We might have to set a limit here
-		words = Wordlist.loadWords(Wordlist.READ_ALL, seed);
-		uniqueWords = new UnifiedSet<>(words);
+		// Read all -> might be too expensive
+		words = Wordlist.loadWords(size, seed);
 	}
 
 	@Override
@@ -44,8 +44,12 @@ public class StringDictionaryGenerator implements ElementGenerator<String> {
 	@Override
 	public String[] generateArrayFromPool(int arraySize, int poolSize) {
 		
+		if(poolSize > this.size << 1) {
+			throw new IllegalArgumentException("Poolsize should be at most twice the size of the array");
+		}
+		
 		// Create a pool to draw from
-		List<String> pool = uniqueWords.stream().limit(poolSize).collect(Collectors.toList());
+		List<String> pool = words.stream().limit(poolSize).collect(Collectors.toList());
 		
 		String[] array = new String[arraySize];
 		for (int i = 0; i < arraySize; i++) {
