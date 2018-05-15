@@ -12,14 +12,13 @@ public class JDKMapBench extends AbstractMapBench<Object, Integer> {
 
 	private Map<Object, Integer> fullMap;
 	protected Object[] keys;
-	private Object[] newKeys;
 	protected Integer[] values;
 		
 	@Param
-	JDKMap2IntFact impl;
+	public JDKMap2IntFact impl;
 
 	@Param
-	SingleOperationWorkload workload;
+	public JDKMapWorkload workload;
 	
 	
 	protected Map<Object, Integer> getNewMap() {
@@ -38,8 +37,6 @@ public class JDKMapBench extends AbstractMapBench<Object, Integer> {
 		fullMap = this.getNewMap();
 
 		keys = keyGenerator.generateArray(size);
-		newKeys = keyGenerator.generateArray(varietyOfKeys);
-		
 		values = valueGenerator.generateArray(size);
 
 		for(int i = 0; i < size; i++) {
@@ -54,7 +51,7 @@ public class JDKMapBench extends AbstractMapBench<Object, Integer> {
 		blackhole.consume(fullMap);
 	}
 	
-	private enum SingleOperationWorkload {
+	private enum JDKMapWorkload {
 		
 		POPULATE {
 

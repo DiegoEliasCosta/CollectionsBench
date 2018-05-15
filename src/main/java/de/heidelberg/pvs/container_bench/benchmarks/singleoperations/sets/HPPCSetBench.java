@@ -14,18 +14,16 @@ import de.heidelberg.pvs.container_bench.factories.HPPCSetFact;
  * @author Diego
  *
  */
-public class AbstractHPPCSetBench extends AbstractSetBench<Object> {
+public class HPPCSetBench extends AbstractSetBench<Object> {
 
 	private ObjectSet<Object> fullSet;
 	private Object[] values;
-	private Object[] newValues;
-	private int newValuesSize;
 
 	@Param
-	HPPCSetFact impl;
+	public HPPCSetFact impl;
 	
 	@Param
-	SingleOperationWorkload workload;
+	public HPPCSetWorkload workload;
 
 	protected ObjectSet<Object> getNewSet() {
 		return impl.maker.get();
@@ -36,20 +34,18 @@ public class AbstractHPPCSetBench extends AbstractSetBench<Object> {
 	}
 
 	public void testSetup() {
-		newValuesSize = 2 * size; // 50% of colision
 		fullSet = this.getNewSet();
 		values = generator.generateArray(size);
-		newValues = generator.generateArray(2 * size);
 		for (int i = 0; i < size; i++) {
 			fullSet.add(values[i]);
 		}
 	}
 
-	private enum SingleOperationWorkload {
+	private enum HPPCSetWorkload {
 
 		POPULATE {
 			@Override
-			void run(AbstractHPPCSetBench self) {
+			void run(HPPCSetBench self) {
 				ObjectSet<Object> newSet = self.getNewSet();
 				for (int i = 0; i < self.size; i++) {
 					newSet.add(self.values[i]);
@@ -60,7 +56,7 @@ public class AbstractHPPCSetBench extends AbstractSetBench<Object> {
 
 		ITERATE {
 			@Override
-			void run(AbstractHPPCSetBench self) {
+			void run(HPPCSetBench self) {
 				for (Object element : self.fullSet) {
 					self.blackhole.consume(element);
 				}
@@ -69,7 +65,7 @@ public class AbstractHPPCSetBench extends AbstractSetBench<Object> {
 
 		COPY {
 			@Override
-			void run(AbstractHPPCSetBench self) {
+			void run(HPPCSetBench self) {
 				ObjectSet<Object> newSet = self.copySet(self.fullSet);
 				self.blackhole.consume(newSet);
 			}
@@ -78,13 +74,13 @@ public class AbstractHPPCSetBench extends AbstractSetBench<Object> {
 		CONTAINS {
 
 			@Override
-			void run(AbstractHPPCSetBench self) {
+			void run(HPPCSetBench self) {
 				int index = self.generator.generateIndex(self.size);
 				self.blackhole.consume(self.fullSet.contains(self.values[index]));
 			}
 		};
 
-		abstract void run(AbstractHPPCSetBench self);
+		abstract void run(HPPCSetBench self);
 
 	}
 

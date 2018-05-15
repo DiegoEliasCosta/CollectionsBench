@@ -18,10 +18,10 @@ public class JDKListBench extends AbstractListBench<Object> {
 	protected Object[] values;
 
 	@Param
-	protected SingleOperationWorkload workload; 
+	public JDKListWorkload workload; 
 	
 	@Param
-	private JDKListFact impl;
+	public JDKListFact impl;
 	
 	protected List<Object> getNewList() {
 		return impl.maker.get();
@@ -48,7 +48,7 @@ public class JDKListBench extends AbstractListBench<Object> {
 		return list;
 	}
 	
-	private enum SingleOperationWorkload {
+	private enum JDKListWorkload {
 
 		ITERATE {
 			@Override

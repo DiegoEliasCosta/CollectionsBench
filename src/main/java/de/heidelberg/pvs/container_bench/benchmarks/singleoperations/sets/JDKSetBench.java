@@ -12,13 +12,12 @@ public class JDKSetBench extends AbstractSetBench<Object> {
 	
 	private Set<Object> fullSet;
 	protected Object[] values;
-	private Object[] newValues;
 	
 	@Param
-	JDKSetFact impl;
+	public JDKSetFact impl;
 	
 	@Param
-	SingleOperationWorkload workload;
+	public JDKSetWorkload workload;
 	
 	@SuppressWarnings("unchecked")
 	protected Set<Object> getNewSet() {
@@ -41,13 +40,12 @@ public class JDKSetBench extends AbstractSetBench<Object> {
 	public void testSetup() {
 		fullSet = this.getNewSet();
 		values = generator.generateArray(size);
-		newValues = generator.generateArray(2 * size);
 		for(int i = 0; i < size; i++) {
 			fullSet.add(values[i]);
 		}
 	}
 	
-	private enum SingleOperationWorkload {
+	private enum JDKSetWorkload {
 		
 		POPULATE {
 			@Override

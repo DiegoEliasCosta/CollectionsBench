@@ -11,14 +11,13 @@ public class HPPCMapBench extends AbstractMapBench<Object, Integer> {
 
 	private ObjectObjectMap<Object, Integer> fullMap;
 	private Object[] keys;
-	private Object[] newKeys;
 	private Integer[] values;
 
 	@Param
-	HPPCMapFact impl;
+	public HPPCMapFact impl;
 
 	@Param
-	SingleOperationWorkload workload;
+	public HPPCMapWorkload workload;
 
 	protected ObjectObjectMap<Object, Integer> getNewMap() {
 		return impl.maker.get();
@@ -35,8 +34,6 @@ public class HPPCMapBench extends AbstractMapBench<Object, Integer> {
 		fullMap = this.getNewMap();
 
 		keys = keyGenerator.generateArray(size);
-		newKeys = keyGenerator.generateArrayFromPool(size, 2 * size);
-
 		values = valueGenerator.generateArray(size);
 
 		for (int i = 0; i < size; i++) {
@@ -45,7 +42,7 @@ public class HPPCMapBench extends AbstractMapBench<Object, Integer> {
 
 	}
 
-	private enum SingleOperationWorkload {
+	private enum HPPCMapWorkload {
 
 		POPULATE {
 			@Override

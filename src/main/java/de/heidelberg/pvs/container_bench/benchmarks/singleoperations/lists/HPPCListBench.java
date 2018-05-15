@@ -13,10 +13,10 @@ public class HPPCListBench extends AbstractListBench<Object> {
 	Object[] values;
 	
 	@Param
-	HPPCListFact impl;
+	public HPPCListFact impl;
 	
 	@Param
-	SingleOperationWorkload workload;
+	public HPPCListWorkload workload;
 	
 	protected ObjectIndexedContainer<Object> getNewList() {
 		return impl.maker.get();
@@ -36,7 +36,7 @@ public class HPPCListBench extends AbstractListBench<Object> {
 
 	}
 	
-	private enum SingleOperationWorkload {
+	private enum HPPCListWorkload {
 
 		ITERATE {
 			@Override
