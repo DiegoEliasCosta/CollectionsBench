@@ -36,7 +36,7 @@ public class HPPCListBench extends AbstractListBench<Object> {
 
 	}
 	
-	private enum HPPCListWorkload {
+	public enum HPPCListWorkload {
 
 		ITERATE {
 			@Override

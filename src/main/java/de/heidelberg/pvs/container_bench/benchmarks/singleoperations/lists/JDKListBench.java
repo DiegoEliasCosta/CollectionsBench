@@ -48,7 +48,7 @@ public class JDKListBench extends AbstractListBench<Object> {
 		return list;
 	}
 	
-	private enum JDKListWorkload {
+	public enum JDKListWorkload {
 
 		ITERATE {
 			@Override

@@ -42,7 +42,7 @@ public class HPPCMapBench extends AbstractMapBench<Object, Integer> {
 
 	}
 
-	private enum HPPCMapWorkload {
+	public enum HPPCMapWorkload {
 
 		POPULATE {
 			@Override

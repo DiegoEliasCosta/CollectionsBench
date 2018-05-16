@@ -41,7 +41,7 @@ public class HPPCSetBench extends AbstractSetBench<Object> {
 		}
 	}
 
-	private enum HPPCSetWorkload {
+	public enum HPPCSetWorkload {
 
 		POPULATE {
 			@Override

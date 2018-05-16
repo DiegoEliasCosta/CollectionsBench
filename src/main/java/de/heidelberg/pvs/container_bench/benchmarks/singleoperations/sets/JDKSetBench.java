@@ -45,7 +45,7 @@ public class JDKSetBench extends AbstractSetBench<Object> {
 		}
 	}
 	
-	private enum JDKSetWorkload {
+	public enum JDKSetWorkload {
 		
 		POPULATE {
 			@Override

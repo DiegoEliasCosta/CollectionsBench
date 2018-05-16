@@ -51,7 +51,7 @@ public class JDKMapBench extends AbstractMapBench<Object, Integer> {
 		blackhole.consume(fullMap);
 	}
 	
-	private enum JDKMapWorkload {
+	public enum JDKMapWorkload {
 		
 		POPULATE {
 

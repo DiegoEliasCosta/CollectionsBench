@@ -28,10 +28,10 @@ import de.heidelberg.pvs.container_bench.generators.PayloadType;
  * @author diego.costa
  *
  */
-@BenchmarkMode(Mode.AverageTime)
+@BenchmarkMode(Mode.SampleTime)
 @OutputTimeUnit(TimeUnit.NANOSECONDS)
-@Timeout(time = 5, timeUnit = TimeUnit.SECONDS)
-@Warmup(iterations = 10, time = 1, timeUnit = TimeUnit.SECONDS)
+@Timeout(time = 60, timeUnit = TimeUnit.SECONDS)
+@Warmup(iterations = 20, time = 1, timeUnit = TimeUnit.SECONDS)
 @Measurement(iterations = 30, time = 1, timeUnit = TimeUnit.SECONDS)
 @Threads(1)
 @Fork(2)
