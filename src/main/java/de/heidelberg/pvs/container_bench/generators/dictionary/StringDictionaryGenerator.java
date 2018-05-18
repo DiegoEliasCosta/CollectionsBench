@@ -16,14 +16,14 @@ public class StringDictionaryGenerator implements ElementGenerator<String> {
 	protected List<String> words;
 	
 	protected Well44497b generator;
-
+	
 	protected int seed; 
-	protected int size;
+	protected int poolSize;
 	
 	@Override
 	public void init(int size, int seed) throws IOException {
 		this.seed = seed;
-		this.size = size;
+		this.poolSize = size;
 		
 		generator = new Well44497b(seed);
 		// Read all -> might be too expensive
@@ -39,27 +39,6 @@ public class StringDictionaryGenerator implements ElementGenerator<String> {
 	public String[] generateArray(int arraySize) {
 		String[] array = new String[arraySize];
 		return words.subList(0, arraySize).toArray(array);
-	}
-
-	@Override
-	public String[] generateArrayFromPool(int arraySize, int poolSize) {
-		
-		if(poolSize > this.size << 1) {
-			throw new IllegalArgumentException("Poolsize should be at most twice the size of the array");
-		}
-		
-		// Create a pool to draw from
-		List<String> pool = words.stream().limit(poolSize).collect(Collectors.toList());
-		
-		String[] array = new String[arraySize];
-		for (int i = 0; i < arraySize; i++) {
-			int idx = generator.nextInt(poolSize);
-			// Draw from the pool
-			array[i] = pool.get(idx);
-		} 
-		
-		return array;
-		
 	}
 
 }

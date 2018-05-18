@@ -1,6 +1,8 @@
 package de.heidelberg.pvs.container_bench.generators.uniform;
 
-public class IntegerUniformGenerator extends AbstractUniformGenerator<Integer> {
+import de.heidelberg.pvs.container_bench.generators.IntElementGenerator;
+
+public class IntegerUniformGenerator extends AbstractUniformGenerator<Integer> implements IntElementGenerator {
 
 	@Override
 	public Integer[] generateArray(int arraySize) {
@@ -12,10 +14,10 @@ public class IntegerUniformGenerator extends AbstractUniformGenerator<Integer> {
 	}
 
 	@Override
-	public Integer[] generateArrayFromPool(int arraySize, int range) {
-		Integer[] integers = new Integer[arraySize];
+	public int[] generateIntArray(int arraySize) {
+		int[] integers = new int[arraySize];
 		for (int i = 0; i < arraySize; i++) {
-			integers[i] = generator.nextInt(range);
+			integers[i] = generator.nextInt();
 		}
 		return integers;
 	}
