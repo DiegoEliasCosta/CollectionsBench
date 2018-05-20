@@ -4,8 +4,10 @@ import java.util.function.IntConsumer;
 
 import it.unimi.dsi.fastutil.ints.IntArrayList;
 
-public class FastutilsIntListBench extends AbstractIntListBench {
+public class FastutilIntListBench extends AbstractIntListBench {
 
+	
+	
 	IntArrayList fullList;
 	
 	@Override

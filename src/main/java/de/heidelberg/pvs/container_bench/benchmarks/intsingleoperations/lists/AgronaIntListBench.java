@@ -5,9 +5,10 @@ import java.util.function.IntConsumer;
 import org.agrona.collections.IntArrayList;
 
 
-public class AgroraIntListBench extends AbstractIntListBench {
+public class AgronaIntListBench extends AbstractIntListBench {
 
 	IntArrayList fullList;
+	
 	
 	@Override
 	public void testSetup() {
