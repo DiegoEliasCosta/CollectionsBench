@@ -11,9 +11,6 @@ import de.heidelberg.pvs.container_bench.generators.IntElementGenerator;
 
 public abstract class AbstractIntSetBench extends AbstractIntSingleOperationsBench{
 
-	/**
-	 * Implementation of our Randomness 
-	 */
 	protected IntElementGenerator generator;
 	
 	@Param
@@ -33,7 +30,7 @@ public abstract class AbstractIntSetBench extends AbstractIntSingleOperationsBen
 		workload.run(this);
 	}
 	
-	enum IntSetWorload {
+	public enum IntSetWorload {
 		
 		POPULATE {
 			@Override

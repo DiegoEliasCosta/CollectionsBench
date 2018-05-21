@@ -33,7 +33,7 @@ public abstract class AbstractIntListBench extends AbstractIntSingleOperationsBe
 		workload.run(this);
 	}
 	
-	enum IntListWorload {
+	public enum IntListWorload {
 		
 		POPULATE {
 			@Override
@@ -70,8 +70,6 @@ public abstract class AbstractIntListBench extends AbstractIntSingleOperationsBe
 		
 	}
 
-
-
 	protected abstract void populateBench();
 
 	protected abstract void containsBench();
@@ -79,6 +77,5 @@ public abstract class AbstractIntListBench extends AbstractIntSingleOperationsBe
 	protected abstract void copyBench();
 
 	protected abstract void iterateBench();
-	
 
 }

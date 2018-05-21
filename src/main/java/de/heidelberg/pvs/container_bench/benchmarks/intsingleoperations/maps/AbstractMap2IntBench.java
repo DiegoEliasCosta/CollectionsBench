@@ -48,7 +48,7 @@ public abstract class AbstractMap2IntBench extends AbstractIntSingleOperationsBe
 		workload.run(this);
 	}
 	
-	enum Map2IntWorload {
+	public enum Map2IntWorload {
 		
 		POPULATE {
 			@Override
