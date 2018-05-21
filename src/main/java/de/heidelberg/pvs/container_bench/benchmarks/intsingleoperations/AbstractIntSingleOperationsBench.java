@@ -31,7 +31,7 @@ import de.heidelberg.pvs.container_bench.generators.IntPayloadType;
 @OutputTimeUnit(TimeUnit.NANOSECONDS)
 @Timeout(time = 60, timeUnit = TimeUnit.SECONDS)
 @Warmup(iterations = 20, time = 1, timeUnit = TimeUnit.SECONDS)
-@Measurement(iterations = 30, time = 1, timeUnit = TimeUnit.SECONDS)
+@Measurement(iterations = 40, time = 1, timeUnit = TimeUnit.SECONDS)
 @Threads(1)
 @Fork(2)
 @State(Scope.Benchmark)

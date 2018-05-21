@@ -26,9 +26,9 @@ import de.heidelberg.pvs.container_bench.generators.Wordlist;
 @BenchmarkMode(Mode.SingleShotTime)
 @OutputTimeUnit(TimeUnit.MILLISECONDS)
 @Timeout(time = 10, timeUnit = TimeUnit.MINUTES)
-@Warmup(iterations = 5)
-@Measurement(iterations = 11)
-@Fork(1)
+@Warmup(iterations = 20, time = 1, timeUnit = TimeUnit.SECONDS)
+@Measurement(iterations = 40, time = 1, timeUnit = TimeUnit.SECONDS)
+@Fork(2)
 @Threads(1)
 @State(Scope.Thread)
 public abstract class AbstractWordSetBenchmark<T> {
