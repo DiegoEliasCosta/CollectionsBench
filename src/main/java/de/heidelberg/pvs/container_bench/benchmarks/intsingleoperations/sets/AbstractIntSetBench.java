@@ -17,7 +17,7 @@ public abstract class AbstractIntSetBench extends AbstractIntSingleOperationsBen
 	protected IntElementGenerator generator;
 	
 	@Param
-	public IntListWorload workload;
+	public IntSetWorload workload;
 	
 	protected int values[];
 
@@ -33,7 +33,7 @@ public abstract class AbstractIntSetBench extends AbstractIntSingleOperationsBen
 		workload.run(this);
 	}
 	
-	enum IntListWorload {
+	enum IntSetWorload {
 		
 		POPULATE {
 			@Override
