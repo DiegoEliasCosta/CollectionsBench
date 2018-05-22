@@ -34,11 +34,9 @@ import de.heidelberg.pvs.container_bench.generators.Wordlist;
 public abstract class AbstractWordcountBenchmark<T> {
 	/**
 	 * Number of words to load from the file.
-	 *
-	 * Named zz to have this sort last.
 	 */
 	@Param({ "100000" })
-	public int zzsize;
+	public int size;
 
 	/** -1: no random shuffling */
 	@Param({ "-1" })
@@ -63,7 +61,7 @@ public abstract class AbstractWordcountBenchmark<T> {
 	@Setup(Level.Trial)
 	public void setupData(Blackhole b, Data data) throws IOException {
 		bh = b;
-		data.words = Wordlist.loadWords(zzsize, seed);
+		data.words = Wordlist.loadWords(size, seed);
 	}
 
 	@Setup(Level.Iteration)

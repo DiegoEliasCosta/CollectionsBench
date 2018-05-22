@@ -38,10 +38,9 @@ public abstract class AbstractIntSetBenchmark<T> {
 	/**
 	 * Number of words to load from the file.
 	 *
-	 * Named zz to have this sort last.
 	 */
 	@Param({ "100000" })
-	public int zzsize = 100_000;
+	public int size = 100_000;
 
 	/** -1: no random shuffling */
 	@Param({ "-1" })
@@ -60,7 +59,7 @@ public abstract class AbstractIntSetBenchmark<T> {
 	@Setup(Level.Iteration)
 	public void setup(Blackhole b) throws IOException, InterruptedException {
 		bh = b;
-		words = words != null ? words : Wordlist.loadInts(zzsize, seed, mask);
+		words = words != null ? words : Wordlist.loadInts(size, seed, mask);
 		workload.init(this);
 	}
 
