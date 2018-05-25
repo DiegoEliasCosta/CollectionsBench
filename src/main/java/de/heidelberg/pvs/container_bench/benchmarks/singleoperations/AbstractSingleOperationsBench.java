@@ -35,7 +35,7 @@ import de.heidelberg.pvs.container_bench.generators.PayloadType;
 @Measurement(iterations = 40, time = 1, timeUnit = TimeUnit.SECONDS)
 @Threads(1)
 @Fork(2)
-@State(Scope.Benchmark)
+@State(Scope.Thread)
 public abstract class AbstractSingleOperationsBench {
 
 	/**
