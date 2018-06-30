@@ -25,7 +25,7 @@ import de.heidelberg.pvs.container_bench.generators.Wordlist;
 
 @BenchmarkMode(Mode.SingleShotTime)
 @OutputTimeUnit(TimeUnit.MILLISECONDS)
-@Timeout(time = 10, timeUnit = TimeUnit.MINUTES)
+@Timeout(time = 20, timeUnit = TimeUnit.SECONDS)
 @Warmup(iterations = 20, time = 1, timeUnit = TimeUnit.SECONDS)
 @Measurement(iterations = 40, time = 1, timeUnit = TimeUnit.SECONDS)
 @Fork(2)
@@ -39,7 +39,7 @@ public abstract class AbstractWordSetBenchmark<T> {
 	/**
 	 * Number of words to load from the file.
 	 */
-	@Param({ "100000" })
+	@Param({ "100", "1000", "10000", "100000", "1000000" })
 	public int size = 100_000;
 
 	/** -1: no random shuffling */

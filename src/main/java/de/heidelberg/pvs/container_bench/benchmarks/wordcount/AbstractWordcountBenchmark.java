@@ -35,7 +35,7 @@ public abstract class AbstractWordcountBenchmark<T> {
 	/**
 	 * Number of words to load from the file.
 	 */
-	@Param({ "100000" })
+	@Param({ "100", "1000", "10000", "100000", "1000000" })
 	public int size;
 
 	/** -1: no random shuffling */
