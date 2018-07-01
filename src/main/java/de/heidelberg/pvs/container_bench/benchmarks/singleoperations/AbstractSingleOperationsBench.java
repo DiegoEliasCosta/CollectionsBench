@@ -30,7 +30,7 @@ import de.heidelberg.pvs.container_bench.generators.PayloadType;
  */
 @BenchmarkMode(Mode.SampleTime)
 @OutputTimeUnit(TimeUnit.NANOSECONDS)
-@Timeout(time = 60, timeUnit = TimeUnit.SECONDS)
+@Timeout(time = 20, timeUnit = TimeUnit.SECONDS)
 @Warmup(iterations = 20, time = 1, timeUnit = TimeUnit.SECONDS)
 @Measurement(iterations = 40, time = 1, timeUnit = TimeUnit.SECONDS)
 @Threads(1)

@@ -1,7 +1,7 @@
-package de.heidelberg.pvs.container_bench.benchmarks.concurrency.sets;
+package de.heidelberg.pvs.container_bench.benchmarks.concurrency.lists;
 
 import java.io.IOException;
-import java.util.Set;
+import java.util.List;
 
 import org.openjdk.jmh.annotations.Benchmark;
 import org.openjdk.jmh.annotations.Group;
@@ -12,15 +12,15 @@ import org.openjdk.jmh.annotations.Setup;
 import org.openjdk.jmh.infra.Blackhole;
 
 import de.heidelberg.pvs.container_bench.benchmarks.concurrency.AbstractConcurrentBench;
-import de.heidelberg.pvs.container_bench.factories.JDKSyncSetFact;
+import de.heidelberg.pvs.container_bench.factories.JDKSyncListFact;
 import de.heidelberg.pvs.container_bench.generators.ElementGenerator;
 import de.heidelberg.pvs.container_bench.generators.GeneratorFactory;
 import de.heidelberg.pvs.container_bench.generators.PayloadType;
 
-public class JDKConcurrentSetBench extends AbstractConcurrentBench {
-	
+public class JDKConcurrentListBench extends AbstractConcurrentBench {
+
 	@Param
-	JDKSyncSetFact impl;
+	JDKSyncListFact impl;
 
 	String values[];
 
@@ -28,7 +28,7 @@ public class JDKConcurrentSetBench extends AbstractConcurrentBench {
 
 	Blackhole blackhole;
 
-	Set<Object> sharedEmptySet;
+	List<Object> sharedEmptyList;
 
 	@Param("STRING_DICTIONARY")
 	PayloadType payloadType;
@@ -36,12 +36,13 @@ public class JDKConcurrentSetBench extends AbstractConcurrentBench {
 	@Setup(Level.Iteration)
 	@SuppressWarnings("unchecked")
 	public void setup(Blackhole bh) throws IOException {
-		sharedEmptySet = impl.maker.get();
+		sharedEmptyList = impl.maker.get();
 
 		valuesGenerator = (ElementGenerator<String>) GeneratorFactory.buildRandomGenerator(PayloadType.STRING_DICTIONARY);
 		valuesGenerator.init(size, seed);
 
 		values = valuesGenerator.generateArray(size);
+
 		blackhole = bh;
 
 	}
@@ -51,7 +52,7 @@ public class JDKConcurrentSetBench extends AbstractConcurrentBench {
 	@GroupThreads(10)
 	public void readFromState() {
 		int index = valuesGenerator.generateIndex(size);
-		blackhole.consume(sharedEmptySet.contains(values[index]));
+		blackhole.consume(sharedEmptyList.contains(values[index]));
 
 	}
 
@@ -60,7 +61,7 @@ public class JDKConcurrentSetBench extends AbstractConcurrentBench {
 	@GroupThreads(1)
 	public void writeOnState() {
 		for (int i = 0; i < size; i++) {
-			sharedEmptySet.add(values[i]);
+			sharedEmptyList.add(values[i]);
 		}
 	}
 
@@ -70,8 +71,8 @@ public class JDKConcurrentSetBench extends AbstractConcurrentBench {
 	public void searchAndAdd() {
 
 		int index = this.valuesGenerator.generateIndex(size);
-		if (!sharedEmptySet.contains(values[index])) {
-			sharedEmptySet.add(values[index]);
+		if (!sharedEmptyList.contains(values[index])) {
+			sharedEmptyList.add(values[index]);
 		}
 	}
 
@@ -80,7 +81,7 @@ public class JDKConcurrentSetBench extends AbstractConcurrentBench {
 	@GroupThreads(1)
 	public void add() {
 		int index = this.valuesGenerator.generateIndex(size);
-		sharedEmptySet.add(values[index]);
+		sharedEmptyList.add(values[index]);
 	}
 
 	@Benchmark
@@ -88,8 +89,7 @@ public class JDKConcurrentSetBench extends AbstractConcurrentBench {
 	@GroupThreads(1)
 	public void remove() {
 		int index = this.valuesGenerator.generateIndex(size);
-		sharedEmptySet.remove(values[index]);
+		sharedEmptyList.remove(values[index]);
 	}
-
 
 }
