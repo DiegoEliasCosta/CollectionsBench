@@ -18,6 +18,7 @@ import org.openjdk.jmh.annotations.Warmup;
 import org.openjdk.jmh.infra.Blackhole;
 
 import de.heidelberg.pvs.container_bench.generators.IntPayloadType;
+import de.heidelberg.pvs.container_bench.generators.PayloadType;
 
 /**
  * Abstract class of Single Operation benchmarks with primitives.

@@ -1,5 +1,6 @@
 package de.heidelberg.pvs.container_bench.benchmarks.singleoperations.maps;
 
+import org.openjdk.jmh.annotations.Benchmark;
 import org.openjdk.jmh.annotations.Param;
 
 import com.carrotsearch.hppc.ObjectObjectMap;
@@ -40,6 +41,12 @@ public class HPPCMapBench extends AbstractMapBench<Object, Integer> {
 			fullMap.put(keys[i], values[i]);
 		}
 
+	}
+	
+	@Benchmark
+	public void bench() throws InterruptedException {
+		workload.run(this);
+		blackhole.consume(fullMap);
 	}
 
 	public enum HPPCMapWorkload {

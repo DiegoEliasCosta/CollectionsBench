@@ -46,7 +46,7 @@ public class JDKMapBench extends AbstractMapBench<Object, Integer> {
 	}
 	
 	@Benchmark
-	public void bench() {
+	public void bench() throws InterruptedException {
 		workload.run(this);
 		blackhole.consume(fullMap);
 	}
@@ -56,10 +56,13 @@ public class JDKMapBench extends AbstractMapBench<Object, Integer> {
 		POPULATE {
 
 			@Override
-			public void run(JDKMapBench self) {
+			public void run(JDKMapBench self) throws InterruptedException {
 				Map<Object, Integer> newMap = self.getNewMap();
 				for(int i = 0; i < self.size; i++) {
 					self.blackhole.consume(newMap.put(self.keys[i], self.values[i]));
+					if (Thread.interrupted()) {
+						throw new InterruptedException();
+					}
 				}
 				self.blackhole.consume(newMap);
 			}
@@ -70,7 +73,7 @@ public class JDKMapBench extends AbstractMapBench<Object, Integer> {
 		CONTAINS {
 
 			@Override
-			public void run(JDKMapBench self) {
+			public void run(JDKMapBench self) throws InterruptedException {
 				int index = self.keyGenerator.generateIndex(self.size);
 				self.blackhole.consume(self.fullMap.containsKey(self.keys[index]));
 				
@@ -81,7 +84,7 @@ public class JDKMapBench extends AbstractMapBench<Object, Integer> {
 		COPY {
 
 			@Override
-			public void run(JDKMapBench self) {
+			public void run(JDKMapBench self) throws InterruptedException {
 				Map<Object, Integer> newMap = self.copyMap(self.fullMap); 
 				self.blackhole.consume(newMap);
 			}
@@ -90,9 +93,12 @@ public class JDKMapBench extends AbstractMapBench<Object, Integer> {
 		ITERATE {
 
 			@Override
-			public void run(JDKMapBench self) {
+			public void run(JDKMapBench self) throws InterruptedException {
 				for(Entry<Object, Integer> entry : self.fullMap.entrySet()) {
 					self.blackhole.consume(entry);
+					if (Thread.interrupted()) {
+						throw new InterruptedException();
+					}
 				}
 				
 			}
@@ -101,7 +107,7 @@ public class JDKMapBench extends AbstractMapBench<Object, Integer> {
 		}
 		;
 		
-		public abstract void run(JDKMapBench self);
+		public abstract void run(JDKMapBench self) throws InterruptedException;
 		
 	}
 	

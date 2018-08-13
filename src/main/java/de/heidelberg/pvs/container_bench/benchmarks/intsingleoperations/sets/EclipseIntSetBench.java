@@ -15,7 +15,7 @@ public class EclipseIntSetBench extends AbstractIntSetBench {
 	
 	@Override
 	public void testSetup() {
-		impl.maker.get();
+		fullSet = impl.maker.get();
 		for (int i = 0; i < values.length; i++) {
 			fullSet.add(values[i]);
 		}

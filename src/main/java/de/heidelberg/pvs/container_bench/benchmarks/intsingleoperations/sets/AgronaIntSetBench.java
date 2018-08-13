@@ -11,13 +11,13 @@ import de.heidelberg.pvs.container_bench.factories.AgronaIntSetFact;
 public class AgronaIntSetBench extends AbstractIntSetBench {
 
 	@Param
-	AgronaIntSetFact impl;
+	public AgronaIntSetFact impl;
 	
 	IntHashSet fullSet;
 	
 	@Override
 	public void testSetup() {
-		impl.maker.get();
+		fullSet = impl.maker.get();
 		for (int i = 0; i < values.length; i++) {
 			fullSet.add(values[i]);
 		}

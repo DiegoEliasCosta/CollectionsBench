@@ -49,4 +49,5 @@ public enum JDKMap2IntFact {
 	private JDKMap2IntFact(Supplier<Map<Object, Integer>> maker) {
 		this.maker = maker;
 	}
+	
 }

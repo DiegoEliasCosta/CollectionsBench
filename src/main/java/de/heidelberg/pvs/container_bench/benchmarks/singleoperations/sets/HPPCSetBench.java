@@ -2,6 +2,7 @@ package de.heidelberg.pvs.container_bench.benchmarks.singleoperations.sets;
 
 import java.util.Set;
 
+import org.openjdk.jmh.annotations.Benchmark;
 import org.openjdk.jmh.annotations.Param;
 
 import com.carrotsearch.hppc.ObjectSet;
@@ -39,6 +40,12 @@ public class HPPCSetBench extends AbstractSetBench<Object> {
 		for (int i = 0; i < size; i++) {
 			fullSet.add(values[i]);
 		}
+	}
+	
+	@Benchmark
+	public void bench() throws InterruptedException {
+		workload.run(this);
+		blackhole.consume(fullSet);
 	}
 
 	public enum HPPCSetWorkload {

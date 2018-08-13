@@ -3,11 +3,19 @@ package de.heidelberg.pvs.container_bench.benchmarks.intsingleoperations.lists;
 import java.util.function.IntConsumer;
 
 import org.agrona.collections.IntArrayList;
+import org.openjdk.jmh.annotations.Param;
 
 
 public class AgronaIntListBench extends AbstractIntListBench {
 
 	IntArrayList fullList;
+	
+	@Param
+	public AgronaIntListFact impl;
+	
+	public enum AgronaIntListFact {
+		AGRONA_I_ARRAY
+	}
 	
 	
 	@Override

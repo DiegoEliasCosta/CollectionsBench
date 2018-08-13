@@ -27,15 +27,15 @@ public abstract class AbstractMap2IntBench extends AbstractIntSingleOperationsBe
 	public Map2IntWorload workload;
 	
 	protected int values[];
-	protected String keys[];
+	protected Object keys[];
 
 	@SuppressWarnings("unchecked")
 	public void generatorSetup() throws IOException {
-		valuesGenerator = GeneratorFactory.buildRandomGenerator(IntPayloadType.INTEGER_UNIFORM);
+		valuesGenerator = GeneratorFactory.buildRandomGenerator(payloadType);
 		valuesGenerator.init(size, seed);
 
-		keyGenerator = (ElementGenerator<String>) 
-				GeneratorFactory.buildRandomGenerator(payloadType);
+		keyGenerator = 
+				(ElementGenerator<String>) GeneratorFactory.buildRandomGenerator(PayloadType.STRING_DICTIONARY);
 		keyGenerator.init(size, seed);
 		
 		values = valuesGenerator.generateIntArray(size);
