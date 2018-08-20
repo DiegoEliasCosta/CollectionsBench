@@ -32,14 +32,12 @@ public class DoubleBraceStaticInitBench extends StackOverflowQuestionsBench {
 
 	@Param
 	DoubleBraceWorkload workload;
-
 	enum DoubleBraceWorkload {
 		SO_STATIC_INITIALIZATION_WORKLOAD
 	};
 
 	@Param
 	PayloadType payloadType;
-
 	enum PayloadType {
 		STRING
 	};
