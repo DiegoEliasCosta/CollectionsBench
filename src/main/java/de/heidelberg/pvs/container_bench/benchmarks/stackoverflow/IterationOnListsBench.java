@@ -6,9 +6,7 @@ import java.util.List;
 
 import org.openjdk.jmh.annotations.Benchmark;
 import org.openjdk.jmh.annotations.Param;
-import org.openjdk.jmh.infra.Blackhole;
 
-import de.heidelberg.pvs.container_bench.benchmarks.sets.AbstractWordSetBenchmark;
 import de.heidelberg.pvs.container_bench.benchmarks.singleoperations.AbstractSingleOperationsBench;
 import de.heidelberg.pvs.container_bench.factories.JDKListFact;
 import de.heidelberg.pvs.container_bench.generators.ElementGenerator;
@@ -23,7 +21,7 @@ import de.heidelberg.pvs.container_bench.generators.PayloadType;
  * @author diego.costa
  *
  */
-public class IterationOnListsBench extends AbstractSingleOperationsBench {
+public abstract class IterationOnListsBench extends AbstractSingleOperationsBench {
 
 	/**
 	 * Type of the payload object
@@ -34,19 +32,19 @@ public class IterationOnListsBench extends AbstractSingleOperationsBench {
 	@Param
 	JDKListFact impl;
 	private ElementGenerator<Object> generator;
-	
+
 	@Param
 	private ListIterationWorkload workload;
+	enum ListIterationWorkload { SO_LIST_ITERATE };
 
 	private Object values[];
-	private List<Object> fullList;
+	protected List<Object> fullList;
 
 	@SuppressWarnings("unchecked")
 	@Override
 	public void generatorSetup() throws IOException {
 		generator = (ElementGenerator<Object>) GeneratorFactory.buildRandomGenerator(payloadType);
 		generator.init(size, seed);
-
 	}
 
 	@Override
@@ -58,79 +56,48 @@ public class IterationOnListsBench extends AbstractSingleOperationsBench {
 		}
 	}
 
-	public enum ListIterationWorkload {
-
-		BASIC_FOOR_LOOP {
-			@Override
-			public void run(IterationOnListsBench self) throws InterruptedException {
-				for(int i = 0; i < self.size; i ++) {
-					self.blackhole.consume(self.fullList.get(i));
-				}
-			}
-		}, //
-		
-		ENHANCED_FOOR_LOOP {
-			@Override
-			public void run(IterationOnListsBench self) throws InterruptedException {
-				for (Object i : self.fullList) {
-					self.blackhole.consume(i);
-				}
-			}
-		},
-		
-		ITERATOR_LOOP {
-			@Override
-			public void run(IterationOnListsBench self) throws InterruptedException {
-				for (Iterator<Object> iter = self.fullList.iterator(); iter.hasNext();) {
-					self.blackhole.consume(iter.next());
-				}
-			}
-		}, //
-		
-		LIST_ITERATOR_LOOP {
-			
-			@Override
-			public void run(IterationOnListsBench self) throws InterruptedException {
-				for (Iterator<Object> iter = self.fullList.listIterator(); iter.hasNext();) {
-					self.blackhole.consume(iter.next());
-				}
-			}
-			
-		}, //
-		
-		
-		STREAM_FOR_EACH {
-
-			@Override
-			public void run(IterationOnListsBench self) throws InterruptedException {
-				self.fullList.stream().forEach(elem -> self.blackhole.consume(elem));
-				
-			}
-			
-		}, //
-		
-		ITERABLE_FOREACH {
-
-			@Override
-			public void run(IterationOnListsBench self) throws InterruptedException {
-				self.fullList.forEach(elem -> self.blackhole.consume(elem));
-			}
-			
-		}, 
-		
-		PARALLEL_STREAM {
-
-			@Override
-			public void run(IterationOnListsBench self) throws InterruptedException {
-				self.fullList.parallelStream().forEach(elem -> self.blackhole.consume(elem));
-				
-			}
-			
-		};
-
-		abstract public void run(IterationOnListsBench self) throws InterruptedException;
-		
+	@Benchmark
+	public void basicForLoop() {
+		for (int i = 0; i < size; i++) {
+			blackhole.consume(fullList.get(i));
+		}
 	}
 
+	@Benchmark
+	public void enhancedForLoop() {
+		for (Object i : fullList) {
+			blackhole.consume(i);
+		}
+	}
+
+	@Benchmark
+	public void iteratorForLoop() {
+		for (Iterator<Object> iter = fullList.iterator(); iter.hasNext();) {
+			blackhole.consume(iter.next());
+		}
+	}
+
+	@Benchmark
+	public void listIteratorForLoop() {
+		for (Iterator<Object> iter = fullList.listIterator(); iter.hasNext();) {
+			blackhole.consume(iter.next());
+		}
+	}
+
+	@Benchmark
+	public void streamForEach() {
+		fullList.stream().forEach(elem -> blackhole.consume(elem));
+	}
+
+	@Benchmark
+	public void iterableForEach() {
+		fullList.forEach(elem -> blackhole.consume(elem));
+	}
+
+	@Benchmark
+	public void parallelStream() {
+		fullList.parallelStream().forEach(elem -> blackhole.consume(elem));
+
+	}
 
 }

@@ -11,41 +11,48 @@ import org.openjdk.jmh.annotations.Param;
  * from the top #1 most voted question on Collections performance
  * https://stackoverflow.com/questions/924285/efficiency-of-java-double-brace-initialization
  * 
- * Simple tests
- * 1. Create a small collection with 2 elements with and without double bracer
- * 2. Create a larger collection with 20 elements with and without double bracer
+ * Simple tests 1. Create a small collection with 2 elements with and without
+ * double bracer 2. Create a larger collection with 20 elements with and without
+ * double bracer
  * 
  * I believe anything about that would not be created statically.
  * 
  * @author diego.costa
  *
  */
-public class DoubleBraceInitializationBench extends StackOverflowQuestionsBench {
-	
+public class DoubleBraceStaticInitBench extends StackOverflowQuestionsBench {
 
 	// Keeping in conformity with the structure of other benchmarks
 	@Param
 	ArrayListImpl impl;
-	enum ArrayListImpl { JDK_ARRAYLIST } // This cannot be done through our factory
-	
+
+	enum ArrayListImpl {
+		JDK_ARRAYLIST
+	} // This cannot be done through our factory
+
 	@Param
 	DoubleBraceWorkload workload;
-	enum DoubleBraceWorkload { DOUBLE_BRACE_INITIALIZATION };
-	
+
+	enum DoubleBraceWorkload {
+		SO_STATIC_INITIALIZATION_WORKLOAD
+	};
+
 	@Param
 	PayloadType payloadType;
-	enum PayloadType { STRING };
-	
+
+	enum PayloadType {
+		STRING
+	};
+
 	@Param
 	int size = -1;
-	
+
 	@Param
 	int seed = -1;
-	
-	@SuppressWarnings("serial")
-	@Benchmark
-	public List<String> createSmallListWithDoubleBrace() {
 
+	@Benchmark
+	public List<String> smallListInitializationWithDoubleBrace() throws InterruptedException {
+		@SuppressWarnings("serial")
 		List<String> l = new ArrayList<String>() {
 			{
 				add("Hello");
@@ -53,13 +60,20 @@ public class DoubleBraceInitializationBench extends StackOverflowQuestionsBench 
 			}
 		};
 		return l;
+	};
 
-	}
-
-	@SuppressWarnings("serial")
+	
 	@Benchmark
-	public List<String> createMediumListWithDoubleBrace() {
+	public List<String> smallListInitializationRegular() throws InterruptedException {
+		List<String> l = new ArrayList<String>();
+		l.add("Hello");
+		l.add("World!");
+		return l;
+	};
 
+	@Benchmark
+	public List<String> largerListInitializationWithDoubleBrace() throws InterruptedException {
+		@SuppressWarnings("serial")
 		List<String> l = new ArrayList<String>() {
 			{
 				add("Hello");
@@ -85,22 +99,10 @@ public class DoubleBraceInitializationBench extends StackOverflowQuestionsBench 
 			}
 		};
 		return l;
-
-	}
-
-	@Benchmark
-	public List<String> createSmallListRegular() {
-
-		List<String> l = new ArrayList<String>();
-		l.add("Hello");
-		l.add("World!");
-		return l;
-
-	}
+	};
 
 	@Benchmark
-	public List<String> createMediumListRegular() {
-
+	public List<String> largerListInitializationRegular() throws InterruptedException {
 		List<String> l = new ArrayList<String>();
 		l.add("Hello");
 		l.add("World!");
@@ -123,6 +125,7 @@ public class DoubleBraceInitializationBench extends StackOverflowQuestionsBench 
 		l.add("ullamcorper");
 		l.add("ornare.");
 		return l;
-	}
+	};
+
 
 }

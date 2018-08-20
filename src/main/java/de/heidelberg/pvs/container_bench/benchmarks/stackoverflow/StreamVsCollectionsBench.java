@@ -28,6 +28,10 @@ public class StreamVsCollectionsBench {
 	PayloadType payloadType;
 	enum PayloadType { INTEGER_UNIFORM } // fixed
 	
+	@Param
+	StreamVsCollectionWorkload workload;
+	enum StreamVsCollectionWorkload { SO_FILTERING_ADDING }
+	
 	@Param({ "467505" })
 	public int seed;
 	
