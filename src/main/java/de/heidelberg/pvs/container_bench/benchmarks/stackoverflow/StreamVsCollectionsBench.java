@@ -12,7 +12,7 @@ import org.openjdk.jmh.annotations.Setup;
 import de.heidelberg.pvs.container_bench.generators.ElementGenerator;
 import de.heidelberg.pvs.container_bench.generators.uniform.IntegerUniformGenerator;
 
-public class StreamVsCollectionsBench {
+public class StreamVsCollectionsBench extends StackOverflowQuestionsBench {
 
 	/**
 	 * From 100 - 1M
@@ -22,15 +22,15 @@ public class StreamVsCollectionsBench {
 	
 	@Param
 	ArrayListFact impl;
-	enum ArrayListFact { JDK_ARRAY } // fixed
+	public enum ArrayListFact { JDK_ARRAY } // fixed
 	
 	@Param
 	PayloadType payloadType;
-	enum PayloadType { INTEGER_UNIFORM } // fixed
+	public enum PayloadType { INTEGER_UNIFORM } // fixed
 	
 	@Param
 	StreamVsCollectionWorkload workload;
-	enum StreamVsCollectionWorkload { SO_FILTERING_ADDING }
+	public enum StreamVsCollectionWorkload { SO_FILTERING_ADDING }
 	
 	@Param({ "467505" })
 	public int seed;

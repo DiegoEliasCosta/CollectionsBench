@@ -24,29 +24,28 @@ public class DoubleBraceStaticInitBench extends StackOverflowQuestionsBench {
 
 	// Keeping in conformity with the structure of other benchmarks
 	@Param
-	ArrayListImpl impl;
-
-	enum ArrayListImpl {
+	public ArrayListImpl impl;
+	public enum ArrayListImpl {
 		JDK_ARRAYLIST
 	} // This cannot be done through our factory
 
 	@Param
-	DoubleBraceWorkload workload;
-	enum DoubleBraceWorkload {
+	public DoubleBraceWorkload workload;
+	public enum DoubleBraceWorkload {
 		SO_STATIC_INITIALIZATION_WORKLOAD
 	};
 
 	@Param
-	PayloadType payloadType;
-	enum PayloadType {
+	public PayloadType payloadType;
+	public enum PayloadType {
 		STRING
 	};
 
-	@Param
-	int size = -1;
+	@Param("-1")
+	int size;
 
-	@Param
-	int seed = -1;
+	@Param("-1")
+	int seed;
 
 	@Benchmark
 	public List<String> smallListInitializationWithDoubleBrace() throws InterruptedException {

@@ -17,14 +17,14 @@ public class MapIterationBench extends AbstractSingleOperationsBench {
 	
 	// Keeping in conformity with the structure of other benchmarks
 	@Param
-	JDKHashMapFact impl;
-	enum JDKHashMapFact { JDK_HASH }; // fixed
+	public JDKHashMapFact impl;
+	public enum JDKHashMapFact { JDK_HASH }; // fixed
 	
 	Map<Object, Object> fullMap;
 
 	@Param
-	MapIterationWorkload workload;
-	enum MapIterationWorkload {	SO_MAP_ITERATE	}; // fixed
+	public MapIterationWorkload workload;
+	public enum MapIterationWorkload {	SO_MAP_ITERATE	}; // fixed
 
 	private ElementGenerator<Object> generator;
 	

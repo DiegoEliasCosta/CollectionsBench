@@ -31,11 +31,11 @@ public abstract class IterationOnListsBench extends AbstractSingleOperationsBenc
 
 	@Param
 	JDKListFact impl;
-	private ElementGenerator<Object> generator;
+	public ElementGenerator<Object> generator;
 
 	@Param
-	private ListIterationWorkload workload;
-	enum ListIterationWorkload { SO_LIST_ITERATE };
+	public ListIterationWorkload workload;
+	public enum ListIterationWorkload { SO_LIST_ITERATE };
 
 	private Object values[];
 	protected List<Object> fullList;
