@@ -1,16 +1,17 @@
 package de.heidelberg.pvs.container_bench.benchmarks.intsingleoperations.sets;
 
-import org.apache.mahout.math.function.IntProcedure;
-import org.apache.mahout.math.set.OpenIntHashSet;
+import java.util.function.IntConsumer;
+
 import org.openjdk.jmh.annotations.Param;
 
-import de.heidelberg.pvs.container_bench.factories.MahoutIntSetFact;
+import de.heidelberg.pvs.container_bench.factories.FastutilIntSetFact;
+import it.unimi.dsi.fastutil.ints.IntSet;
 
-public class MahoutIntSetBench extends AbstractIntSetBench {
+public class FastutilIntSetForEach extends AbstractIntSetBenchmark {
 	@Param
-	MahoutIntSetFact impl;
+	public FastutilIntSetFact impl;
 
-	OpenIntHashSet fullSet;
+	IntSet fullSet;
 
 	@Override
 	public void testSetup() {
@@ -22,7 +23,7 @@ public class MahoutIntSetBench extends AbstractIntSetBench {
 
 	@Override
 	protected void populateBench() {
-		OpenIntHashSet newSet = impl.maker.get();
+		IntSet newSet = impl.maker.get();
 		for (int i = 0; i < values.length && failIfInterrupted(); i++) {
 			newSet.add(values[i]);
 		}
@@ -37,28 +38,18 @@ public class MahoutIntSetBench extends AbstractIntSetBench {
 
 	@Override
 	protected void copyBench() {
-		OpenIntHashSet newSet = impl.maker.get();
-		newSet.ensureCapacity(size);
-		// Mahout does not provide an API for copying
-		fullSet.forEachKey(new IntProcedure() {
-			@Override
-			public boolean apply(int element) {
-				newSet.add(element);
-				failIfInterrupted();
-				return true;
-			}
-		});
+		IntSet newSet = impl.maker.get();
+		newSet.addAll(fullSet);
 		blackhole.consume(newSet);
 	}
 
 	@Override
 	protected void iterateBench() {
-		fullSet.forEachKey(new IntProcedure() {
+		fullSet.forEach(new IntConsumer() {
 			@Override
-			public boolean apply(int element) {
+			public void accept(int value) {
 				failIfInterrupted();
-				blackhole.consume(element);
-				return true;
+				blackhole.consume(value);
 			}
 		});
 	}

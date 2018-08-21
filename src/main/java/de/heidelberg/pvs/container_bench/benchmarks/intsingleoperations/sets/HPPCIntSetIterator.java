@@ -1,17 +1,18 @@
 package de.heidelberg.pvs.container_bench.benchmarks.intsingleoperations.sets;
 
-import java.util.function.IntConsumer;
-
 import org.openjdk.jmh.annotations.Param;
 
-import de.heidelberg.pvs.container_bench.factories.KolobokeIntSetFact;
-import net.openhft.koloboke.collect.set.IntSet;
+import com.carrotsearch.hppc.IntHashSet;
+import com.carrotsearch.hppc.IntSet;
+import com.carrotsearch.hppc.cursors.IntCursor;
 
-public class KolobokeIntSetBench extends AbstractIntSetBench {
+import de.heidelberg.pvs.container_bench.factories.HPPCIntSetFact;
+
+public class HPPCIntSetIterator extends AbstractIntSetBenchmark {
 	@Param
-	KolobokeIntSetFact impl;
+	HPPCIntSetFact impl;
 
-	IntSet fullSet;
+	IntHashSet fullSet;
 
 	@Override
 	public void testSetup() {
@@ -38,19 +39,16 @@ public class KolobokeIntSetBench extends AbstractIntSetBench {
 
 	@Override
 	protected void copyBench() {
-		IntSet newSet = impl.maker.get();
+		IntHashSet newSet = impl.maker.get();
 		newSet.addAll(fullSet);
 		blackhole.consume(newSet);
 	}
 
 	@Override
 	protected void iterateBench() {
-		fullSet.forEach(new IntConsumer() {
-			@Override
-			public void accept(int value) {
-				failIfInterrupted();
-				blackhole.consume(value);
-			}
-		});
+		for (IntCursor c : fullSet) {
+			failIfInterrupted();
+			blackhole.consume(c.value);
+		}
 	}
 }

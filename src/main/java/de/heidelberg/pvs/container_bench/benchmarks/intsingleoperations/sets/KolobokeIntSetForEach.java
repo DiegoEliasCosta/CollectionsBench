@@ -4,12 +4,12 @@ import java.util.function.IntConsumer;
 
 import org.openjdk.jmh.annotations.Param;
 
-import de.heidelberg.pvs.container_bench.factories.FastutilIntSetFact;
-import it.unimi.dsi.fastutil.ints.IntSet;
+import de.heidelberg.pvs.container_bench.factories.KolobokeIntSetFact;
+import net.openhft.koloboke.collect.set.IntSet;
 
-public class FastutilIntSetBench extends AbstractIntSetBench {
+public class KolobokeIntSetForEach extends AbstractIntSetBenchmark {
 	@Param
-	public FastutilIntSetFact impl;
+	KolobokeIntSetFact impl;
 
 	IntSet fullSet;
 

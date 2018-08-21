@@ -1,20 +1,16 @@
 package de.heidelberg.pvs.container_bench.benchmarks.intsingleoperations.sets;
 
-import java.util.function.Consumer;
-
 import org.openjdk.jmh.annotations.Param;
 
-import com.carrotsearch.hppc.IntHashSet;
-import com.carrotsearch.hppc.IntSet;
-import com.carrotsearch.hppc.cursors.IntCursor;
+import de.heidelberg.pvs.container_bench.factories.TroveIntSetFact;
+import gnu.trove.iterator.TIntIterator;
+import gnu.trove.set.TIntSet;
 
-import de.heidelberg.pvs.container_bench.factories.HPPCIntSetFact;
-
-public class HPPCIntSetBench extends AbstractIntSetBench {
+public class TroveIntSetIterator extends AbstractIntSetBenchmark {
 	@Param
-	HPPCIntSetFact impl;
+	TroveIntSetFact impl;
 
-	IntHashSet fullSet;
+	TIntSet fullSet;
 
 	@Override
 	public void testSetup() {
@@ -26,7 +22,7 @@ public class HPPCIntSetBench extends AbstractIntSetBench {
 
 	@Override
 	protected void populateBench() {
-		IntSet newSet = impl.maker.get();
+		TIntSet newSet = impl.maker.get();
 		for (int i = 0; i < values.length && failIfInterrupted(); i++) {
 			newSet.add(values[i]);
 		}
@@ -41,19 +37,15 @@ public class HPPCIntSetBench extends AbstractIntSetBench {
 
 	@Override
 	protected void copyBench() {
-		IntHashSet newSet = impl.maker.get();
+		TIntSet newSet = impl.maker.get();
 		newSet.addAll(fullSet);
 		blackhole.consume(newSet);
 	}
 
 	@Override
 	protected void iterateBench() {
-		fullSet.forEach(new Consumer<IntCursor>() {
-			@Override
-			public void accept(IntCursor t) {
-				failIfInterrupted();
-				blackhole.consume(t);
-			}
-		});
+		for (TIntIterator iter = fullSet.iterator(); iter.hasNext() && failIfInterrupted();) {
+			blackhole.consume(iter.next());
+		}
 	}
 }

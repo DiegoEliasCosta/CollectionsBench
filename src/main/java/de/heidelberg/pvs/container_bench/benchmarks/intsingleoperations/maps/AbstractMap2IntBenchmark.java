@@ -17,7 +17,7 @@ import de.heidelberg.pvs.container_bench.generators.PayloadType;
  * @author diego.costa
  *
  */
-public abstract class AbstractMap2IntBench extends AbstractIntSingleOperationsBench {
+public abstract class AbstractMap2IntBenchmark extends AbstractIntSingleOperationsBench {
 	protected IntElementGenerator valuesGenerator;
 	protected ElementGenerator<String> keyGenerator;
 
@@ -50,40 +50,40 @@ public abstract class AbstractMap2IntBench extends AbstractIntSingleOperationsBe
 	public enum Map2IntWorload {
 		POPULATE {
 			@Override
-			void run(AbstractMap2IntBench self) {
+			void run(AbstractMap2IntBenchmark self) {
 				self.populateBench();
 			}
 		},
 
 		ITERATE_KEY {
 			@Override
-			void run(AbstractMap2IntBench self) {
+			void run(AbstractMap2IntBenchmark self) {
 				self.iterateKeyBench();
 			}
 		},
 
 		ITERATE_KEYVALUE {
 			@Override
-			void run(AbstractMap2IntBench self) {
+			void run(AbstractMap2IntBenchmark self) {
 				self.iterateKeyValueBench();
 			}
 		},
 
 		COPY {
 			@Override
-			void run(AbstractMap2IntBench self) {
+			void run(AbstractMap2IntBenchmark self) {
 				self.copyBench();
 			}
 		},
 
 		CONTAINS {
 			@Override
-			void run(AbstractMap2IntBench self) {
+			void run(AbstractMap2IntBenchmark self) {
 				self.containsBench();
 			}
 		};
 
-		abstract void run(AbstractMap2IntBench self);
+		abstract void run(AbstractMap2IntBenchmark self);
 	}
 
 	protected abstract void populateBench();

@@ -5,6 +5,7 @@ import org.openjdk.jmh.annotations.Param;
 
 import com.carrotsearch.hppc.ObjectObjectMap;
 import com.carrotsearch.hppc.cursors.ObjectObjectCursor;
+import com.carrotsearch.hppc.predicates.ObjectObjectPredicate;
 
 import de.heidelberg.pvs.container_bench.factories.HPPCMapFact;
 
@@ -80,8 +81,24 @@ public class HPPCMapBench extends AbstractMapBench<Object, Integer> {
 			void run(HPPCMapBench self) {
 				for (ObjectObjectCursor<Object, Integer> c : self.fullMap) {
 					failIfInterrupted();
-					self.blackhole.consume(c);
+					self.blackhole.consume(c.key);
+					self.blackhole.consume(c.value);
 				}
+			}
+		},
+
+		FOREACH {
+			@Override
+			void run(HPPCMapBench self) {
+				self.fullMap.forEach(new ObjectObjectPredicate<Object, Integer>() {
+					@Override
+					public boolean apply(Object key, Integer value) {
+						failIfInterrupted();
+						self.blackhole.consume(key);
+						self.blackhole.consume(value);
+						return true;
+					}
+				});
 			}
 		};
 

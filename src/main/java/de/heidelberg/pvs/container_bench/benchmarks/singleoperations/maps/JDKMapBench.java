@@ -81,8 +81,20 @@ public class JDKMapBench extends AbstractMapBench<Object, Integer> {
 			public void run(JDKMapBench self) {
 				for (Entry<Object, Integer> entry : self.fullMap.entrySet()) {
 					failIfInterrupted();
-					self.blackhole.consume(entry);
+					self.blackhole.consume(entry.getKey());
+					self.blackhole.consume(entry.getValue());
 				}
+			}
+		}, //
+
+		FOREACH {
+			@Override
+			public void run(JDKMapBench self) {
+				self.fullMap.forEach((k, v) -> {
+					failIfInterrupted();
+					self.blackhole.consume(k);
+					self.blackhole.consume(v);
+				});
 			}
 		};
 

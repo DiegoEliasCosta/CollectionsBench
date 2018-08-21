@@ -65,6 +65,16 @@ public class JDKSetBench extends AbstractSetBench<Object> {
 			}
 		},
 
+		FOREACH {
+			@Override
+			void run(JDKSetBench self) {
+				self.fullSet.forEach(element -> {
+					failIfInterrupted();
+					self.blackhole.consume(element);
+				});
+			}
+		},
+
 		COPY {
 			@Override
 			void run(JDKSetBench self) {

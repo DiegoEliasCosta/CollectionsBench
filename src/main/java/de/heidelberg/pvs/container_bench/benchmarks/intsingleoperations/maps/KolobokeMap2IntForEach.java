@@ -1,17 +1,17 @@
 package de.heidelberg.pvs.container_bench.benchmarks.intsingleoperations.maps;
 
+import java.util.function.ObjIntConsumer;
+
 import org.openjdk.jmh.annotations.Param;
 
-import de.heidelberg.pvs.container_bench.factories.TroveMap2IntFact;
-import gnu.trove.map.TObjectIntMap;
-import gnu.trove.procedure.TObjectIntProcedure;
-import gnu.trove.procedure.TObjectProcedure;
+import de.heidelberg.pvs.container_bench.factories.KolobokeMap2IntFact;
+import net.openhft.koloboke.collect.map.hash.HashObjIntMap;
 
-public class TroveMap2IntBench extends AbstractMap2IntBench {
+public class KolobokeMap2IntForEach extends AbstractMap2IntBenchmark {
 	@Param
-	TroveMap2IntFact impl;
+	KolobokeMap2IntFact impl;
 
-	TObjectIntMap<Object> fullMap;
+	HashObjIntMap<Object> fullMap;
 
 	@Override
 	public void testSetup() {
@@ -23,7 +23,7 @@ public class TroveMap2IntBench extends AbstractMap2IntBench {
 
 	@Override
 	protected void populateBench() {
-		TObjectIntMap<Object> newMap = impl.maker.get();
+		HashObjIntMap<Object> newMap = impl.maker.get();
 		for (int i = 0; i < keys.length && failIfInterrupted(); i++) {
 			newMap.put(keys[i], values[i]);
 		}
@@ -38,31 +38,27 @@ public class TroveMap2IntBench extends AbstractMap2IntBench {
 
 	@Override
 	protected void copyBench() {
-		TObjectIntMap<Object> newMap = impl.maker.get();
+		HashObjIntMap<Object> newMap = impl.maker.get();
 		newMap.putAll(fullMap);
 		blackhole.consume(newMap);
 	}
 
 	@Override
 	protected void iterateKeyBench() {
-		fullMap.forEachKey(new TObjectProcedure<Object>() {
-			@Override
-			public boolean execute(Object object) {
-				failIfInterrupted();
-				blackhole.consume(object);
-				return true; // call additional
-			}
-		});
+		for (Object e : fullMap.keySet()) {
+			failIfInterrupted();
+			blackhole.consume(e);
+		}
 	}
 
 	@Override
 	protected void iterateKeyValueBench() {
-		fullMap.forEachEntry(new TObjectIntProcedure<Object>() {
+		fullMap.forEach(new ObjIntConsumer<Object>() {
 			@Override
-			public boolean execute(Object a, int b) {
+			public void accept(Object t, int value) {
 				failIfInterrupted();
-				blackhole.consume(a);
-				return true;
+				blackhole.consume(t);
+				blackhole.consume(value);
 			}
 		});
 	}

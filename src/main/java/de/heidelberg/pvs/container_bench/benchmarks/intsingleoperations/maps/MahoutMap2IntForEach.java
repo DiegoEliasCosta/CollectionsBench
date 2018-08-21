@@ -7,7 +7,7 @@ import org.openjdk.jmh.annotations.Param;
 
 import de.heidelberg.pvs.container_bench.factories.MahoutMap2IntFact;
 
-public class MahoutMap2IntBench extends AbstractMap2IntBench {
+public class MahoutMap2IntForEach extends AbstractMap2IntBenchmark {
 	@Param
 	MahoutMap2IntFact impl;
 
@@ -46,9 +46,9 @@ public class MahoutMap2IntBench extends AbstractMap2IntBench {
 	protected void iterateKeyBench() {
 		fullMap.forEachKey(new ObjectProcedure<Object>() {
 			@Override
-			public boolean apply(Object element) {
+			public boolean apply(Object key) {
 				failIfInterrupted();
-				blackhole.consume(element);
+				blackhole.consume(key);
 				return false;
 			}
 		});
@@ -58,12 +58,12 @@ public class MahoutMap2IntBench extends AbstractMap2IntBench {
 	protected void iterateKeyValueBench() {
 		fullMap.forEachPair(new ObjectIntProcedure<Object>() {
 			@Override
-			public boolean apply(Object first, int second) {
+			public boolean apply(Object key, int value) {
 				failIfInterrupted();
-				blackhole.consume(first);
+				blackhole.consume(key);
+				blackhole.consume(value);
 				return false;
 			}
 		});
 	}
-
 }

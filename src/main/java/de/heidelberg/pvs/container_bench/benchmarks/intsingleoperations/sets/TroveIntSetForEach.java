@@ -6,7 +6,7 @@ import de.heidelberg.pvs.container_bench.factories.TroveIntSetFact;
 import gnu.trove.procedure.TIntProcedure;
 import gnu.trove.set.TIntSet;
 
-public class TroveIntSetBench extends AbstractIntSetBench {
+public class TroveIntSetForEach extends AbstractIntSetBenchmark {
 	@Param
 	TroveIntSetFact impl;
 

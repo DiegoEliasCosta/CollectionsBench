@@ -4,10 +4,9 @@ import org.openjdk.jmh.annotations.Param;
 
 import de.heidelberg.pvs.container_bench.factories.FastutilMap2IntFact;
 import it.unimi.dsi.fastutil.objects.Object2IntMap;
-import it.unimi.dsi.fastutil.objects.Object2IntMap.Entry;
-import it.unimi.dsi.fastutil.objects.ObjectSet;
+import it.unimi.dsi.fastutil.objects.ObjectIterator;
 
-public class FastutilMap2IntBench extends AbstractMap2IntBench {
+public class FastutilMap2IntIterator extends AbstractMap2IntBenchmark {
 	@Param
 	FastutilMap2IntFact impl;
 
@@ -45,19 +44,21 @@ public class FastutilMap2IntBench extends AbstractMap2IntBench {
 
 	@Override
 	protected void iterateKeyBench() {
-		ObjectSet<Object> keySet = fullMap.keySet();
-		for (Object key : keySet) {
+		ObjectIterator<Object> keyIter = fullMap.keySet().iterator();
+		while (keyIter.hasNext()) {
 			failIfInterrupted();
-			blackhole.consume(key);
+			blackhole.consume(keyIter.next());
 		}
 	}
 
 	@Override
 	protected void iterateKeyValueBench() {
-		ObjectSet<Entry<Object>> object2IntEntrySet = fullMap.object2IntEntrySet();
-		for (Entry<Object> e : object2IntEntrySet) {
+		ObjectIterator<Object2IntMap.Entry<Object>> iter = fullMap.object2IntEntrySet().iterator();
+		while (iter.hasNext()) {
 			failIfInterrupted();
-			blackhole.consume(e);
+			Object2IntMap.Entry<Object> ent = iter.next();
+			blackhole.consume(ent.getKey());
+			blackhole.consume(ent.getIntValue());
 		}
 	}
 }

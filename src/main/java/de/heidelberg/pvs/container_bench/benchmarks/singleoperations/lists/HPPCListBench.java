@@ -4,6 +4,7 @@ import org.openjdk.jmh.annotations.Param;
 
 import com.carrotsearch.hppc.ObjectIndexedContainer;
 import com.carrotsearch.hppc.cursors.ObjectCursor;
+import com.carrotsearch.hppc.predicates.ObjectPredicate;
 
 import de.heidelberg.pvs.container_bench.factories.HPPCListFact;
 
@@ -42,6 +43,20 @@ public class HPPCListBench extends AbstractListBench<Object> {
 					failIfInterrupted();
 					self.blackhole.consume(element);
 				}
+			}
+		}, //
+
+		FOREACH {
+			@Override
+			public void run(HPPCListBench self) {
+				self.fullList.forEach(new ObjectPredicate<Object>() {
+					@Override
+					public boolean apply(Object value) {
+						failIfInterrupted();
+						self.blackhole.consume(value);
+						return true;
+					}
+				});
 			}
 		}, //
 

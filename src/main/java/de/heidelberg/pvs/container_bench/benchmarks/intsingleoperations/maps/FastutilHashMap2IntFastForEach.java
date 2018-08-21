@@ -1,20 +1,15 @@
 package de.heidelberg.pvs.container_bench.benchmarks.intsingleoperations.maps;
 
-import java.util.function.Consumer;
-
 import org.openjdk.jmh.annotations.Param;
 
-import com.carrotsearch.hppc.ObjectCollection;
-import com.carrotsearch.hppc.ObjectIntMap;
-import com.carrotsearch.hppc.cursors.ObjectIntCursor;
+import de.heidelberg.pvs.container_bench.factories.FastutilFastMap2IntFact;
+import it.unimi.dsi.fastutil.objects.Object2IntMap;
 
-import de.heidelberg.pvs.container_bench.factories.HPPCMap2IntFact;
-
-public class HPPCMap2IntBench extends AbstractMap2IntBench {
+public class FastutilHashMap2IntFastForEach extends AbstractMap2IntBenchmark {
 	@Param
-	HPPCMap2IntFact impl;
+	FastutilFastMap2IntFact impl;
 
-	ObjectIntMap<Object> fullMap;
+	Object2IntMap<Object> fullMap;
 
 	@Override
 	public void testSetup() {
@@ -26,7 +21,7 @@ public class HPPCMap2IntBench extends AbstractMap2IntBench {
 
 	@Override
 	protected void populateBench() {
-		ObjectIntMap<Object> newMap = impl.maker.get();
+		Object2IntMap<Object> newMap = impl.maker.get();
 		for (int i = 0; i < keys.length && failIfInterrupted(); i++) {
 			newMap.put(keys[i], values[i]);
 		}
@@ -41,29 +36,25 @@ public class HPPCMap2IntBench extends AbstractMap2IntBench {
 
 	@Override
 	protected void copyBench() {
-		ObjectIntMap<Object> newMap = impl.maker.get();
+		Object2IntMap<Object> newMap = impl.maker.get();
 		newMap.putAll(fullMap);
 		blackhole.consume(newMap);
 	}
 
 	@Override
 	protected void iterateKeyBench() {
-		ObjectCollection<Object> keys2 = fullMap.keys();
-		for (Object e : keys2) {
+		fullMap.keySet().forEach(key -> {
 			failIfInterrupted();
-			blackhole.consume(e);
-		}
-		blackhole.consume(keys2);
+			blackhole.consume(key);
+		});
 	}
 
 	@Override
 	protected void iterateKeyValueBench() {
-		fullMap.forEach(new Consumer<ObjectIntCursor<Object>>() {
-			@Override
-			public void accept(ObjectIntCursor<Object> t) {
-				failIfInterrupted();
-				blackhole.consume(t);
-			}
+		impl.fastEntrySet.apply(fullMap).fastForEach(e -> {
+			failIfInterrupted();
+			blackhole.consume(e.getKey());
+			blackhole.consume(e.getIntValue());
 		});
 	}
 }

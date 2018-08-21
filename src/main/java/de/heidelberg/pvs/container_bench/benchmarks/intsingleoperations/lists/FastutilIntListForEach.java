@@ -1,15 +1,16 @@
 package de.heidelberg.pvs.container_bench.benchmarks.intsingleoperations.lists;
 
-import org.eclipse.collections.api.block.procedure.primitive.IntProcedure;
-import org.eclipse.collections.impl.list.mutable.primitive.IntArrayList;
+import java.util.function.IntConsumer;
 
-public class EclipseIntListBench extends AbstractIntListBench {
+import it.unimi.dsi.fastutil.ints.IntArrayList;
+
+public class FastutilIntListForEach extends AbstractIntListBenchmark {
 	IntArrayList fullList;
 
 	@Override
 	public void testSetup() {
 		fullList = new IntArrayList();
-		for (int i = 0; i < values.length; i++) {
+		for (int i = 0; i < values.length && failIfInterrupted(); i++) {
 			fullList.add(values[i]);
 		}
 	}
@@ -31,17 +32,17 @@ public class EclipseIntListBench extends AbstractIntListBench {
 
 	@Override
 	protected void copyBench() {
-		IntArrayList newList = IntArrayList.newList(fullList);
-		blackhole.consume(newList);
+		IntArrayList newlist = new IntArrayList(fullList);
+		blackhole.consume(newlist);
 	}
 
 	@Override
 	protected void iterateBench() {
-		fullList.forEach(new IntProcedure() {
+		fullList.forEach(new IntConsumer() {
 			@Override
-			public void value(int each) {
+			public void accept(int value) {
 				failIfInterrupted();
-				blackhole.consume(each);
+				blackhole.consume(value);
 			}
 		});
 	}

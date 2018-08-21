@@ -7,7 +7,7 @@ import org.openjdk.jmh.annotations.Param;
 
 import de.heidelberg.pvs.container_bench.factories.EclipseMap2IntFact;
 
-public class EclipseMap2IntBench extends AbstractMap2IntBench {
+public class EclipseMap2IntForEach extends AbstractMap2IntBenchmark {
 	@Param
 	EclipseMap2IntFact impl;
 
@@ -46,10 +46,12 @@ public class EclipseMap2IntBench extends AbstractMap2IntBench {
 	@Override
 	protected void iterateKeyBench() {
 		fullMap.forEachKey(new Procedure<Object>() {
+			private static final long serialVersionUID = 1L;
+
 			@Override
-			public void value(Object each) {
+			public void value(Object key) {
 				failIfInterrupted();
-				blackhole.consume(each);
+				blackhole.consume(key);
 			}
 		});
 	}
@@ -57,10 +59,13 @@ public class EclipseMap2IntBench extends AbstractMap2IntBench {
 	@Override
 	protected void iterateKeyValueBench() {
 		fullMap.forEachKeyValue(new ObjectIntProcedure<Object>() {
+			private static final long serialVersionUID = 1L;
+
 			@Override
-			public void value(Object each, int parameter) {
+			public void value(Object key, int value) {
 				failIfInterrupted();
-				blackhole.consume(each);
+				blackhole.consume(key);
+				blackhole.consume(value);
 			}
 		});
 	}

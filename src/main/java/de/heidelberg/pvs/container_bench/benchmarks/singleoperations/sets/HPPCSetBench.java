@@ -4,6 +4,7 @@ import org.openjdk.jmh.annotations.Benchmark;
 import org.openjdk.jmh.annotations.Param;
 
 import com.carrotsearch.hppc.ObjectSet;
+import com.carrotsearch.hppc.procedures.ObjectProcedure;
 
 import de.heidelberg.pvs.container_bench.factories.HPPCSetFact;
 
@@ -63,6 +64,19 @@ public class HPPCSetBench extends AbstractSetBench<Object> {
 					failIfInterrupted();
 					self.blackhole.consume(element);
 				}
+			}
+		}, //
+
+		FOREACH {
+			@Override
+			void run(HPPCSetBench self) {
+				self.fullSet.forEach(new ObjectProcedure<Object>() {
+					@Override
+					public void apply(Object value) {
+						failIfInterrupted();
+						self.blackhole.consume(value);
+					}
+				});
 			}
 		}, //
 

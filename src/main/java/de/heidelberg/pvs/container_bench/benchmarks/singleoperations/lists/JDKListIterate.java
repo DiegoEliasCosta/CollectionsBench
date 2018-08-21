@@ -12,7 +12,7 @@ import de.heidelberg.pvs.container_bench.factories.JDKListFact;
  * 
  * @author Diego
  */
-public class JDKListBench extends AbstractListBench<Object> {
+public class JDKListIterate extends AbstractListBench<Object> {
 
 	private List<Object> fullList;
 	protected Object[] values;
@@ -51,7 +51,7 @@ public class JDKListBench extends AbstractListBench<Object> {
 	public enum JDKListWorkload {
 		ITERATE {
 			@Override
-			public void run(JDKListBench self) {
+			public void run(JDKListIterate self) {
 				for (Object element : self.fullList) {
 					failIfInterrupted();
 					self.blackhole.consume(element);
@@ -59,9 +59,19 @@ public class JDKListBench extends AbstractListBench<Object> {
 			}
 		}, //
 
+		FOREACH {
+			@Override
+			public void run(JDKListIterate self) {
+				self.fullList.forEach(element -> {
+					failIfInterrupted();
+					self.blackhole.consume(element);
+				});
+			}
+		}, //
+
 		GET_INDEX {
 			@Override
-			public void run(JDKListBench self) {
+			public void run(JDKListIterate self) {
 				int index = self.generator.generateIndex(self.size);
 				self.blackhole.consume(self.fullList.get(index));
 			}
@@ -69,7 +79,7 @@ public class JDKListBench extends AbstractListBench<Object> {
 
 		CONTAINS {
 			@Override
-			public void run(JDKListBench self) {
+			public void run(JDKListIterate self) {
 				int index = self.generator.generateIndex(self.size);
 				self.blackhole.consume(self.fullList.contains(self.values[index]));
 			}
@@ -77,7 +87,7 @@ public class JDKListBench extends AbstractListBench<Object> {
 
 		POPULATE {
 			@Override
-			public void run(JDKListBench self) {
+			public void run(JDKListIterate self) {
 				List<Object> newList = self.getNewList();
 				for (int i = 0; i < self.size && failIfInterrupted(); i++) {
 					newList.add(self.values[i]);
@@ -88,7 +98,7 @@ public class JDKListBench extends AbstractListBench<Object> {
 
 		COPY {
 			@Override
-			public void run(JDKListBench self) {
+			public void run(JDKListIterate self) {
 				List<Object> newList = self.copyList(self.fullList);
 				self.blackhole.consume(newList);
 			}
@@ -96,6 +106,6 @@ public class JDKListBench extends AbstractListBench<Object> {
 		// TODO: Add more scenarios for single operation
 		;
 
-		abstract public void run(JDKListBench self);
+		abstract public void run(JDKListIterate self);
 	}
 }

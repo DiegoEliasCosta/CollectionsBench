@@ -5,7 +5,7 @@ import java.util.function.IntConsumer;
 import org.agrona.collections.IntArrayList;
 import org.openjdk.jmh.annotations.Param;
 
-public class AgronaIntListBench extends AbstractIntListBench {
+public class AgronaIntListForEach extends AbstractIntListBenchmark {
 	IntArrayList fullList;
 
 	@Param
@@ -58,5 +58,4 @@ public class AgronaIntListBench extends AbstractIntListBench {
 			}
 		});
 	}
-
 }

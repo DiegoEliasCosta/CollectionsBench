@@ -1,16 +1,16 @@
 package de.heidelberg.pvs.container_bench.benchmarks.intsingleoperations.sets;
 
-import org.agrona.collections.IntHashSet;
-import org.agrona.collections.IntIterator;
 import org.openjdk.jmh.annotations.Param;
 
-import de.heidelberg.pvs.container_bench.factories.AgronaIntSetFact;
+import de.heidelberg.pvs.container_bench.factories.FastutilIntSetFact;
+import it.unimi.dsi.fastutil.ints.IntIterator;
+import it.unimi.dsi.fastutil.ints.IntSet;
 
-public class AgronaIntSetBench extends AbstractIntSetBench {
+public class FastutilIntSetIterator extends AbstractIntSetBenchmark {
 	@Param
-	public AgronaIntSetFact impl;
+	public FastutilIntSetFact impl;
 
-	IntHashSet fullSet;
+	IntSet fullSet;
 
 	@Override
 	public void testSetup() {
@@ -22,7 +22,7 @@ public class AgronaIntSetBench extends AbstractIntSetBench {
 
 	@Override
 	protected void populateBench() {
-		IntHashSet newSet = impl.maker.get();
+		IntSet newSet = impl.maker.get();
 		for (int i = 0; i < values.length && failIfInterrupted(); i++) {
 			newSet.add(values[i]);
 		}
@@ -37,18 +37,15 @@ public class AgronaIntSetBench extends AbstractIntSetBench {
 
 	@Override
 	protected void copyBench() {
-		IntHashSet newSet = impl.maker.get();
+		IntSet newSet = impl.maker.get();
 		newSet.addAll(fullSet);
 		blackhole.consume(newSet);
 	}
 
 	@Override
 	protected void iterateBench() {
-		// No for each without unboxing
-		IntIterator iterator = fullSet.iterator();
-		while (iterator.hasNext()) {
-			failIfInterrupted();
-			blackhole.consume(iterator.nextValue());
+		for (IntIterator iter = fullSet.iterator(); iter.hasNext() && failIfInterrupted();) {
+			blackhole.consume(iter.nextInt());
 		}
 	}
 }

@@ -6,7 +6,7 @@ import org.openjdk.jmh.annotations.Param;
 
 import de.heidelberg.pvs.container_bench.factories.EclipseIntSetFact;
 
-public class EclipseIntSetBench extends AbstractIntSetBench {
+public class EclipseIntSetForEach extends AbstractIntSetBenchmark {
 	@Param
 	EclipseIntSetFact impl;
 
@@ -45,6 +45,8 @@ public class EclipseIntSetBench extends AbstractIntSetBench {
 	@Override
 	protected void iterateBench() {
 		fullSet.forEach(new IntProcedure() {
+			private static final long serialVersionUID = 1L;
+
 			@Override
 			public void value(int each) {
 				failIfInterrupted();

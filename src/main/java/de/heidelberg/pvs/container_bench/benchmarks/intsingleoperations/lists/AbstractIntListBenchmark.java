@@ -9,7 +9,7 @@ import de.heidelberg.pvs.container_bench.benchmarks.intsingleoperations.Abstract
 import de.heidelberg.pvs.container_bench.generators.GeneratorFactory;
 import de.heidelberg.pvs.container_bench.generators.IntElementGenerator;
 
-public abstract class AbstractIntListBench extends AbstractIntSingleOperationsBench {
+public abstract class AbstractIntListBenchmark extends AbstractIntSingleOperationsBench {
 	/**
 	 * Implementation of our Randomness
 	 */
@@ -37,33 +37,33 @@ public abstract class AbstractIntListBench extends AbstractIntSingleOperationsBe
 	public enum IntListWorload {
 		POPULATE {
 			@Override
-			void run(AbstractIntListBench self) {
+			void run(AbstractIntListBenchmark self) {
 				self.populateBench();
 			}
 		},
 
 		ITERATE {
 			@Override
-			void run(AbstractIntListBench self) {
+			void run(AbstractIntListBenchmark self) {
 				self.iterateBench();
 			}
 		},
 
 		COPY {
 			@Override
-			void run(AbstractIntListBench self) {
+			void run(AbstractIntListBenchmark self) {
 				self.copyBench();
 			}
 		},
 
 		CONTAINS {
 			@Override
-			void run(AbstractIntListBench self) {
+			void run(AbstractIntListBenchmark self) {
 				self.containsBench();
 			}
 		};
 
-		abstract void run(AbstractIntListBench self);
+		abstract void run(AbstractIntListBenchmark self);
 	}
 
 	protected abstract void populateBench();

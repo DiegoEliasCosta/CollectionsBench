@@ -1,14 +1,14 @@
 package de.heidelberg.pvs.container_bench.benchmarks.intsingleoperations.lists;
 
-import gnu.trove.list.array.TIntArrayList;
-import gnu.trove.procedure.TIntProcedure;
+import com.carrotsearch.hppc.IntArrayList;
+import com.carrotsearch.hppc.procedures.IntProcedure;
 
-public class TroveIntListBench extends AbstractIntListBench {
-	TIntArrayList fullList;
+public class HPPCIntListForEach extends AbstractIntListBenchmark {
+	IntArrayList fullList;
 
 	@Override
 	public void testSetup() {
-		fullList = new TIntArrayList();
+		fullList = new IntArrayList();
 		for (int i = 0; i < values.length && failIfInterrupted(); i++) {
 			fullList.add(values[i]);
 		}
@@ -16,12 +16,11 @@ public class TroveIntListBench extends AbstractIntListBench {
 
 	@Override
 	protected void populateBench() {
-		TIntArrayList newList = new TIntArrayList();
+		IntArrayList newList = new IntArrayList();
 		for (int i = 0; i < values.length && failIfInterrupted(); i++) {
-			newList.add(values[i]);
+			fullList.add(values[i]);
 		}
 		blackhole.consume(newList);
-
 	}
 
 	@Override
@@ -32,20 +31,18 @@ public class TroveIntListBench extends AbstractIntListBench {
 
 	@Override
 	protected void copyBench() {
-		TIntArrayList newList = new TIntArrayList(fullList);
+		IntArrayList newList = new IntArrayList(fullList);
 		blackhole.consume(newList);
 	}
 
 	@Override
 	protected void iterateBench() {
-		fullList.forEach(new TIntProcedure() {
+		fullList.forEach(new IntProcedure() {
 			@Override
-			public boolean execute(int value) {
+			public void apply(int value) {
 				failIfInterrupted();
 				blackhole.consume(value);
-				return true;
 			}
 		});
 	}
-
 }
