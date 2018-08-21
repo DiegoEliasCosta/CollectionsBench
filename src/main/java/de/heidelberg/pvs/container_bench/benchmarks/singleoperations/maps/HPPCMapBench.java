@@ -9,7 +9,6 @@ import com.carrotsearch.hppc.cursors.ObjectObjectCursor;
 import de.heidelberg.pvs.container_bench.factories.HPPCMapFact;
 
 public class HPPCMapBench extends AbstractMapBench<Object, Integer> {
-
 	private ObjectObjectMap<Object, Integer> fullMap;
 	private Object[] keys;
 	private Integer[] values;
@@ -37,25 +36,23 @@ public class HPPCMapBench extends AbstractMapBench<Object, Integer> {
 		keys = keyGenerator.generateArray(size);
 		values = valueGenerator.generateArray(size);
 
-		for (int i = 0; i < size; i++) {
+		for (int i = 0; i < size && failIfInterrupted(); i++) {
 			fullMap.put(keys[i], values[i]);
 		}
-
 	}
-	
+
 	@Benchmark
-	public void bench() throws InterruptedException {
+	public void bench() {
 		workload.run(this);
 		blackhole.consume(fullMap);
 	}
 
 	public enum HPPCMapWorkload {
-
 		POPULATE {
 			@Override
 			void run(HPPCMapBench self) {
 				ObjectObjectMap<Object, Integer> newMap = self.getNewMap();
-				for (int i = 0; i < self.size; i++) {
+				for (int i = 0; i < self.size && failIfInterrupted(); i++) {
 					newMap.put(self.keys[i], self.values[i]);
 				}
 				self.blackhole.consume(newMap);
@@ -68,27 +65,26 @@ public class HPPCMapBench extends AbstractMapBench<Object, Integer> {
 				int index = self.keyGenerator.generateIndex(self.size);
 				self.blackhole.consume(self.fullMap.containsKey(self.keys[index]));
 			}
-		}, 
-		
+		},
+
 		COPY {
 			@Override
 			void run(HPPCMapBench self) {
 				ObjectObjectMap<Object, Integer> newMap = self.copyMap(self.fullMap);
 				self.blackhole.consume(newMap);
 			}
-		}, 
-		
+		},
+
 		ITERATE {
 			@Override
 			void run(HPPCMapBench self) {
 				for (ObjectObjectCursor<Object, Integer> c : self.fullMap) {
+					failIfInterrupted();
 					self.blackhole.consume(c);
 				}
 			}
 		};
 
 		abstract void run(HPPCMapBench self);
-
 	}
-
 }

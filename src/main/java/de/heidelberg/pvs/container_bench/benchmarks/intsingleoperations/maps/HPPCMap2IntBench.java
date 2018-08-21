@@ -2,9 +2,6 @@ package de.heidelberg.pvs.container_bench.benchmarks.intsingleoperations.maps;
 
 import java.util.function.Consumer;
 
-import org.eclipse.collections.api.block.procedure.Procedure;
-import org.eclipse.collections.api.block.procedure.primitive.ObjectIntProcedure;
-import org.eclipse.collections.api.map.primitive.MutableObjectIntMap;
 import org.openjdk.jmh.annotations.Param;
 
 import com.carrotsearch.hppc.ObjectCollection;
@@ -14,24 +11,23 @@ import com.carrotsearch.hppc.cursors.ObjectIntCursor;
 import de.heidelberg.pvs.container_bench.factories.HPPCMap2IntFact;
 
 public class HPPCMap2IntBench extends AbstractMap2IntBench {
-
 	@Param
 	HPPCMap2IntFact impl;
-	
+
 	ObjectIntMap<Object> fullMap;
-	
+
 	@Override
 	public void testSetup() {
 		fullMap = impl.maker.get();
-		for (int i = 0; i < keys.length; i++) {
+		for (int i = 0; i < keys.length && failIfInterrupted(); i++) {
 			fullMap.put(keys[i], values[i]);
 		}
 	}
-	
+
 	@Override
 	protected void populateBench() {
 		ObjectIntMap<Object> newMap = impl.maker.get();
-		for (int i = 0; i < keys.length; i++) {
+		for (int i = 0; i < keys.length && failIfInterrupted(); i++) {
 			newMap.put(keys[i], values[i]);
 		}
 		blackhole.consume(newMap);
@@ -53,7 +49,8 @@ public class HPPCMap2IntBench extends AbstractMap2IntBench {
 	@Override
 	protected void iterateKeyBench() {
 		ObjectCollection<Object> keys2 = fullMap.keys();
-		for(Object e : keys2) {
+		for (Object e : keys2) {
+			failIfInterrupted();
 			blackhole.consume(e);
 		}
 		blackhole.consume(keys2);
@@ -61,13 +58,12 @@ public class HPPCMap2IntBench extends AbstractMap2IntBench {
 
 	@Override
 	protected void iterateKeyValueBench() {
-		
 		fullMap.forEach(new Consumer<ObjectIntCursor<Object>>() {
 			@Override
 			public void accept(ObjectIntCursor<Object> t) {
+				failIfInterrupted();
 				blackhole.consume(t);
 			}
 		});
 	}
-
 }

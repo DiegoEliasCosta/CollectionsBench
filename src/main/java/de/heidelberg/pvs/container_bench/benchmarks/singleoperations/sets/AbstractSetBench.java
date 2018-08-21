@@ -7,7 +7,6 @@ import de.heidelberg.pvs.container_bench.generators.ElementGenerator;
 import de.heidelberg.pvs.container_bench.generators.GeneratorFactory;
 
 public abstract class AbstractSetBench<T> extends AbstractSingleOperationsBench {
-
 	/**
 	 * Implementation of our Randomness
 	 */
@@ -19,5 +18,4 @@ public abstract class AbstractSetBench<T> extends AbstractSingleOperationsBench 
 		generator = (ElementGenerator<T>) GeneratorFactory.buildRandomGenerator(payloadType);
 		generator.init(size, seed);
 	}
-
 }

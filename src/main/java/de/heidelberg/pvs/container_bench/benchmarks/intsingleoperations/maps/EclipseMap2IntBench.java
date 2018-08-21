@@ -8,26 +8,23 @@ import org.openjdk.jmh.annotations.Param;
 import de.heidelberg.pvs.container_bench.factories.EclipseMap2IntFact;
 
 public class EclipseMap2IntBench extends AbstractMap2IntBench {
-
 	@Param
 	EclipseMap2IntFact impl;
-	
+
 	MutableObjectIntMap<Object> fullMap;
-	
+
 	@Override
 	public void testSetup() {
 		fullMap = impl.maker.get();
-		for (int i = 0; i < values.length; i++) {
+		for (int i = 0; i < values.length && failIfInterrupted(); i++) {
 			fullMap.put(keys[i], values[i]);
 		}
-		
-		
 	}
-	
+
 	@Override
 	protected void populateBench() {
 		MutableObjectIntMap<Object> newMap = impl.maker.get();
-		for (int i = 0; i < values.length; i++) {
+		for (int i = 0; i < values.length && failIfInterrupted(); i++) {
 			newMap.put(keys[i], values[i]);
 		}
 		blackhole.consume(newMap);
@@ -51,6 +48,7 @@ public class EclipseMap2IntBench extends AbstractMap2IntBench {
 		fullMap.forEachKey(new Procedure<Object>() {
 			@Override
 			public void value(Object each) {
+				failIfInterrupted();
 				blackhole.consume(each);
 			}
 		});
@@ -61,11 +59,9 @@ public class EclipseMap2IntBench extends AbstractMap2IntBench {
 		fullMap.forEachKeyValue(new ObjectIntProcedure<Object>() {
 			@Override
 			public void value(Object each, int parameter) {
+				failIfInterrupted();
 				blackhole.consume(each);
 			}
 		});
 	}
-
-
-
 }

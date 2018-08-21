@@ -8,16 +8,15 @@ import com.carrotsearch.hppc.cursors.ObjectCursor;
 import de.heidelberg.pvs.container_bench.factories.HPPCListFact;
 
 public class HPPCListBench extends AbstractListBench<Object> {
-
 	ObjectIndexedContainer<Object> fullList;
 	Object[] values;
-	
+
 	@Param
 	public HPPCListFact impl;
-	
+
 	@Param
 	public HPPCListWorkload workload;
-	
+
 	protected ObjectIndexedContainer<Object> getNewList() {
 		return impl.maker.get();
 	}
@@ -25,30 +24,28 @@ public class HPPCListBench extends AbstractListBench<Object> {
 	protected ObjectIndexedContainer<Object> copyList(ObjectIndexedContainer<Object> original) {
 		return impl.copyMaker.apply(original);
 	}
-	
+
 	@Override
 	public void testSetup() {
 		fullList = this.getNewList();
 		values = this.generator.generateArray(size);
-		for (int i = 0; i < size; i++) {
+		for (int i = 0; i < size && failIfInterrupted(); i++) {
 			fullList.add(values[i]);
 		}
-
 	}
-	
-	public enum HPPCListWorkload {
 
+	public enum HPPCListWorkload {
 		ITERATE {
 			@Override
 			public void run(HPPCListBench self) {
 				for (ObjectCursor<Object> element : self.fullList) {
+					failIfInterrupted();
 					self.blackhole.consume(element);
 				}
 			}
 		}, //
 
 		GET_INDEX {
-
 			@Override
 			public void run(HPPCListBench self) {
 				int index = self.generator.generateIndex(self.size);
@@ -57,43 +54,34 @@ public class HPPCListBench extends AbstractListBench<Object> {
 		}, //
 
 		CONTAINS {
-
 			@Override
 			public void run(HPPCListBench self) {
 				int index = self.generator.generateIndex(self.size);
 				self.blackhole.consume(self.fullList.contains(self.values[index]));
-
 			}
-
 		}, //
 
 		POPULATE {
-
 			@Override
 			public <T> void run(HPPCListBench self) {
 				ObjectIndexedContainer<Object> newList = self.getNewList();
-				for (int i = 0; i < self.size; i++) {
+				for (int i = 0; i < self.size && failIfInterrupted(); i++) {
 					newList.add(self.values[i]);
 				}
 				self.blackhole.consume(newList);
 			}
-
 		}, //
-		
-		COPY {
 
+		COPY {
 			@Override
 			public void run(HPPCListBench self) {
 				ObjectIndexedContainer<Object> newList = self.copyList(self.fullList);
 				self.blackhole.consume(newList);
 			}
-		}, 
-		
+		},
 		// TODO: Add more scenarios for single operation
 		;
-		
-		abstract public <T> void run(HPPCListBench self);
-		
-	}
 
+		abstract public <T> void run(HPPCListBench self);
+	}
 }

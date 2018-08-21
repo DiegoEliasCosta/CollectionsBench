@@ -4,21 +4,20 @@ import com.carrotsearch.hppc.IntArrayList;
 import com.carrotsearch.hppc.procedures.IntProcedure;
 
 public class HPPCIntListBench extends AbstractIntListBench {
-
 	IntArrayList fullList;
-	
+
 	@Override
 	public void testSetup() {
 		fullList = new IntArrayList();
-		for (int i = 0; i < values.length; i++) {
+		for (int i = 0; i < values.length && failIfInterrupted(); i++) {
 			fullList.add(values[i]);
 		}
 	}
-	
+
 	@Override
 	protected void populateBench() {
 		IntArrayList newList = new IntArrayList();
-		for (int i = 0; i < values.length; i++) {
+		for (int i = 0; i < values.length && failIfInterrupted(); i++) {
 			fullList.add(values[i]);
 		}
 		blackhole.consume(newList);
@@ -41,11 +40,9 @@ public class HPPCIntListBench extends AbstractIntListBench {
 		fullList.forEach(new IntProcedure() {
 			@Override
 			public void apply(int value) {
+				failIfInterrupted();
 				blackhole.consume(value);
 			}
-		}); 
+		});
 	}
-
-	
-
 }

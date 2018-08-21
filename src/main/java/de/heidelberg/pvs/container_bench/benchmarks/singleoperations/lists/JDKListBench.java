@@ -18,11 +18,11 @@ public class JDKListBench extends AbstractListBench<Object> {
 	protected Object[] values;
 
 	@Param
-	public JDKListWorkload workload; 
-	
+	public JDKListWorkload workload;
+
 	@Param
 	public JDKListFact impl;
-	
+
 	protected List<Object> getNewList() {
 		return impl.maker.get();
 	}
@@ -31,7 +31,7 @@ public class JDKListBench extends AbstractListBench<Object> {
 	public void testSetup() {
 		fullList = this.getNewList();
 		values = generator.generateArray(size);
-		for (int i = 0; i < size; i++) {
+		for (int i = 0; i < size && failIfInterrupted(); i++) {
 			fullList.add(values[i]);
 		}
 	}
@@ -47,20 +47,19 @@ public class JDKListBench extends AbstractListBench<Object> {
 		list.addAll(fullList2);
 		return list;
 	}
-	
-	public enum JDKListWorkload {
 
+	public enum JDKListWorkload {
 		ITERATE {
 			@Override
 			public void run(JDKListBench self) {
 				for (Object element : self.fullList) {
+					failIfInterrupted();
 					self.blackhole.consume(element);
 				}
 			}
 		}, //
 
 		GET_INDEX {
-
 			@Override
 			public void run(JDKListBench self) {
 				int index = self.generator.generateIndex(self.size);
@@ -69,45 +68,34 @@ public class JDKListBench extends AbstractListBench<Object> {
 		}, //
 
 		CONTAINS {
-
 			@Override
 			public void run(JDKListBench self) {
 				int index = self.generator.generateIndex(self.size);
 				self.blackhole.consume(self.fullList.contains(self.values[index]));
-
 			}
-
 		}, //
 
 		POPULATE {
-
 			@Override
 			public void run(JDKListBench self) {
 				List<Object> newList = self.getNewList();
-				for (int i = 0; i < self.size; i++) {
+				for (int i = 0; i < self.size && failIfInterrupted(); i++) {
 					newList.add(self.values[i]);
 				}
 				self.blackhole.consume(newList);
 			}
-
 		}, //
-		
-		COPY {
 
+		COPY {
 			@Override
 			public void run(JDKListBench self) {
 				List<Object> newList = self.copyList(self.fullList);
 				self.blackhole.consume(newList);
 			}
-		}, 
-		
+		},
 		// TODO: Add more scenarios for single operation
-
 		;
 
 		abstract public void run(JDKListBench self);
-
 	}
-
-
 }

@@ -5,24 +5,20 @@ import java.util.function.IntConsumer;
 import it.unimi.dsi.fastutil.ints.IntArrayList;
 
 public class FastutilIntListBench extends AbstractIntListBench {
-
-	
-	
 	IntArrayList fullList;
-	
+
 	@Override
 	public void testSetup() {
 		fullList = new IntArrayList();
-		for (int i = 0; i < values.length; i++) {
+		for (int i = 0; i < values.length && failIfInterrupted(); i++) {
 			fullList.add(values[i]);
 		}
 	}
-	
-	
+
 	@Override
 	protected void populateBench() {
 		IntArrayList newList = new IntArrayList();
-		for (int i = 0; i < size; i++) {
+		for (int i = 0; i < size && failIfInterrupted(); i++) {
 			newList.add(values[i]);
 		}
 		blackhole.consume(newList);
@@ -45,10 +41,9 @@ public class FastutilIntListBench extends AbstractIntListBench {
 		fullList.forEach(new IntConsumer() {
 			@Override
 			public void accept(int value) {
+				failIfInterrupted();
 				blackhole.consume(value);
 			}
 		});
 	}
-
-
 }

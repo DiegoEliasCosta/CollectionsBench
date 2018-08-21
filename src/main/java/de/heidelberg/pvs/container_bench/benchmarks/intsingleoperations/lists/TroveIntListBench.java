@@ -1,19 +1,15 @@
 package de.heidelberg.pvs.container_bench.benchmarks.intsingleoperations.lists;
 
-import com.carrotsearch.hppc.IntArrayList;
-import com.carrotsearch.hppc.procedures.IntProcedure;
-
 import gnu.trove.list.array.TIntArrayList;
 import gnu.trove.procedure.TIntProcedure;
 
 public class TroveIntListBench extends AbstractIntListBench {
-
 	TIntArrayList fullList;
 
 	@Override
 	public void testSetup() {
 		fullList = new TIntArrayList();
-		for (int i = 0; i < values.length; i++) {
+		for (int i = 0; i < values.length && failIfInterrupted(); i++) {
 			fullList.add(values[i]);
 		}
 	}
@@ -21,7 +17,7 @@ public class TroveIntListBench extends AbstractIntListBench {
 	@Override
 	protected void populateBench() {
 		TIntArrayList newList = new TIntArrayList();
-		for (int i = 0; i < values.length; i++) {
+		for (int i = 0; i < values.length && failIfInterrupted(); i++) {
 			newList.add(values[i]);
 		}
 		blackhole.consume(newList);
@@ -45,6 +41,7 @@ public class TroveIntListBench extends AbstractIntListBench {
 		fullList.forEach(new TIntProcedure() {
 			@Override
 			public boolean execute(int value) {
+				failIfInterrupted();
 				blackhole.consume(value);
 				return true;
 			}

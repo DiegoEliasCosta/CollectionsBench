@@ -7,24 +7,23 @@ import gnu.trove.procedure.TIntProcedure;
 import gnu.trove.set.TIntSet;
 
 public class TroveIntSetBench extends AbstractIntSetBench {
-
 	@Param
 	TroveIntSetFact impl;
-	
+
 	TIntSet fullSet;
 
 	@Override
 	public void testSetup() {
-		fullSet	= impl.maker.get();
-		for (int i = 0; i < values.length; i++) {
+		fullSet = impl.maker.get();
+		for (int i = 0; i < values.length && failIfInterrupted(); i++) {
 			fullSet.add(values[i]);
 		}
 	}
-	
+
 	@Override
 	protected void populateBench() {
-		TIntSet newSet	= impl.maker.get();
-		for (int i = 0; i < values.length; i++) {
+		TIntSet newSet = impl.maker.get();
+		for (int i = 0; i < values.length && failIfInterrupted(); i++) {
 			newSet.add(values[i]);
 		}
 		blackhole.consume(newSet);
@@ -48,10 +47,10 @@ public class TroveIntSetBench extends AbstractIntSetBench {
 		fullSet.forEach(new TIntProcedure() {
 			@Override
 			public boolean execute(int value) {
+				failIfInterrupted();
 				blackhole.consume(value);
 				return true; // keep executing TIntProcedure
 			}
 		});
 	}
-	
 }

@@ -9,13 +9,12 @@ import de.heidelberg.pvs.container_bench.benchmarks.intsingleoperations.Abstract
 import de.heidelberg.pvs.container_bench.generators.GeneratorFactory;
 import de.heidelberg.pvs.container_bench.generators.IntElementGenerator;
 
-public abstract class AbstractIntSetBench extends AbstractIntSingleOperationsBench{
-
+public abstract class AbstractIntSetBench extends AbstractIntSingleOperationsBench {
 	protected IntElementGenerator generator;
-	
+
 	@Param
 	public IntSetWorload workload;
-	
+
 	protected int values[];
 
 	public void generatorSetup() throws IOException {
@@ -24,55 +23,48 @@ public abstract class AbstractIntSetBench extends AbstractIntSingleOperationsBen
 		values = generator.generateIntArray(size);
 	}
 
-	
 	@Benchmark
 	public void bench() {
 		workload.run(this);
 	}
-	
+
 	public enum IntSetWorload {
-		
 		POPULATE {
 			@Override
 			void run(AbstractIntSetBench self) {
 				self.populateBench();
 			}
-		}, 
-		
+		},
+
 		ITERATE {
 			@Override
 			void run(AbstractIntSetBench self) {
 				self.iterateBench();
 			}
-			
-		}, 
-		
+		},
+
 		COPY {
 			@Override
 			void run(AbstractIntSetBench self) {
 				self.copyBench();
 			}
-			
-		}, 
-		
+		},
+
 		CONTAINS {
 			@Override
 			void run(AbstractIntSetBench self) {
 				self.containsBench();
 			}
-		}
-		;
-		
+		};
+
 		abstract void run(AbstractIntSetBench self);
-		
 	}
 
 	protected abstract void populateBench();
 
 	protected abstract void containsBench();
-		
+
 	protected abstract void copyBench();
 
 	protected abstract void iterateBench();
-	
 }

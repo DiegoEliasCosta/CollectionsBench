@@ -8,29 +8,27 @@ import gnu.trove.procedure.TObjectIntProcedure;
 import gnu.trove.procedure.TObjectProcedure;
 
 public class TroveMap2IntBench extends AbstractMap2IntBench {
-
 	@Param
 	TroveMap2IntFact impl;
-	
+
 	TObjectIntMap<Object> fullMap;
-	
+
 	@Override
 	public void testSetup() {
 		fullMap = impl.maker.get();
-		for (int i = 0; i < keys.length; i++) {
+		for (int i = 0; i < keys.length && failIfInterrupted(); i++) {
 			fullMap.put(keys[i], values[i]);
 		}
 	}
-	
+
 	@Override
 	protected void populateBench() {
 		TObjectIntMap<Object> newMap = impl.maker.get();
-		for (int i = 0; i < keys.length; i++) {
+		for (int i = 0; i < keys.length && failIfInterrupted(); i++) {
 			newMap.put(keys[i], values[i]);
 		}
 		blackhole.consume(newMap);
 	}
-
 
 	@Override
 	protected void containsBench() {
@@ -50,11 +48,11 @@ public class TroveMap2IntBench extends AbstractMap2IntBench {
 		fullMap.forEachKey(new TObjectProcedure<Object>() {
 			@Override
 			public boolean execute(Object object) {
+				failIfInterrupted();
 				blackhole.consume(object);
-				return true; // call additional 
+				return true; // call additional
 			}
 		});
-				
 	}
 
 	@Override
@@ -62,6 +60,7 @@ public class TroveMap2IntBench extends AbstractMap2IntBench {
 		fullMap.forEachEntry(new TObjectIntProcedure<Object>() {
 			@Override
 			public boolean execute(Object a, int b) {
+				failIfInterrupted();
 				blackhole.consume(a);
 				return true;
 			}

@@ -8,25 +8,23 @@ import de.heidelberg.pvs.container_bench.factories.FastutilIntSetFact;
 import it.unimi.dsi.fastutil.ints.IntSet;
 
 public class FastutilIntSetBench extends AbstractIntSetBench {
-
 	@Param
 	public FastutilIntSetFact impl;
-	
+
 	IntSet fullSet;
-	
+
 	@Override
 	public void testSetup() {
 		fullSet = impl.maker.get();
-		for (int i = 0; i < values.length; i++) {
+		for (int i = 0; i < values.length && failIfInterrupted(); i++) {
 			fullSet.add(values[i]);
 		}
 	}
 
-	
 	@Override
 	protected void populateBench() {
 		IntSet newSet = impl.maker.get();
-		for (int i = 0; i < values.length; i++) {
+		for (int i = 0; i < values.length && failIfInterrupted(); i++) {
 			newSet.add(values[i]);
 		}
 		blackhole.consume(newSet);
@@ -50,9 +48,9 @@ public class FastutilIntSetBench extends AbstractIntSetBench {
 		fullSet.forEach(new IntConsumer() {
 			@Override
 			public void accept(int value) {
+				failIfInterrupted();
 				blackhole.consume(value);
 			}
 		});
 	}
-
 }

@@ -7,24 +7,23 @@ import org.openjdk.jmh.annotations.Param;
 import de.heidelberg.pvs.container_bench.factories.MahoutIntSetFact;
 
 public class MahoutIntSetBench extends AbstractIntSetBench {
-
 	@Param
 	MahoutIntSetFact impl;
-	
+
 	OpenIntHashSet fullSet;
-	
+
 	@Override
 	public void testSetup() {
 		fullSet = impl.maker.get();
-		for (int i = 0; i < values.length; i++) {
+		for (int i = 0; i < values.length && failIfInterrupted(); i++) {
 			fullSet.add(values[i]);
 		}
 	}
-	
+
 	@Override
 	protected void populateBench() {
 		OpenIntHashSet newSet = impl.maker.get();
-		for (int i = 0; i < values.length; i++) {
+		for (int i = 0; i < values.length && failIfInterrupted(); i++) {
 			newSet.add(values[i]);
 		}
 		blackhole.consume(newSet);
@@ -40,11 +39,12 @@ public class MahoutIntSetBench extends AbstractIntSetBench {
 	protected void copyBench() {
 		OpenIntHashSet newSet = impl.maker.get();
 		newSet.ensureCapacity(size);
-		// Mahout does not provide an API for copying 
+		// Mahout does not provide an API for copying
 		fullSet.forEachKey(new IntProcedure() {
 			@Override
 			public boolean apply(int element) {
 				newSet.add(element);
+				failIfInterrupted();
 				return true;
 			}
 		});
@@ -56,11 +56,10 @@ public class MahoutIntSetBench extends AbstractIntSetBench {
 		fullSet.forEachKey(new IntProcedure() {
 			@Override
 			public boolean apply(int element) {
+				failIfInterrupted();
 				blackhole.consume(element);
 				return true;
 			}
 		});
-		
 	}
-
 }

@@ -18,12 +18,12 @@ import org.openjdk.jmh.annotations.Timeout;
 import org.openjdk.jmh.annotations.Warmup;
 import org.openjdk.jmh.infra.Blackhole;
 
+import de.heidelberg.pvs.container_bench.benchmarks.UncheckedInterruptedException;
 import de.heidelberg.pvs.container_bench.generators.PayloadType;
 
 /**
- * Abstract class of Single Operation benchmarks.
- * Each workload is composed by one or multiple calls of a single collection
- * operation.
+ * Abstract class of Single Operation benchmarks. Each workload is composed by
+ * one or multiple calls of a single collection operation.
  * 
  * @author diego.costa
  *
@@ -43,7 +43,7 @@ public abstract class AbstractSingleOperationsBench {
 	 */
 	@Param({ "100", "1000", "10000", "100000", "1000000" })
 	public int size;
-	
+
 	/**
 	 * Type of the payload object
 	 */
@@ -66,13 +66,27 @@ public abstract class AbstractSingleOperationsBench {
 	public abstract void testSetup();
 
 	@Setup
-	public void initializeSetup(Blackhole blackhole) throws IOException {
+	public void initializeSetup(Blackhole blackhole) throws IOException, InterruptedException {
 		this.blackhole = blackhole;
 		// Initialize the seed
 		this.generatorSetup();
 		// Test Setup
 		this.testSetup();
-
 	}
 
+	/**
+	 * For really slow benchmarks, allow timeouts to function.
+	 * 
+	 * This can nicely be added to a loop as {@code && failIfInterrupted()}
+	 *
+	 * @return {@code true}, or an exception is thrown
+	 * @throws InterruptedException
+	 *             on timeout
+	 */
+	protected static boolean failIfInterrupted() {
+		if (Thread.interrupted()) {
+			throw new UncheckedInterruptedException();
+		}
+		return true;
+	}
 }

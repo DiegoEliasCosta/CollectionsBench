@@ -20,6 +20,7 @@ import org.openjdk.jmh.annotations.Timeout;
 import org.openjdk.jmh.annotations.Warmup;
 import org.openjdk.jmh.infra.Blackhole;
 
+import de.heidelberg.pvs.container_bench.benchmarks.UncheckedInterruptedException;
 import de.heidelberg.pvs.container_bench.generators.Wordlist;
 
 @BenchmarkMode(Mode.SingleShotTime)
@@ -64,7 +65,7 @@ public abstract class AbstractIntSetBenchmark<T> {
 	}
 
 	@Benchmark
-	public void bench() throws InterruptedException {
+	public void bench() {
 		workload.run(this);
 		bh.consume(set); // prevent elimination
 	}
@@ -106,7 +107,7 @@ public abstract class AbstractIntSetBenchmark<T> {
 	public enum Workload {
 		ADD {
 			@Override
-			public <T> void run(AbstractIntSetBenchmark<T> self) throws InterruptedException {
+			public <T> void run(AbstractIntSetBenchmark<T> self) {
 				int[] words = self.words;
 				for (int i = 0, size = words.length; i < size && failIfInterrupted(); i++) {
 					self.add(words[i]);
@@ -115,7 +116,7 @@ public abstract class AbstractIntSetBenchmark<T> {
 		}, //
 		REMOVE {
 			@Override
-			public <T> void run(AbstractIntSetBenchmark<T> self) throws InterruptedException {
+			public <T> void run(AbstractIntSetBenchmark<T> self) {
 				int[] words = self.words;
 				for (int i = 0, size = words.length; i < size && failIfInterrupted(); i++) {
 					self.remove(words[i]);
@@ -123,7 +124,7 @@ public abstract class AbstractIntSetBenchmark<T> {
 			}
 
 			@Override
-			public <T> void init(AbstractIntSetBenchmark<T> self) throws InterruptedException {
+			public <T> void init(AbstractIntSetBenchmark<T> self) {
 				int[] words = self.words;
 				self.set = self.makeSet();
 				for (int i = 0, size = words.length; i < size && failIfInterrupted(); i++) {
@@ -133,7 +134,7 @@ public abstract class AbstractIntSetBenchmark<T> {
 		}, //
 		CONTAINS {
 			@Override
-			public <T> void run(AbstractIntSetBenchmark<T> self) throws InterruptedException {
+			public <T> void run(AbstractIntSetBenchmark<T> self) {
 				int[] words = self.words;
 				int found = 0;
 				for (int i = 0, size = words.length; i < size && failIfInterrupted(); i++) {
@@ -145,7 +146,7 @@ public abstract class AbstractIntSetBenchmark<T> {
 			}
 
 			@Override
-			public <T> void init(AbstractIntSetBenchmark<T> self) throws InterruptedException {
+			public <T> void init(AbstractIntSetBenchmark<T> self) {
 				int[] words = self.words;
 				self.set = self.makeSet();
 				for (int i = 0, size = words.length; i < size && failIfInterrupted(); i++) {
@@ -156,7 +157,7 @@ public abstract class AbstractIntSetBenchmark<T> {
 		}, //
 		ADD_OR_REMOVE {
 			@Override
-			public <T> void run(AbstractIntSetBenchmark<T> self) throws InterruptedException {
+			public <T> void run(AbstractIntSetBenchmark<T> self) {
 				int[] words = self.words;
 				for (int i = 0, size = words.length; i < size && failIfInterrupted();) {
 					self.add(words[i++]);
@@ -169,7 +170,7 @@ public abstract class AbstractIntSetBenchmark<T> {
 		}, //
 		ADD_THEN_REMOVE {
 			@Override
-			public <T> void run(AbstractIntSetBenchmark<T> self) throws InterruptedException {
+			public <T> void run(AbstractIntSetBenchmark<T> self) {
 				int[] words = self.words;
 				for (int i = 0, size = words.length; i < size && failIfInterrupted(); i++) {
 					self.add(words[i]);
@@ -181,7 +182,7 @@ public abstract class AbstractIntSetBenchmark<T> {
 		}, //
 		REMOVE_THEN_ADD {
 			@Override
-			public <T> void run(AbstractIntSetBenchmark<T> self) throws InterruptedException {
+			public <T> void run(AbstractIntSetBenchmark<T> self) {
 				int[] words = self.words;
 				for (int i = 0, size = words.length; i < size && failIfInterrupted(); i++) {
 					self.remove(words[i]);
@@ -192,7 +193,7 @@ public abstract class AbstractIntSetBenchmark<T> {
 			}
 
 			@Override
-			public <T> void init(AbstractIntSetBenchmark<T> self) throws InterruptedException {
+			public <T> void init(AbstractIntSetBenchmark<T> self) {
 				int[] words = self.words;
 				self.set = self.makeSet();
 				for (int i = 0, size = words.length; i < size && failIfInterrupted(); i++) {
@@ -202,18 +203,15 @@ public abstract class AbstractIntSetBenchmark<T> {
 		}, //
 		;
 
-		public <T> void init(AbstractIntSetBenchmark<T> self) throws InterruptedException {
+		public <T> void init(AbstractIntSetBenchmark<T> self) {
 			self.set = self.makeSet();
 		}
 
-		abstract public <T> void run(AbstractIntSetBenchmark<T> self) throws InterruptedException;
+		abstract public <T> void run(AbstractIntSetBenchmark<T> self);
 
-		//
-		;
-
-		private static boolean failIfInterrupted() throws InterruptedException {
+		private static boolean failIfInterrupted() {
 			if (Thread.interrupted()) {
-				throw new InterruptedException();
+				throw new UncheckedInterruptedException();
 			}
 			return true;
 		}

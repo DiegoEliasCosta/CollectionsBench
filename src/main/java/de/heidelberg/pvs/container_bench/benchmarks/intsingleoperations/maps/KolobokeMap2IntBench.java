@@ -1,38 +1,31 @@
 package de.heidelberg.pvs.container_bench.benchmarks.intsingleoperations.maps;
 
-import java.util.Map.Entry;
-import java.util.function.Consumer;
 import java.util.function.ObjIntConsumer;
 
 import org.openjdk.jmh.annotations.Param;
-
-import com.carrotsearch.hppc.ObjectCollection;
-import com.carrotsearch.hppc.ObjectIntMap;
-import com.carrotsearch.hppc.cursors.ObjectIntCursor;
 
 import de.heidelberg.pvs.container_bench.factories.KolobokeMap2IntFact;
 import net.openhft.koloboke.collect.map.hash.HashObjIntMap;
 import net.openhft.koloboke.collect.set.hash.HashObjSet;
 
 public class KolobokeMap2IntBench extends AbstractMap2IntBench {
-
 	@Param
 	KolobokeMap2IntFact impl;
-	
+
 	HashObjIntMap<Object> fullMap;
-	
+
 	@Override
 	public void testSetup() {
 		fullMap = impl.maker.get();
-		for (int i = 0; i < keys.length; i++) {
+		for (int i = 0; i < keys.length && failIfInterrupted(); i++) {
 			fullMap.put(keys[i], values[i]);
 		}
 	}
-	
+
 	@Override
 	protected void populateBench() {
 		HashObjIntMap<Object> newMap = impl.maker.get();
-		for (int i = 0; i < keys.length; i++) {
+		for (int i = 0; i < keys.length && failIfInterrupted(); i++) {
 			newMap.put(keys[i], values[i]);
 		}
 		blackhole.consume(newMap);
@@ -54,7 +47,8 @@ public class KolobokeMap2IntBench extends AbstractMap2IntBench {
 	@Override
 	protected void iterateKeyBench() {
 		HashObjSet<Object> keySet = fullMap.keySet();
-		for(Object e: keySet) {
+		for (Object e : keySet) {
+			failIfInterrupted();
 			blackhole.consume(e);
 		}
 		blackhole.consume(keySet);
@@ -65,6 +59,7 @@ public class KolobokeMap2IntBench extends AbstractMap2IntBench {
 		fullMap.forEach(new ObjIntConsumer<Object>() {
 			@Override
 			public void accept(Object t, int value) {
+				failIfInterrupted();
 				blackhole.consume(t);
 			}
 		});

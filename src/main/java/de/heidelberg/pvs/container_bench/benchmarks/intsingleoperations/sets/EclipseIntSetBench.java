@@ -7,24 +7,23 @@ import org.openjdk.jmh.annotations.Param;
 import de.heidelberg.pvs.container_bench.factories.EclipseIntSetFact;
 
 public class EclipseIntSetBench extends AbstractIntSetBench {
-
 	@Param
 	EclipseIntSetFact impl;
-	
+
 	MutableIntSet fullSet;
-	
+
 	@Override
 	public void testSetup() {
 		fullSet = impl.maker.get();
-		for (int i = 0; i < values.length; i++) {
+		for (int i = 0; i < values.length && failIfInterrupted(); i++) {
 			fullSet.add(values[i]);
 		}
 	}
-	
+
 	@Override
 	protected void populateBench() {
 		MutableIntSet newSet = impl.maker.get();
-		for (int i = 0; i < values.length; i++) {
+		for (int i = 0; i < values.length && failIfInterrupted(); i++) {
 			newSet.add(values[i]);
 		}
 		blackhole.consume(newSet);
@@ -48,9 +47,9 @@ public class EclipseIntSetBench extends AbstractIntSetBench {
 		fullSet.forEach(new IntProcedure() {
 			@Override
 			public void value(int each) {
+				failIfInterrupted();
 				blackhole.consume(each);
 			}
 		});
 	}
-
 }

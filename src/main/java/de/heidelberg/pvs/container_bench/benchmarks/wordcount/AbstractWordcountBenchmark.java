@@ -21,6 +21,7 @@ import org.openjdk.jmh.annotations.Timeout;
 import org.openjdk.jmh.annotations.Warmup;
 import org.openjdk.jmh.infra.Blackhole;
 
+import de.heidelberg.pvs.container_bench.benchmarks.UncheckedInterruptedException;
 import de.heidelberg.pvs.container_bench.generators.Wordlist;
 
 @BenchmarkMode(Mode.SingleShotTime)
@@ -76,14 +77,14 @@ public abstract class AbstractWordcountBenchmark<T> {
 	 *            Data to process
 	 */
 	@Benchmark
-	public void wordcount(Data data) throws InterruptedException {
+	public void wordcount(Data data) {
 		List<String> words = data.words;
 		for (int i = 0, size = words.size(); i < size; i++) {
 			String word = words.get(i);
 			count(map, word);
 			// bh.consume(word); // try to prevent loop unrolling
 			if (Thread.interrupted()) {
-				throw new InterruptedException();
+				throw new UncheckedInterruptedException();
 			}
 		}
 		bh.consume(map); // prevent elimination

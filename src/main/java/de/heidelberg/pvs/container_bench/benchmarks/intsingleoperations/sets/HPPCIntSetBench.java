@@ -11,31 +11,26 @@ import com.carrotsearch.hppc.cursors.IntCursor;
 import de.heidelberg.pvs.container_bench.factories.HPPCIntSetFact;
 
 public class HPPCIntSetBench extends AbstractIntSetBench {
-	
 	@Param
 	HPPCIntSetFact impl;
-	
+
 	IntHashSet fullSet;
-	
+
 	@Override
 	public void testSetup() {
 		fullSet = impl.maker.get();
-		for (int i = 0; i < values.length; i++) {
+		for (int i = 0; i < values.length && failIfInterrupted(); i++) {
 			fullSet.add(values[i]);
 		}
-		
 	}
-
 
 	@Override
 	protected void populateBench() {
-		
 		IntSet newSet = impl.maker.get();
-		for (int i = 0; i < values.length; i++) {
+		for (int i = 0; i < values.length && failIfInterrupted(); i++) {
 			newSet.add(values[i]);
 		}
 		blackhole.consume(newSet);
-		
 	}
 
 	@Override
@@ -56,6 +51,7 @@ public class HPPCIntSetBench extends AbstractIntSetBench {
 		fullSet.forEach(new Consumer<IntCursor>() {
 			@Override
 			public void accept(IntCursor t) {
+				failIfInterrupted();
 				blackhole.consume(t);
 			}
 		});

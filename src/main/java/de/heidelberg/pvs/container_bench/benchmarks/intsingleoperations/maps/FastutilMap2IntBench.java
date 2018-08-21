@@ -8,29 +8,27 @@ import it.unimi.dsi.fastutil.objects.Object2IntMap.Entry;
 import it.unimi.dsi.fastutil.objects.ObjectSet;
 
 public class FastutilMap2IntBench extends AbstractMap2IntBench {
-
 	@Param
 	FastutilMap2IntFact impl;
-	
+
 	Object2IntMap<Object> fullMap;
-	
+
 	@Override
 	public void testSetup() {
 		fullMap = impl.maker.get();
-		for (int i = 0; i < keys.length; i++) {
+		for (int i = 0; i < keys.length && failIfInterrupted(); i++) {
 			fullMap.put(keys[i], values[i]);
 		}
 	}
-	
+
 	@Override
 	protected void populateBench() {
 		Object2IntMap<Object> newMap = impl.maker.get();
-		for (int i = 0; i < keys.length; i++) {
+		for (int i = 0; i < keys.length && failIfInterrupted(); i++) {
 			newMap.put(keys[i], values[i]);
 		}
 		blackhole.consume(newMap);
 	}
-
 
 	@Override
 	protected void containsBench() {
@@ -48,7 +46,8 @@ public class FastutilMap2IntBench extends AbstractMap2IntBench {
 	@Override
 	protected void iterateKeyBench() {
 		ObjectSet<Object> keySet = fullMap.keySet();
-		for(Object key : keySet) {
+		for (Object key : keySet) {
+			failIfInterrupted();
 			blackhole.consume(key);
 		}
 	}
@@ -56,10 +55,9 @@ public class FastutilMap2IntBench extends AbstractMap2IntBench {
 	@Override
 	protected void iterateKeyValueBench() {
 		ObjectSet<Entry<Object>> object2IntEntrySet = fullMap.object2IntEntrySet();
-		for(Entry<Object> e : object2IntEntrySet) {
+		for (Entry<Object> e : object2IntEntrySet) {
+			failIfInterrupted();
 			blackhole.consume(e);
 		}
-		
 	}
-
 }

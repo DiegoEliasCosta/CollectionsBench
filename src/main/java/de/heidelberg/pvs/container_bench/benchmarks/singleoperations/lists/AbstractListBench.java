@@ -7,14 +7,12 @@ import de.heidelberg.pvs.container_bench.generators.ElementGenerator;
 import de.heidelberg.pvs.container_bench.generators.GeneratorFactory;
 
 public abstract class AbstractListBench<T> extends AbstractSingleOperationsBench {
-
 	protected ElementGenerator<T> generator;
 
 	@Override
-	@SuppressWarnings("unchecked") //  generator
+	@SuppressWarnings("unchecked") // generator
 	public void generatorSetup() throws IOException {
 		generator = (ElementGenerator<T>) GeneratorFactory.buildRandomGenerator(payloadType);
 		generator.init(size, seed);
 	}
-	
 }
