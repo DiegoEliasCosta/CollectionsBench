@@ -1,5 +1,6 @@
 package de.heidelberg.pvs.container_bench.benchmarks.singleoperations.lists;
 
+import org.openjdk.jmh.annotations.Benchmark;
 import org.openjdk.jmh.annotations.Param;
 
 import com.carrotsearch.hppc.ObjectIndexedContainer;
@@ -34,6 +35,12 @@ public class HPPCListBench extends AbstractListBench<Object> {
 			fullList.add(values[i]);
 		}
 
+	}
+	
+	@Benchmark
+	public void bench() {
+		workload.run(this);
+		blackhole.consume(fullList);
 	}
 	
 	public enum HPPCListWorkload {
