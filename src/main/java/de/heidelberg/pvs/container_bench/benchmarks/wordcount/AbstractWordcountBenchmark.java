@@ -4,6 +4,7 @@ import java.io.IOException;
 import java.util.List;
 import java.util.concurrent.TimeUnit;
 
+import org.openjdk.jmh.annotations.AuxCounters;
 import org.openjdk.jmh.annotations.Benchmark;
 import org.openjdk.jmh.annotations.BenchmarkMode;
 import org.openjdk.jmh.annotations.CompilerControl;
@@ -16,10 +17,12 @@ import org.openjdk.jmh.annotations.Param;
 import org.openjdk.jmh.annotations.Scope;
 import org.openjdk.jmh.annotations.Setup;
 import org.openjdk.jmh.annotations.State;
+import org.openjdk.jmh.annotations.TearDown;
 import org.openjdk.jmh.annotations.Threads;
 import org.openjdk.jmh.annotations.Timeout;
 import org.openjdk.jmh.annotations.Warmup;
 import org.openjdk.jmh.infra.Blackhole;
+import org.openjdk.jol.info.GraphLayout;
 
 import de.heidelberg.pvs.container_bench.generators.Wordlist;
 
@@ -46,11 +49,19 @@ public abstract class AbstractWordcountBenchmark<T> {
 	@Param
 	public WorkloadEnum workload;
 
-	public static enum WorkloadEnum { WORDCOUNT };
+	public static enum WorkloadEnum {
+		WORDCOUNT
+	};
 
 	Blackhole bh;
 
 	T map;
+
+	@AuxCounters(AuxCounters.Type.EVENTS)
+	@State(Scope.Thread)
+	public static class Memory {
+		public long totalsize;
+	}
 
 	@State(Scope.Benchmark)
 	public static class Data {
@@ -87,6 +98,17 @@ public abstract class AbstractWordcountBenchmark<T> {
 			}
 		}
 		bh.consume(map); // prevent elimination
+	}
+
+	/**
+	 * Memory measurement at teardown.
+	 *
+	 * @param memory
+	 *            Memory counter
+	 */
+	@TearDown(Level.Iteration)
+	public void memory(Memory memory) {
+		memory.totalsize = map != null ? GraphLayout.parseInstance(map).totalSize() : 0;
 	}
 
 	/**
