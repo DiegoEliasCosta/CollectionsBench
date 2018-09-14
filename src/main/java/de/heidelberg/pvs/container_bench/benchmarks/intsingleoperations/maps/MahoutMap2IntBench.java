@@ -1,7 +1,5 @@
 package de.heidelberg.pvs.container_bench.benchmarks.intsingleoperations.maps;
 
-import java.util.List;
-
 import org.apache.mahout.math.function.ObjectIntProcedure;
 import org.apache.mahout.math.function.ObjectProcedure;
 import org.apache.mahout.math.map.OpenObjectIntHashMap;
@@ -63,6 +61,7 @@ public class MahoutMap2IntBench extends AbstractMap2IntBench {
 			@Override
 			public boolean apply(Object first, int second) {
 				blackhole.consume(first);
+				blackhole.consume(second);
 				return false;
 			}
 		});

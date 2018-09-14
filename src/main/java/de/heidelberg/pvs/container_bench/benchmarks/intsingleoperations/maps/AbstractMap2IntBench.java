@@ -9,7 +9,6 @@ import de.heidelberg.pvs.container_bench.benchmarks.intsingleoperations.Abstract
 import de.heidelberg.pvs.container_bench.generators.ElementGenerator;
 import de.heidelberg.pvs.container_bench.generators.GeneratorFactory;
 import de.heidelberg.pvs.container_bench.generators.IntElementGenerator;
-import de.heidelberg.pvs.container_bench.generators.IntPayloadType;
 import de.heidelberg.pvs.container_bench.generators.PayloadType;
 
 /**

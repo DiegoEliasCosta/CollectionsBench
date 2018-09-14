@@ -95,7 +95,8 @@ public class JDKMapBench extends AbstractMapBench<Object, Integer> {
 			@Override
 			public void run(JDKMapBench self) throws InterruptedException {
 				for(Entry<Object, Integer> entry : self.fullMap.entrySet()) {
-					self.blackhole.consume(entry);
+					self.blackhole.consume(entry.getKey());
+					self.blackhole.consume(entry.getValue());
 					if (Thread.interrupted()) {
 						throw new InterruptedException();
 					}

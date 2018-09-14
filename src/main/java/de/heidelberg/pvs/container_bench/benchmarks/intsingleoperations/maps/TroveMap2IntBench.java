@@ -63,6 +63,7 @@ public class TroveMap2IntBench extends AbstractMap2IntBench {
 			@Override
 			public boolean execute(Object a, int b) {
 				blackhole.consume(a);
+				blackhole.consume(b);
 				return true;
 			}
 		});

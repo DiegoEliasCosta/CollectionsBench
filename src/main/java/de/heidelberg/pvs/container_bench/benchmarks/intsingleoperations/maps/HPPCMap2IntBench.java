@@ -2,9 +2,6 @@ package de.heidelberg.pvs.container_bench.benchmarks.intsingleoperations.maps;
 
 import java.util.function.Consumer;
 
-import org.eclipse.collections.api.block.procedure.Procedure;
-import org.eclipse.collections.api.block.procedure.primitive.ObjectIntProcedure;
-import org.eclipse.collections.api.map.primitive.MutableObjectIntMap;
 import org.openjdk.jmh.annotations.Param;
 
 import com.carrotsearch.hppc.ObjectCollection;
@@ -65,7 +62,8 @@ public class HPPCMap2IntBench extends AbstractMap2IntBench {
 		fullMap.forEach(new Consumer<ObjectIntCursor<Object>>() {
 			@Override
 			public void accept(ObjectIntCursor<Object> t) {
-				blackhole.consume(t);
+				blackhole.consume(t.key);
+				blackhole.consume(t.value);
 			}
 		});
 	}

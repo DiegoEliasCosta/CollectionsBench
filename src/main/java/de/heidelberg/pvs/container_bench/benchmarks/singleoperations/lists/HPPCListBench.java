@@ -49,7 +49,7 @@ public class HPPCListBench extends AbstractListBench<Object> {
 			@Override
 			public void run(HPPCListBench self) {
 				for (ObjectCursor<Object> element : self.fullList) {
-					self.blackhole.consume(element);
+					self.blackhole.consume(element.value);
 				}
 			}
 		}, //

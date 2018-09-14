@@ -56,7 +56,7 @@ public class HPPCIntSetBench extends AbstractIntSetBench {
 		fullSet.forEach(new Consumer<IntCursor>() {
 			@Override
 			public void accept(IntCursor t) {
-				blackhole.consume(t);
+				blackhole.consume(t.value);
 			}
 		});
 	}

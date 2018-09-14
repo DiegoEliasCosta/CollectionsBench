@@ -4,8 +4,6 @@ import java.io.IOException;
 
 import org.openjdk.jmh.annotations.Param;
 
-import com.google.common.reflect.TypeToken;
-
 import de.heidelberg.pvs.container_bench.benchmarks.singleoperations.AbstractSingleOperationsBench;
 import de.heidelberg.pvs.container_bench.generators.ElementGenerator;
 import de.heidelberg.pvs.container_bench.generators.GeneratorFactory;

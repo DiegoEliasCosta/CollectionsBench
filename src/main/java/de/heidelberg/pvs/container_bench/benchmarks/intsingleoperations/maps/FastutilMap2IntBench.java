@@ -57,7 +57,8 @@ public class FastutilMap2IntBench extends AbstractMap2IntBench {
 	protected void iterateKeyValueBench() {
 		ObjectSet<Entry<Object>> object2IntEntrySet = fullMap.object2IntEntrySet();
 		for(Entry<Object> e : object2IntEntrySet) {
-			blackhole.consume(e);
+			blackhole.consume(e.getKey());
+			blackhole.consume(e.getIntValue());
 		}
 		
 	}

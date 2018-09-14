@@ -62,6 +62,7 @@ public class EclipseMap2IntBench extends AbstractMap2IntBench {
 			@Override
 			public void value(Object each, int parameter) {
 				blackhole.consume(each);
+				blackhole.consume(parameter);
 			}
 		});
 	}

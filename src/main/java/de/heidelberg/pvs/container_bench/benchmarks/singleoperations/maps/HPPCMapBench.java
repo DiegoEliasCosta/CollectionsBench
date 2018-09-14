@@ -82,7 +82,8 @@ public class HPPCMapBench extends AbstractMapBench<Object, Integer> {
 			@Override
 			void run(HPPCMapBench self) {
 				for (ObjectObjectCursor<Object, Integer> c : self.fullMap) {
-					self.blackhole.consume(c);
+					self.blackhole.consume(c.key);
+					self.blackhole.consume(c.value);
 				}
 			}
 		};
