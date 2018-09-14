@@ -3,7 +3,7 @@ package de.heidelberg.pvs.container_bench.benchmarks.intsets;
 import org.openjdk.jmh.annotations.Param;
 
 import de.heidelberg.pvs.container_bench.factories.KolobokeIntSetFact;
-import net.openhft.koloboke.collect.set.IntSet;
+import com.koloboke.collect.set.IntSet;
 
 public class KolobokeIntSet extends AbstractIntSetBenchmark<IntSet> {
 	@Param

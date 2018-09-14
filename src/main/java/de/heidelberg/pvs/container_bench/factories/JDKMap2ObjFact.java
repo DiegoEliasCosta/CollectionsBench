@@ -9,7 +9,7 @@ public enum JDKMap2ObjFact {
 	JDK_O2O_TREE(java.util.TreeMap::new), //
 	JDK_O2O_HASHTABLE(java.util.Hashtable::new), //
 
-	KOLOBOKE_O2O_HASH(net.openhft.koloboke.collect.map.hash.HashObjObjMaps::newMutableMap), //
+	KOLOBOKE_O2O_HASH(com.koloboke.collect.map.hash.HashObjObjMaps::newMutableMap), //
 	KOLOBOKE_O2O_QHASH(KolobokeQHash.ObjObjMaps::newMutableMap), //
 
 	FASTUTIL_O2O_HASH(it.unimi.dsi.fastutil.objects.Object2ObjectOpenHashMap::new), //

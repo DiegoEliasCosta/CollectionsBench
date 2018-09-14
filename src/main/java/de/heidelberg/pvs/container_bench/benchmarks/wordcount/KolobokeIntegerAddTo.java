@@ -3,7 +3,7 @@ package de.heidelberg.pvs.container_bench.benchmarks.wordcount;
 import org.openjdk.jmh.annotations.Param;
 
 import de.heidelberg.pvs.container_bench.factories.KolobokeMap2IntFact;
-import net.openhft.koloboke.collect.map.hash.HashObjIntMap;
+import com.koloboke.collect.map.hash.HashObjIntMap;
 
 public class KolobokeIntegerAddTo extends AbstractWordcountBenchmark<HashObjIntMap<Object>> {
 	@Param

@@ -9,8 +9,8 @@ public enum JDKMap2IntFact {
 	JDK_O2O_TREE(java.util.TreeMap::new), //
 	JDK_O2O_HASHTABLE(java.util.Hashtable::new), //
 
-	KOLOBOKE_O2O_HASH(net.openhft.koloboke.collect.map.hash.HashObjObjMaps::newMutableMap), //
-	KOLOBOKE_O2I_HASH(net.openhft.koloboke.collect.map.hash.HashObjIntMaps::newMutableMap), //
+	KOLOBOKE_O2O_HASH(com.koloboke.collect.map.hash.HashObjObjMaps::newMutableMap), //
+	KOLOBOKE_O2I_HASH(com.koloboke.collect.map.hash.HashObjIntMaps::newMutableMap), //
 	KOLOBOKE_O2O_QHASH(KolobokeQHash.ObjObjMaps::newMutableMap), //
 	KOLOBOKE_O2I_QHASH(KolobokeQHash.ObjIntMaps::newMutableMap), //
 
