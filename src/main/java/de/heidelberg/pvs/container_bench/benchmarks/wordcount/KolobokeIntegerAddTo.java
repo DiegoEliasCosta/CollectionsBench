@@ -18,4 +18,9 @@ public class KolobokeIntegerAddTo extends AbstractWordcountBenchmark<HashObjIntM
 	protected void count(HashObjIntMap<Object> map, String object) {
 		map.addValue(object, 1);
 	}
+
+	@Override
+	protected int size(HashObjIntMap<Object> map) {
+		return map.size();
+	}
 }

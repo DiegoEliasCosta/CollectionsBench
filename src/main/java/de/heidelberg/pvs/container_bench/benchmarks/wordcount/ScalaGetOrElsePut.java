@@ -19,4 +19,9 @@ public class ScalaGetOrElsePut extends AbstractWordcountBenchmark<Map<String, In
 		// Avoid ambiguity:
 		map.put(object, ((scala.collection.Map<String, Integer>) map).getOrElse(object, () -> 0) + 1);
 	}
+
+	@Override
+	protected int size(Map<String, Integer> map) {
+		return ((scala.collection.Map<String, Integer>) map).size();
+	}
 }

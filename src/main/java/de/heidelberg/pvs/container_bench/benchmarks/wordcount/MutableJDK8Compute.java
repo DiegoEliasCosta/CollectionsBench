@@ -27,4 +27,9 @@ public class MutableJDK8Compute extends AbstractWordcountBenchmark<Map<Object, M
 			return value;
 		});
 	}
+
+	@Override
+	protected int size(Map<Object, MutableInteger> map) {
+		return map.size();
+	}
 }

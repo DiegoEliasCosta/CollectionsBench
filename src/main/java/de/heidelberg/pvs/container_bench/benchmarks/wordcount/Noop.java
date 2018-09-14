@@ -22,4 +22,9 @@ public class Noop extends AbstractWordcountBenchmark<Void> {
 	protected void count(Void map, String object) {
 		// Empty, not even blackhole
 	}
+
+	@Override
+	protected int size(Void map) {
+		return 0;
+	}
 }

@@ -29,4 +29,9 @@ public class HPPCIndexOf extends AbstractWordcountBenchmark<ObjectObjectMap<Obje
 			map.indexInsert(idx, object, 1);
 		}
 	}
+
+	@Override
+	protected int size(ObjectObjectMap<Object, Integer> map) {
+		return map.size();
+	}
 }

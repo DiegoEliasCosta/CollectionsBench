@@ -26,4 +26,9 @@ public class MutableScalaGetPut extends AbstractWordcountBenchmark<Map<String, M
 			map.put(object, new MutableInteger(1));
 		}
 	}
+
+	@Override
+	protected int size(Map<String, MutableInteger> map) {
+		return ((scala.collection.Map<String, MutableInteger>) map).size();
+	}
 }

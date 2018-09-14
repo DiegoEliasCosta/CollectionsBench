@@ -19,4 +19,9 @@ public class JDK8Merge extends AbstractWordcountBenchmark<Map<Object, Integer>> 
 	protected void count(Map<Object, Integer> map, String object) {
 		map.merge(object, 1, (x, y) -> x != null ? x + y : y);
 	}
+
+	@Override
+	protected int size(Map<Object, Integer> map) {
+		return map.size();
+	}
 }

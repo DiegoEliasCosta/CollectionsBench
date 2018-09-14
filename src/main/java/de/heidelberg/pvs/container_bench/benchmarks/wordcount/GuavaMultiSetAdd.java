@@ -7,10 +7,9 @@ import com.google.common.collect.Multiset;
 import de.heidelberg.pvs.container_bench.factories.GuavaMultiSetFact;
 
 public class GuavaMultiSetAdd extends AbstractWordcountBenchmark<Multiset<Object>> {
-
 	@Param
 	GuavaMultiSetFact impl;
-	
+
 	@Override
 	protected Multiset<Object> makeMap() {
 		return impl.maker.get();
@@ -23,4 +22,8 @@ public class GuavaMultiSetAdd extends AbstractWordcountBenchmark<Multiset<Object
 		map.add(object);
 	}
 
+	@Override
+	protected int size(Multiset<Object> map) {
+		return map.size();
+	}
 }

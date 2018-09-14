@@ -20,4 +20,9 @@ public class JDKGetPut extends AbstractWordcountBenchmark<Map<Object, Integer>> 
 		final Integer old = map.get(object);
 		map.put(object, old != null ? old + 1 : 1);
 	}
+
+	@Override
+	protected int size(Map<Object, Integer> map) {
+		return map.size();
+	}
 }

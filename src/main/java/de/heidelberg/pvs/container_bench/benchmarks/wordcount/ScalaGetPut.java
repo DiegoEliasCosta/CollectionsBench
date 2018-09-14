@@ -21,4 +21,9 @@ public class ScalaGetPut extends AbstractWordcountBenchmark<Map<String, Integer>
 		Option<Integer> old = ((scala.collection.Map<String, Integer>) map).get(object);
 		map.put(object, old.isDefined() ? old.get() + 1 : 1);
 	}
+
+	@Override
+	protected int size(Map<String, Integer> map) {
+		return ((scala.collection.Map<String, Integer>) map).size();
+	}
 }

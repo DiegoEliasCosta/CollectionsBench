@@ -17,4 +17,9 @@ public class Blackhole extends AbstractWordcountBenchmark<Void> {
 	protected void count(Void map, String object) {
 		bh.consume(object);
 	}
+
+	@Override
+	protected int size(Void map) {
+		return 0;
+	}
 }

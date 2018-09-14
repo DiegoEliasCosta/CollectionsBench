@@ -19,4 +19,9 @@ public class JDK8Compute extends AbstractWordcountBenchmark<Map<Object, Integer>
 	protected void count(Map<Object, Integer> map, String object) {
 		map.compute(object, (key, value) -> value == null ? 1 : value + 1);
 	}
+
+	@Override
+	protected int size(Map<Object, Integer> map) {
+		return map.size();
+	}
 }

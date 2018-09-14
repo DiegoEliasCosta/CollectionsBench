@@ -25,4 +25,9 @@ public class MutableJDKGetPut extends AbstractWordcountBenchmark<Map<Object, Mut
 			map.put(object, new MutableInteger(1));
 		}
 	}
+
+	@Override
+	protected int size(Map<Object, MutableInteger> map) {
+		return map.size();
+	}
 }

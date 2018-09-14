@@ -25,4 +25,9 @@ public class HPPCGetPut extends AbstractWordcountBenchmark<ObjectObjectMap<Objec
 		Integer old = map.get(object);
 		map.put(object, old != null ? old + 1 : 1);
 	}
+
+	@Override
+	protected int size(ObjectObjectMap<Object, Integer> map) {
+		return map.size();
+	}
 }
