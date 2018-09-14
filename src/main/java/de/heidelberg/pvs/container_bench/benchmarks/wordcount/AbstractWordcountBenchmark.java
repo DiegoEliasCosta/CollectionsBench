@@ -47,6 +47,10 @@ public abstract class AbstractWordcountBenchmark<T> {
 	@Param({ "-1" })
 	public int seed = -1;
 
+	/** Do memory analysis */
+	@Param({ "false" })
+	public boolean doMemory = false;
+
 	/** Fake parameter, for uniform output */
 	@Param
 	public WorkloadEnum workload;
@@ -106,6 +110,7 @@ public abstract class AbstractWordcountBenchmark<T> {
 			count(map, word);
 			// bh.consume(word); // try to prevent loop unrolling
 			if (Thread.interrupted()) {
+				doMemory = false;
 				throw new InterruptedException();
 			}
 		}
@@ -120,11 +125,19 @@ public abstract class AbstractWordcountBenchmark<T> {
 	 */
 	@TearDown(Level.Iteration)
 	public void memory(Memory memory) {
+		if (!doMemory)
+			return; // Avoid costly
 		if (map != null) {
+			memory.numentries = size(map);
 			GraphLayout layout = GraphLayout.parseInstance(map);
 			memory.totalmemory = layout.totalSize();
 			long emptyarray = VM.current().sizeOf(new int[0]);
 			for (Long addr : layout.addresses()) {
+				if (Thread.interrupted()) {
+					memory.tablesizemax = -1;
+					memory.tablesizesum = -1;
+					return;
+				}
 				GraphPathRecord record = layout.record(addr);
 				if (record.klass().isArray()) {
 					Class<?> type = record.klass().getComponentType();
@@ -137,7 +150,6 @@ public abstract class AbstractWordcountBenchmark<T> {
 					memory.tablesizemax = Math.max(memory.tablesizemax, numentries);
 				}
 			}
-			memory.numentries = size(map);
 		}
 	}
 
