@@ -43,6 +43,11 @@ public abstract class AbstractWordcountBenchmark<T> {
 	@Param({ "100", "1000", "10000", "100000", "1000000" })
 	public int size;
 
+	/**
+	 * Maximum size to allow for known-slow implementations (array backed!)
+	 */
+	public final int max_slow_size = 999_999;
+
 	/** -1: no random shuffling */
 	@Param({ "-1" })
 	public int seed = -1;

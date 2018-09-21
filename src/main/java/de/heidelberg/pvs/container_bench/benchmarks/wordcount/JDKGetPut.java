@@ -12,6 +12,9 @@ public class JDKGetPut extends AbstractWordcountBenchmark<Map<Object, Integer>> 
 
 	@Override
 	protected Map<Object, Integer> makeMap() {
+		if (size > max_slow_size && (impl.toString().contains("ARRAY") || impl == JDKMap2IntFact.JAVOLUTION_SORTED)) {
+			throw new RuntimeException("Skipping because size > max_slow_size.");
+		}
 		return impl.maker.get();
 	}
 

@@ -11,6 +11,9 @@ public class FastutilIntegerGetPut extends AbstractWordcountBenchmark<Object2Int
 
 	@Override
 	protected Object2IntMap<Object> makeMap() {
+		if (size > max_slow_size && impl.toString().contains("ARRAY")) {
+			throw new RuntimeException("Skipping because size > max_slow_size.");
+		}
 		return impl.maker.get();
 	}
 
