@@ -13,7 +13,7 @@ public class MutableJDK8Compute extends AbstractWordcountBenchmark<Map<Object, M
 	@SuppressWarnings("unchecked")
 	@Override
 	protected Map<Object, MutableInteger> makeMap() {
-		if (size > max_slow_size && (impl.toString().contains("ARRAY") || impl == JDKMap2IntFact.JAVOLUTION_SORTED)) {
+		if (size > max_slow_size && (impl.toString().contains("ARRAY") || impl == JDKMap2ObjFact.JAVOLUTION_SORTED)) {
 			throw new RuntimeException("Skipping because size > max_slow_size.");
 		}
 		return (Map<Object, MutableInteger>) (Map<?, ?>) impl.maker.get();
