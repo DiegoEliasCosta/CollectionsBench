@@ -16,8 +16,8 @@ public enum JDKMap2ObjFact {
 	FASTUTIL_O2O_LINKEDHASH(it.unimi.dsi.fastutil.objects.Object2ObjectLinkedOpenHashMap::new), //
 	FASTUTIL_O2O_AVL(it.unimi.dsi.fastutil.objects.Object2ObjectAVLTreeMap::new), //
 	FASTUTIL_O2O_RB(it.unimi.dsi.fastutil.objects.Object2ObjectRBTreeMap::new), //
-	FASTUTIL_O2O_ARRAY(it.unimi.dsi.fastutil.objects.Object2ObjectArrayMap::new), //
-	
+	FASTUTIL_O2O_ARRAY(it.unimi.dsi.fastutil.objects.Object2ObjectArrayMap::new, 1000000), //
+
 	TROVE_O2O_HASH(gnu.trove.map.hash.THashMap::new), //
 
 	ECLIPSE_O2O_HASH(org.eclipse.collections.impl.map.mutable.UnifiedMap::new), //
@@ -29,15 +29,22 @@ public enum JDKMap2ObjFact {
 	MAHOUT_O2O_HASH(org.apache.mahout.math.map.OpenHashMap::new), //
 
 	JAVOLUTION_HASH(javolution.util.FastMap::new), //
-	JAVOLUTION_SORTED(javolution.util.FastSortedMap::new), //
+	JAVOLUTION_SORTED(javolution.util.FastSortedMap::new, 1000000), //
 
-	GOOGLE_O2O_ARRAY(com.google.api.client.util.ArrayMap::new), //
-	CORENLP_ARRAY(edu.stanford.nlp.util.ArrayMap::new); //
+	GOOGLE_O2O_ARRAY(com.google.api.client.util.ArrayMap::new, 1000000), //
+	CORENLP_ARRAY(edu.stanford.nlp.util.ArrayMap::new, 1000000); //
 	;
 
 	public final Supplier<Map<Object, Object>> maker;
 
+	public final int maxsize;
+
 	private JDKMap2ObjFact(Supplier<Map<Object, Object>> maker) {
+		this(maker, Integer.MAX_VALUE);
+	}
+
+	private JDKMap2ObjFact(Supplier<Map<Object, Object>> maker, int maxsize) {
 		this.maker = maker;
+		this.maxsize = maxsize;
 	}
 }

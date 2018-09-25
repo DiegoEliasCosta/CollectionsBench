@@ -29,12 +29,14 @@ import org.openjdk.jol.vm.VM;
 import de.heidelberg.pvs.container_bench.generators.Wordlist;
 
 @BenchmarkMode(Mode.AverageTime)
-@OutputTimeUnit(TimeUnit.MILLISECONDS)
-@Timeout(time = 1, timeUnit = TimeUnit.MINUTES)
-@Warmup(iterations = 20, time = 1, timeUnit = TimeUnit.NANOSECONDS) // Simulate single-shot
+// We need to use a fake single-shot to get auxiliary measurements.
+// If you only want to measure time, single-shot mode is okay, too.
+@Warmup(iterations = 20, time = 1, timeUnit = TimeUnit.NANOSECONDS)
 @Measurement(iterations = 40, time = 1, timeUnit = TimeUnit.NANOSECONDS)
 @Fork(2)
 @Threads(1)
+@OutputTimeUnit(TimeUnit.MILLISECONDS)
+@Timeout(time = 1, timeUnit = TimeUnit.MINUTES)
 @State(Scope.Thread)
 public abstract class AbstractWordcountBenchmark<T> {
 	/**
@@ -42,11 +44,6 @@ public abstract class AbstractWordcountBenchmark<T> {
 	 */
 	@Param({ "100", "1000", "10000", "100000", "1000000" })
 	public int size;
-
-	/**
-	 * Maximum size to allow for known-slow implementations (array backed!)
-	 */
-	public final int max_slow_size = 999_999;
 
 	/** -1: no random shuffling */
 	@Param({ "-1" })
@@ -120,6 +117,9 @@ public abstract class AbstractWordcountBenchmark<T> {
 			}
 		}
 		bh.consume(map); // prevent elimination
+		if (doMemory && size < 1000) {
+			Thread.sleep(0, 1); // Sleep 1 ns, to allow measuring memory for small sizes (timeout 1 ns!)
+		}
 	}
 
 	/**
