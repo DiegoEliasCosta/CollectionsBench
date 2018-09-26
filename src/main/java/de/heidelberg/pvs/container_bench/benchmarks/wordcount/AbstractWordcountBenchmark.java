@@ -50,8 +50,7 @@ public abstract class AbstractWordcountBenchmark<T> {
 	public int seed = -1;
 
 	/** Do memory analysis */
-	@Param({ "false" })
-	public boolean doMemory = false;
+	protected boolean doMemory = System.getProperty("doMemory", "false").equals("true");
 
 	/** Fake parameter, for uniform output */
 	@Param
@@ -129,31 +128,32 @@ public abstract class AbstractWordcountBenchmark<T> {
 	 *            Memory counter
 	 */
 	@TearDown(Level.Iteration)
-	public void memory(Memory memory) {
-		if (!doMemory)
+	public final void memory(Memory memory) {
+		if (!doMemory || map == null)
 			return; // Avoid costly
-		if (map != null) {
-			memory.numentries = size(map);
-			GraphLayout layout = GraphLayout.parseInstance(map);
-			memory.totalmemory = layout.totalSize();
-			long emptyarray = VM.current().sizeOf(new int[0]);
-			for (Long addr : layout.addresses()) {
-				if (Thread.interrupted()) {
-					memory.tablesizemax = -1;
-					memory.tablesizesum = -1;
-					return;
+		measureMemory(map, memory);
+	}
+
+	protected void measureMemory(T map, Memory memory) {
+		memory.numentries = size(map);
+		GraphLayout layout = GraphLayout.parseInstance(map);
+		memory.totalmemory = layout.totalSize();
+		long emptyarray = VM.current().sizeOf(new int[0]);
+		for (Long addr : layout.addresses()) {
+			if (Thread.interrupted()) {
+				memory.tablesizemax = memory.tablesizesum = -1;
+				return;
+			}
+			GraphPathRecord record = layout.record(addr);
+			if (record.klass().isArray()) {
+				Class<?> type = record.klass().getComponentType();
+				if (type == char.class || type == byte.class) { // Probably a string.
+					continue;
 				}
-				GraphPathRecord record = layout.record(addr);
-				if (record.klass().isArray()) {
-					Class<?> type = record.klass().getComponentType();
-					if (type == char.class || type == byte.class) { // Probably a string.
-						continue;
-					}
-					final long s = VM.current().sizeOfField(type.toString());
-					final long numentries = (record.size() - emptyarray) / s;
-					memory.tablesizesum += numentries;
-					memory.tablesizemax = Math.max(memory.tablesizemax, numentries);
-				}
+				final long s = VM.current().sizeOfField(type.toString());
+				final long numentries = (record.size() - emptyarray) / s;
+				memory.tablesizesum += numentries;
+				memory.tablesizemax = Math.max(memory.tablesizemax, numentries);
 			}
 		}
 	}
