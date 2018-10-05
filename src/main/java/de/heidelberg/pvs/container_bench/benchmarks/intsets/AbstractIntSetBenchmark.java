@@ -22,7 +22,7 @@ import org.openjdk.jmh.infra.Blackhole;
 
 import de.heidelberg.pvs.container_bench.generators.Wordlist;
 
-@BenchmarkMode(Mode.SingleShotTime)
+@BenchmarkMode(Mode.SampleTime)
 @OutputTimeUnit(TimeUnit.NANOSECONDS)
 @Timeout(time = 20, timeUnit = TimeUnit.SECONDS)
 @Warmup(iterations = 20, time = 1, timeUnit = TimeUnit.SECONDS)

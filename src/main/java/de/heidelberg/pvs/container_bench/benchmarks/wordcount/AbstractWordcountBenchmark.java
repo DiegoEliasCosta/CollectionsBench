@@ -28,15 +28,15 @@ import org.openjdk.jol.vm.VM;
 
 import de.heidelberg.pvs.container_bench.generators.Wordlist;
 
-@BenchmarkMode(Mode.AverageTime)
+@BenchmarkMode(Mode.SampleTime)
 // We need to use a fake single-shot to get auxiliary measurements.
 // If you only want to measure time, single-shot mode is okay, too.
-@Warmup(iterations = 20, time = 1, timeUnit = TimeUnit.NANOSECONDS)
-@Measurement(iterations = 40, time = 1, timeUnit = TimeUnit.NANOSECONDS)
+@Warmup(iterations = 20, time = 1, timeUnit = TimeUnit.SECONDS)
+@Measurement(iterations = 40, time = 1, timeUnit = TimeUnit.SECONDS)
 @Fork(2)
 @Threads(1)
-@OutputTimeUnit(TimeUnit.MILLISECONDS)
-@Timeout(time = 1, timeUnit = TimeUnit.MINUTES)
+@OutputTimeUnit(TimeUnit.NANOSECONDS)
+@Timeout(time = 10, timeUnit = TimeUnit.SECONDS)
 @State(Scope.Thread)
 public abstract class AbstractWordcountBenchmark<T> {
 	/**
@@ -89,11 +89,6 @@ public abstract class AbstractWordcountBenchmark<T> {
 		data.words = Wordlist.loadWords(size, seed);
 	}
 
-	@Setup(Level.Iteration)
-	public void setupState() {
-		map = makeMap();
-	}
-
 	/**
 	 * Class to benchmark a single adapter.
 	 * 
@@ -102,9 +97,8 @@ public abstract class AbstractWordcountBenchmark<T> {
 	 */
 	@Benchmark
 	public void wordcount(Data data) throws InterruptedException {
-		if (size(map) > 0) {
-			throw new IllegalStateException("Map must be empty, run a single shot only.");
-		}
+		map = makeMap();
+		
 		List<String> words = data.words;
 		for (int i = 0, size = words.size(); i < size; i++) {
 			String word = words.get(i);
