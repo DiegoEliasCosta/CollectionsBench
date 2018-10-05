@@ -21,12 +21,12 @@ import de.heidelberg.pvs.container_bench.generators.PayloadType;
  * @author diego.costa
  *
  */
-public abstract class IterationOnListsBench extends AbstractSingleOperationsBench {
+public class IterationOnListsBench extends AbstractSingleOperationsBench {
 
 	/**
 	 * Type of the payload object
 	 */
-	@Param()
+	@Param
 	public PayloadType payloadType;
 
 	@Param
