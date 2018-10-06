@@ -89,11 +89,6 @@ public abstract class AbstractWordcountBenchmark<T> {
 		data.words = Wordlist.loadWords(size, seed);
 	}
 
-	@Setup(Level.Iteration)
-	public void setupState() {
-		map = makeMap();
-	}
-
 	/**
 	 * Class to benchmark a single adapter.
 	 * 
@@ -102,9 +97,7 @@ public abstract class AbstractWordcountBenchmark<T> {
 	 */
 	@Benchmark
 	public void wordcount(Data data) throws InterruptedException {
-		if (size(map) > 0) {
-			throw new IllegalStateException("Map must be empty, run a single shot only.");
-		}
+		map = makeMap(); // We leak the map, for memory measurement in TearDown.
 		List<String> words = data.words;
 		for (int i = 0, size = words.size(); i < size; i++) {
 			String word = words.get(i);
@@ -116,9 +109,6 @@ public abstract class AbstractWordcountBenchmark<T> {
 			}
 		}
 		bh.consume(map); // prevent elimination
-		if (doMemory && size < 1000) {
-			Thread.sleep(0, 1); // Sleep 1 ns, to allow measuring memory for small sizes (timeout 1 ns!)
-		}
 	}
 
 	/**
