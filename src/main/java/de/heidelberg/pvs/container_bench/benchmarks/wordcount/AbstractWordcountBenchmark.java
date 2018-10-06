@@ -110,9 +110,6 @@ public abstract class AbstractWordcountBenchmark<T> {
 			}
 		}
 		bh.consume(map); // prevent elimination
-		if (doMemory && size < 1000) {
-			Thread.sleep(0, 1); // Sleep 1 ns, to allow measuring memory for small sizes (timeout 1 ns!)
-		}
 	}
 
 	/**
