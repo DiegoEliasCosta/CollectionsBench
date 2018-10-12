@@ -24,6 +24,6 @@ public class GuavaMultiSetAdd extends AbstractWordcountBenchmark<Multiset<Object
 
 	@Override
 	protected int size(Multiset<Object> map) {
-		return map.size();
+		return map.elementSet().size(); // unique!
 	}
 }

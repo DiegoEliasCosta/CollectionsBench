@@ -13,6 +13,9 @@ public class MutableJDKGetPut extends AbstractWordcountBenchmark<Map<Object, Mut
 	@SuppressWarnings("unchecked")
 	@Override
 	protected Map<Object, MutableInteger> makeMap() {
+		if (size > impl.maxsize) {
+			throw new RuntimeException("Skipping because size > maxsize.");
+		}
 		return (Map<Object, MutableInteger>) (Map<?, ?>) impl.maker.get();
 	}
 

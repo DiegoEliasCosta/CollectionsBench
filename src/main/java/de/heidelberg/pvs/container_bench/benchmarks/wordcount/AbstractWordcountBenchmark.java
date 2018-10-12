@@ -28,13 +28,15 @@ import org.openjdk.jol.vm.VM;
 
 import de.heidelberg.pvs.container_bench.generators.Wordlist;
 
-@BenchmarkMode(Mode.AverageTime)
-@OutputTimeUnit(TimeUnit.MILLISECONDS)
-@Timeout(time = 1, timeUnit = TimeUnit.MINUTES)
-@Warmup(iterations = 20, time = 1, timeUnit = TimeUnit.NANOSECONDS) // Simulate single-shot
-@Measurement(iterations = 40, time = 1, timeUnit = TimeUnit.NANOSECONDS)
+@BenchmarkMode(Mode.SampleTime)
+// We need to use a fake single-shot to get auxiliary measurements.
+// If you only want to measure time, single-shot mode is okay, too.
+@Warmup(iterations = 20, time = 1, timeUnit = TimeUnit.SECONDS)
+@Measurement(iterations = 40, time = 1, timeUnit = TimeUnit.SECONDS)
 @Fork(2)
 @Threads(1)
+@OutputTimeUnit(TimeUnit.NANOSECONDS)
+@Timeout(time = 10, timeUnit = TimeUnit.SECONDS)
 @State(Scope.Thread)
 public abstract class AbstractWordcountBenchmark<T> {
 	/**
@@ -48,8 +50,7 @@ public abstract class AbstractWordcountBenchmark<T> {
 	public int seed = -1;
 
 	/** Do memory analysis */
-	@Param({ "false" })
-	public boolean doMemory = false;
+	protected boolean doMemory = System.getProperty("doMemory", "false").equals("true");
 
 	/** Fake parameter, for uniform output */
 	@Param
@@ -88,11 +89,6 @@ public abstract class AbstractWordcountBenchmark<T> {
 		data.words = Wordlist.loadWords(size, seed);
 	}
 
-	@Setup(Level.Iteration)
-	public void setupState() {
-		map = makeMap();
-	}
-
 	/**
 	 * Class to benchmark a single adapter.
 	 * 
@@ -101,9 +97,8 @@ public abstract class AbstractWordcountBenchmark<T> {
 	 */
 	@Benchmark
 	public void wordcount(Data data) throws InterruptedException {
-		if (size(map) > 0) {
-			throw new IllegalStateException("Map must be empty, run a single shot only.");
-		}
+		map = makeMap();
+		
 		List<String> words = data.words;
 		for (int i = 0, size = words.size(); i < size; i++) {
 			String word = words.get(i);
@@ -124,31 +119,32 @@ public abstract class AbstractWordcountBenchmark<T> {
 	 *            Memory counter
 	 */
 	@TearDown(Level.Iteration)
-	public void memory(Memory memory) {
-		if (!doMemory)
+	public final void memory(Memory memory) {
+		if (!doMemory || map == null)
 			return; // Avoid costly
-		if (map != null) {
-			memory.numentries = size(map);
-			GraphLayout layout = GraphLayout.parseInstance(map);
-			memory.totalmemory = layout.totalSize();
-			long emptyarray = VM.current().sizeOf(new int[0]);
-			for (Long addr : layout.addresses()) {
-				if (Thread.interrupted()) {
-					memory.tablesizemax = -1;
-					memory.tablesizesum = -1;
-					return;
+		measureMemory(map, memory);
+	}
+
+	protected void measureMemory(T map, Memory memory) {
+		memory.numentries = size(map);
+		GraphLayout layout = GraphLayout.parseInstance(map);
+		memory.totalmemory = layout.totalSize();
+		long emptyarray = VM.current().sizeOf(new int[0]);
+		for (Long addr : layout.addresses()) {
+			if (Thread.interrupted()) {
+				memory.tablesizemax = memory.tablesizesum = -1;
+				return;
+			}
+			GraphPathRecord record = layout.record(addr);
+			if (record.klass().isArray()) {
+				Class<?> type = record.klass().getComponentType();
+				if (type == char.class || type == byte.class) { // Probably a string.
+					continue;
 				}
-				GraphPathRecord record = layout.record(addr);
-				if (record.klass().isArray()) {
-					Class<?> type = record.klass().getComponentType();
-					if (type == char.class || type == byte.class) { // Probably a string.
-						continue;
-					}
-					final long s = VM.current().sizeOfField(type.toString());
-					final long numentries = (record.size() - emptyarray) / s;
-					memory.tablesizesum += numentries;
-					memory.tablesizemax = Math.max(memory.tablesizemax, numentries);
-				}
+				final long s = VM.current().sizeOfField(type.toString());
+				final long numentries = (record.size() - emptyarray) / s;
+				memory.tablesizesum += numentries;
+				memory.tablesizemax = Math.max(memory.tablesizemax, numentries);
 			}
 		}
 	}

@@ -8,7 +8,7 @@ public enum JDKSetFact {
 	JDK_LINKEDHASH(java.util.LinkedHashSet::new), //
 	JDK_TREE(java.util.TreeSet::new), //
 
-	KOLOBOKE_HASH(net.openhft.koloboke.collect.set.hash.HashObjSets::newMutableSet), //
+	KOLOBOKE_HASH(com.koloboke.collect.set.hash.HashObjSets::newMutableSet), //
 	KOLOBOKE_QHASH(KolobokeQHash.ObjSets::newMutableSet), //
 
 	FASTUTIL_HASH(it.unimi.dsi.fastutil.objects.ObjectOpenHashSet::new), //

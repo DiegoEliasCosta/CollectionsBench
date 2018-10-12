@@ -1,5 +1,5 @@
 buildscript {
-    ext.jmh_version = '1.20' // JMH version to use
+    ext.jmh_version = '1.21' // JMH version to use
 }
 
 plugins {
@@ -9,7 +9,7 @@ plugins {
   id 'idea'
   // id 'me.champeau.gradle.jmh' version '0.4.5' // did not work
   id 'com.github.johnrengelman.shadow' version '2.0.4'
-  id 'com.github.ben-manes.versions' version '0.17.0' // for "gradlew dependencyUpdates"
+  id 'com.github.ben-manes.versions' version '0.20.0' // for "gradlew dependencyUpdates -Drevision=release"
 }
 
 repositories {
@@ -38,17 +38,17 @@ dependencies {
     compileOnly group: 'org.openjdk.jmh', name: 'jmh-generator-annprocess', version: jmh_version
     compile group: 'org.openjdk.jol', name: 'jol-core', version:'0.9'
 
-    compile group: 'com.google.api-client', name: 'google-api-client', version: '1.23.0'
-    compile group: 'com.google.guava', name: 'guava', version:'24.1-jre'
-    compile group: 'net.openhft', name: 'koloboke-impl-jdk8', version:'0.6.8'
-    compile group: 'net.sf.trove4j', name: 'trove4j', version:'3.0.3'
-    compile group: 'it.unimi.dsi', name: 'fastutil', version:'8.1.1'
-    compile group: 'com.carrotsearch', name: 'hppc', version:'0.7.3'
-    compile group: 'org.eclipse.collections', name: 'eclipse-collections', version: '9.1.0'
+    compile group: 'com.google.api-client', name: 'google-api-client', version: '1.25.0'
+    compile group: 'com.google.guava', name: 'guava', version:'26.0-jre'
+    compile group: 'com.koloboke', name: 'koloboke-impl-jdk8', version:'1.0.0'
+    compile group: 'net.sf.trove4j', name: 'core', version:'3.1.0'
+    compile group: 'it.unimi.dsi', name: 'fastutil', version:'8.2.1'
+    compile group: 'com.carrotsearch', name: 'hppc', version:'0.8.1'
+    compile group: 'org.eclipse.collections', name: 'eclipse-collections', version: '9.2.0'
     compile group: 'org.apache.mahout', name: 'mahout-math', version:'0.13.0'
     compile group: 'edu.stanford.nlp', name: 'stanford-corenlp', version:'3.9.1'
-    compile group: 'org.agrona', name: 'Agrona', version: '0.9.1'
-    compile group: 'org.apache.commons', name: 'commons-collections4', version: '4.1'
+    compile group: 'org.agrona', name: 'agrona', version: '0.9.24'
+    compile group: 'org.apache.commons', name: 'commons-collections4', version: '4.2'
     compile group: 'org.javolution', name: 'javolution-core-java', version: '6.0.0'
     compile group: 'org.scala-lang', name: 'scala-library', version: '2.12.6'
 

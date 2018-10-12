@@ -12,6 +12,9 @@ public class JDK8Merge extends AbstractWordcountBenchmark<Map<Object, Integer>> 
 
 	@Override
 	protected Map<Object, Integer> makeMap() {
+		if (size > impl.maxsize) {
+			throw new RuntimeException("Skipping because size > maxsize.");
+		}
 		return impl.maker.get();
 	}
 

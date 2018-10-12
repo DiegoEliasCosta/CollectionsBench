@@ -1,9 +1,7 @@
 package de.heidelberg.pvs.container_bench.benchmarks.intsingleoperations.sets;
 
 import org.agrona.collections.IntHashSet;
-import org.agrona.collections.IntIterator;
-import org.eclipse.collections.api.block.procedure.primitive.IntProcedure;
-import org.eclipse.collections.api.set.primitive.MutableIntSet;
+import org.agrona.collections.IntHashSet.IntIterator;
 import org.openjdk.jmh.annotations.Param;
 
 import de.heidelberg.pvs.container_bench.factories.AgronaIntSetFact;
@@ -12,9 +10,9 @@ public class AgronaIntSetBench extends AbstractIntSetBench {
 
 	@Param
 	public AgronaIntSetFact impl;
-	
+
 	IntHashSet fullSet;
-	
+
 	@Override
 	public void testSetup() {
 		fullSet = impl.maker.get();
@@ -22,7 +20,7 @@ public class AgronaIntSetBench extends AbstractIntSetBench {
 			fullSet.add(values[i]);
 		}
 	}
-	
+
 	@Override
 	protected void populateBench() {
 		IntHashSet newSet = impl.maker.get();
@@ -49,7 +47,7 @@ public class AgronaIntSetBench extends AbstractIntSetBench {
 	protected void iterateBench() {
 		// No for each without unboxing
 		IntIterator iterator = fullSet.iterator();
-		while(iterator.hasNext()) {
+		while (iterator.hasNext()) {
 			blackhole.consume(iterator.nextValue());
 		}
 	}

@@ -5,7 +5,7 @@ import java.util.function.IntConsumer;
 import org.openjdk.jmh.annotations.Param;
 
 import de.heidelberg.pvs.container_bench.factories.KolobokeIntSetFact;
-import net.openhft.koloboke.collect.set.IntSet;
+import com.koloboke.collect.set.IntSet;
 
 public class KolobokeIntSetBench extends AbstractIntSetBench {
 

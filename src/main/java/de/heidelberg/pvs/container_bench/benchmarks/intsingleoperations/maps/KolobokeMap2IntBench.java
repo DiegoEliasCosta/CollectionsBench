@@ -5,8 +5,8 @@ import java.util.function.ObjIntConsumer;
 import org.openjdk.jmh.annotations.Param;
 
 import de.heidelberg.pvs.container_bench.factories.KolobokeMap2IntFact;
-import net.openhft.koloboke.collect.map.hash.HashObjIntMap;
-import net.openhft.koloboke.collect.set.hash.HashObjSet;
+import com.koloboke.collect.map.hash.HashObjIntMap;
+import com.koloboke.collect.set.hash.HashObjSet;
 
 public class KolobokeMap2IntBench extends AbstractMap2IntBench {
 
