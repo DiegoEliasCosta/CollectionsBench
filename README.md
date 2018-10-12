@@ -21,27 +21,58 @@ To build and run Collections-Bench you need Java 8.
 **Build the jar file:** Use `./gradlew shadowJar` to generate the `benchmarks.jar` file
 (on windows, use `gradlew.bat shadowJar`).
 
-### Running the complete benchmark
+### Running the complete benchmark suite
 
-Use `java -jar benchmarks.jar` to run the complete benchmark with the default parameters. The complete benchmark with default parameters takes **3 days** to finish, therefore we came with a naming system to allow partial benchmarks to be run easily.
+Use `java -jar benchmarks.jar` to run the complete benchmark with the default parameters. The complete benchmark with default parameters takes **weeks** to finish, therefore we came with a naming system to allow partial benchmarks to be run easily.
 
-### Running a specific benchmark
+### Running specific benchmarks
 
-The JMH allows regular expressions when specifying the classes that will be executed during the benchmark. To facilitate, we design the classes name, to contain the configuration about the benchmark such as the library, collection type and data type:
+We have the following benchmarks implemented in CollectionsBench:
 
-Each class has the following name structure: 
+- wordcount: counts the frequency of words in a pre-tokenized version of Wikipedia articles. Here only `Map` and `Multisets` are evaluated. 
+- singleOperations: benchmark composed by a single collection operation. Ideal for a fine grained performance evaluation. Singleoperations benchmark use all available implementations. 
+- intsingleoperations: singleoperations benchmark with primitive (int) implementations.
+- set: evaluates a six more realistic scenarios using the pre-rokenized Wikipedia article as dataset. 
+- intset: equivalent to set benchmark with primitive (int) implementations.
+- concurrency: comprised of a handful of concurrent scenarios for performance evaluation of thread-safe implementations. 
+- stackoverflow: comprised of 5 most starred stack overflow questions on Java collections performance.
+
+Each benchmark can be specified with a regex formula with the form of `.*benchmarks.[BENCHMARK NAME]`. 
+For instance, the wordcount benchmark can be executed through the command
 
 ```
-[LIBRARY]_[DATATYPE]_[COLLECTIONTYPE]_Test.java
+java -jar benchmarks.jar .*benchmarks.wordcount.*
 ```
 
-For instance, to run the benchmark of standard (JDK) ArrayList containing integers, you can execute the following command:
+**Specifying a collection implementation**
+
+Every benchmark contains an `impl` enum, which specifies what implementations are available for evaluation.
+One can specify a set of implementations by providing the `impl` parameter as following:
 
 ```
-java -jar benchmarks.jar "JDK_Integer_ArrayList_.*"
+java -jar benchmarks.jar -p impl=JDK_ARRAY
 ```
+which will then execute the entire benchmark suite for array implementations of JDK library. 
+Benchmarks that do not have JDK_ARRAY as one of the implementations will not be executed.    
+Users can also provide a list of implementations, by separating them with a comma `-p impl=JDK_ARRAY,JDK_LINKED`. 
 
-**Specifying the benchmark parameters** The benchmark parameters are defined in the class AbstractBenchmarkTest.java (10 warmups, 30 replications, 1 second each). You can re-define the parameters by using the JMH command line structure. 
+CollectionsBench currently has more than 100 implementations, so we will prepare a external python script for a better usability. 
+
+**Specifying a particular payload type and distribution**
+
+Singleoperation benchmarks (both object and primitive) allow collections to be evaluated on different elements (payload).
+We have the followig payloads enabled:
+
+- INTEGER_UNIFORM: Integer elements with random uniform distribution
+- INTEGER_DICTIONARY: Integer elements with highly skewed "Zipfian" data distribution 
+- STRING_UNIFORM: String elements with random uniform distribution
+- STRING_DICTIONARY: String elements with highly skewed "Zipfian" data distribution
+
+Such "Zipfian" data distribution comes from our pre-tokenized words from Wikipedia article and will often represent a more
+realistic distribution than a randomly uniform one.
+
+
+**Specifying the benchmark parameters** The benchmark parameters are pre-defined in the abstract classes of each benchmark. Normally we use 20 warmups, 40 replications with 1 second each. You can re-define the parameters by using the JMH command line structure. 
 
 For 20 warmup iterations, 30 replications of 5 seconds each.
 ```
@@ -50,35 +81,27 @@ java -jar benchmarks.jar -wi 20 -i 30 -r 5
 
 For more information about the parameters, run the help menu: `java -jar benchmarks.jar -h`
 
-
-## Available Test Scenarios
-
-Currently implemented scenarios. Each scenario is implemented in a distinct method, and can be specified in the benchmark parameters. 
-
-| Scenario	| Description											|
-| --------- | -----------------------------------------				|
-| add		| Add a random element into the collection. 			|
-| populate	| Populate an empty collection with N random elements 	|
-| get		| Get a random element from the collection 				|
-| iterate	| Traverse the collection								| 
-| remove	| Remove a random element from the collection 			|
-| copy		| Copy to an empty collection							|  
-| contains	| Search a random element in the collection 			|
-
 ## Available Collection Libraries
  
 We have implemented the benchmark for alternatives of the four most commonly used Java collections, ie,
 ArrayList, LinkedList, HashSet and HashMap with implementations of the following libraries:  
  
-| Library	| Version	|
-| --------- | --------- |
-| JDK (SDK8)|       	|
-| Fastutil	| 8.1.1 	|
-| Guava 	| 24.1-jre	|
-| Koloboke	| 0.6.8		|
-| HPPC		| 0.7.3		|
-| Eclipse	| 9.1.0 	|
-| Trove		| 3.0.3		|
+| Library			| Version	|
+| --------- 		| --------- |
+| JDK (SDK10)		|       	|
+| Fastutil			| 8.2.1 	|
+| Guava 			| 26.0-jre	|
+| Koloboke			| 1.0.0		|
+| HPPC				| 0.7.3		|
+| Eclipse			| 9.2.0 	|
+| Trove				| 3.1.0		|
+| Javolution		| 6.0.0		|
+| Mahout			| 0.13.0	|
+| CoreNLP			| 3.9.1		|
+| Agrona			| 0.9.24	|
+| Apache commons	| 4.2		|
+| HPPC				| 0.8.1		|
+
  	
 
 # Related Work
