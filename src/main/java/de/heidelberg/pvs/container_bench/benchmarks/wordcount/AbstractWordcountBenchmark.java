@@ -28,6 +28,7 @@ import org.openjdk.jol.vm.VM;
 
 import de.heidelberg.pvs.container_bench.generators.Wordlist;
 
+
 @BenchmarkMode(Mode.SampleTime)
 // We need to use a fake single-shot to get auxiliary measurements.
 // If you only want to measure time, single-shot mode is okay, too.
@@ -98,7 +99,6 @@ public abstract class AbstractWordcountBenchmark<T> {
 	@Benchmark
 	public void wordcount(Data data) throws InterruptedException {
 		map = makeMap();
-		
 		List<String> words = data.words;
 		for (int i = 0, size = words.size(); i < size; i++) {
 			String word = words.get(i);
