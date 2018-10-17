@@ -21,7 +21,7 @@ To build and run Collections-Bench you need Java 8.
 **Build the jar file:** Use `./gradlew shadowJar` to generate the `benchmarks.jar` file
 (on windows, use `gradlew.bat shadowJar`).
 
-**Download the dataset** Our benchmarks use an external dataset to draw a more realistic element distribution. Because the file is too large we have it stored in Git Large File Storage (Git LFS). To download the dataset you have to git lsf `git lfs install` and then get the dataset through `git lsf pull`.
+**Download the dataset** Our benchmarks use an external dataset to draw a more realistic element distribution. Because the file is too large we have it stored in Git Large File Storage (Git LFS). To download the dataset you have to install git lsf with `git lfs install` and then get the dataset through `git lsf pull`. 
 
 ### Running the complete benchmark suite
 
