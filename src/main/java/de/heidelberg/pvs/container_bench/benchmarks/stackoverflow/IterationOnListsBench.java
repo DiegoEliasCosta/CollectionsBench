@@ -1,6 +1,7 @@
 package de.heidelberg.pvs.container_bench.benchmarks.stackoverflow;
 
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 
@@ -8,6 +9,7 @@ import org.openjdk.jmh.annotations.Benchmark;
 import org.openjdk.jmh.annotations.Param;
 
 import de.heidelberg.pvs.container_bench.benchmarks.singleoperations.AbstractSingleOperationsBench;
+import de.heidelberg.pvs.container_bench.benchmarks.stackoverflow.DoubleBraceStaticInitBench.ArrayListImpl;
 import de.heidelberg.pvs.container_bench.factories.JDKListFact;
 import de.heidelberg.pvs.container_bench.generators.ElementGenerator;
 import de.heidelberg.pvs.container_bench.generators.GeneratorFactory;
@@ -29,8 +31,12 @@ public class IterationOnListsBench extends AbstractSingleOperationsBench {
 	@Param
 	public PayloadType payloadType;
 
+	// Keeping in conformity with the structure of other benchmarks
 	@Param
-	JDKListFact impl;
+	public ArrayListImpl impl;
+	public enum ArrayListImpl {
+			JDK_ARRAYLIST
+		} // This cannot be done through our factory
 	public ElementGenerator<Object> generator;
 
 	@Param
@@ -49,7 +55,7 @@ public class IterationOnListsBench extends AbstractSingleOperationsBench {
 
 	@Override
 	public void testSetup() {
-		fullList = this.impl.maker.get();
+		fullList = new ArrayList<>();
 		values = this.generator.generateArray(size);
 		for (int i = 0; i < size; i++) {
 			fullList.add(values[i]);
