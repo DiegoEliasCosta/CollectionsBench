@@ -37,7 +37,7 @@ public abstract class AbstractWordSetBenchmark<T> {
 	public Workload workload;
 
 	/**
-	 * Number of words to load from the file.
+	 * Number of words to load from the file. 
 	 */
 	@Param({ "100", "1000", "10000", "100000", "1000000" })
 	public int size = 100_000;

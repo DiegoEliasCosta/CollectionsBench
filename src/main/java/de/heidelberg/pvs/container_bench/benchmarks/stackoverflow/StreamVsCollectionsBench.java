@@ -12,6 +12,11 @@ import org.openjdk.jmh.annotations.Setup;
 import de.heidelberg.pvs.container_bench.generators.ElementGenerator;
 import de.heidelberg.pvs.container_bench.generators.uniform.IntegerUniformGenerator;
 
+/**
+ * 
+ * @author diego
+ *
+ */
 public class StreamVsCollectionsBench extends StackOverflowQuestionsBench {
 
 	/**
