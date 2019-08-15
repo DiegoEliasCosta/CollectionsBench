@@ -2,9 +2,7 @@ package de.heidelberg.pvs.container_bench.benchmarks.stackoverflow;
 
 import com.google.common.collect.Iterables;
 import de.heidelberg.pvs.container_bench.benchmarks.singleoperations.AbstractSingleOperationsBench;
-import de.heidelberg.pvs.container_bench.generators.ElementGenerator;
-import de.heidelberg.pvs.container_bench.generators.GeneratorFactory;
-import de.heidelberg.pvs.container_bench.generators.PayloadType;
+import de.heidelberg.pvs.container_bench.generators.*;
 import org.apache.commons.collections4.CollectionUtils;
 import org.openjdk.jmh.annotations.Benchmark;
 import org.openjdk.jmh.annotations.Level;
@@ -16,6 +14,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import java.util.stream.Collectors;
+import java.util.stream.IntStream;
 
 public class FilterComparisonCollectionBench extends AbstractSingleOperationsBench {
 
@@ -23,7 +22,7 @@ public class FilterComparisonCollectionBench extends AbstractSingleOperationsBen
      * Type of the payload object
      */
     @Param
-    public PayloadType payloadType = PayloadType.INTEGER_UNIFORM;
+    public IntPayloadType payloadType;
 
     // Keeping in conformity with the structure of other benchmarks
     @Param
@@ -31,32 +30,32 @@ public class FilterComparisonCollectionBench extends AbstractSingleOperationsBen
     public enum ArrayListImpl {
         JDK_ARRAYLIST
     } // This cannot be done through our factory
-    public ElementGenerator<Integer> generator;
+    public IntElementGenerator generator;
 
     @Param
     public IterationOnListsBench.ListIterationWorkload workload;
     public enum ListIterationWorkload { SO_LIST_FILTER };
 
-    private Integer values[];
-    private Integer middle;
+    private int values[];
+    private int middle;
     protected List<Integer> fullList;
     protected List<Integer> copyList;
 
     @Override
     public void generatorSetup() throws IOException {
-        generator = (ElementGenerator<Integer>) GeneratorFactory.buildRandomGenerator(payloadType);
+        generator = GeneratorFactory.buildRandomGenerator(payloadType);
         generator.init(size, seed);
     }
 
     @Override
     public void testSetup() {
         fullList = new ArrayList<>();
-        values = this.generator.generateArray(size);
+        values = this.generator.generateIntArray(size);
         for (int i = 0; i < size; i++) {
             fullList.add(values[i]);
         }
 
-        middle = (Integer) Arrays.stream(values).sorted().toArray()[values.length / 2];
+        middle = Arrays.stream(values).sorted().toArray()[values.length / 2];
 
     }
 
@@ -78,6 +77,7 @@ public class FilterComparisonCollectionBench extends AbstractSingleOperationsBen
     public List<Integer> streamFilter() {
         return fullList.stream().filter(e -> e > middle).collect(Collectors.toList());
     }
+
 
     @Benchmark
     public List<Integer> removeIfFilter() {
