@@ -1,4 +1,4 @@
-package de.heidelberg.pvs.container_bench.benchmarks.streaming;
+package de.heidelberg.pvs.container_bench.benchmarks.stream;
 
 import java.util.concurrent.TimeUnit;
 import java.util.stream.IntStream;
