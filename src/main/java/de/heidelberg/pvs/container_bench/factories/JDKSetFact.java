@@ -4,6 +4,7 @@ import java.util.Set;
 import java.util.function.Supplier;
 
 public enum JDKSetFact {
+	
 	JDK_HASH(java.util.HashSet::new), //
 	JDK_LINKEDHASH(java.util.LinkedHashSet::new), //
 	JDK_TREE(java.util.TreeSet::new), //

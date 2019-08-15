@@ -4,6 +4,8 @@ import java.util.Map;
 import java.util.function.Supplier;
 
 public enum JDKMap2ObjFact {
+	
+
 	JDK_O2O_HASH(java.util.HashMap::new), //
 	JDK_O2O_LINKEDHASH(java.util.LinkedHashMap::new), //
 	JDK_O2O_TREE(java.util.TreeMap::new), //
@@ -31,6 +33,8 @@ public enum JDKMap2ObjFact {
 	JAVOLUTION_HASH(javolution.util.FastMap::new), //
 	JAVOLUTION_SORTED(javolution.util.FastSortedMap::new, 1000000), //
 
+	AGRONA_O2O_HASH(org.agrona.collections.Object2ObjectHashMap::new), //
+	
 	GOOGLE_O2O_ARRAY(com.google.api.client.util.ArrayMap::new, 1000000), //
 	CORENLP_ARRAY(edu.stanford.nlp.util.ArrayMap::new, 1000000); //
 	;

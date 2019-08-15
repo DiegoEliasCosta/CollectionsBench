@@ -8,7 +8,7 @@ import com.carrotsearch.hppc.IntIndexedContainer;
 
 public enum HPPCIntListFact {
 
-	HPPC_ARRAY(IntArrayList::new, IntArrayList::new);
+	HPPC_ARRAY(IntArrayList::new, IntArrayList::new); //
 
 	public final Supplier<IntIndexedContainer> maker;
 	public final Function<IntIndexedContainer, IntIndexedContainer> copyMaker;

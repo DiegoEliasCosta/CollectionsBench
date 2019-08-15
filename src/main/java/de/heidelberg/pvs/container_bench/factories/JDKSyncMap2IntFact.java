@@ -14,9 +14,9 @@ public enum JDKSyncMap2IntFact {
 	ECLIPSE_O2O_CONCURRENTHASH(org.eclipse.collections.impl.map.mutable.ConcurrentHashMap::new), //
 
 	FASTUTIL_O2O_SYNCHRONIZED(() -> it.unimi.dsi.fastutil.objects.Object2ObjectMaps
-			.synchronize(new it.unimi.dsi.fastutil.objects.Object2ObjectOpenHashMap<Object, Integer>())),
+			.synchronize(new it.unimi.dsi.fastutil.objects.Object2ObjectOpenHashMap<Object, Integer>())), //
 	
-	GUAVA_O2O_CONCURRENTMAP(com.google.common.collect.Maps::newConcurrentMap)
+	GUAVA_O2O_CONCURRENTMAP(com.google.common.collect.Maps::newConcurrentMap) //
 	
 	;
 

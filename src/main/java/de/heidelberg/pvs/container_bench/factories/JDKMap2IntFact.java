@@ -4,6 +4,7 @@ import java.util.Map;
 import java.util.function.Supplier;
 
 public enum JDKMap2IntFact {
+	
 	JDK_O2O_HASH(java.util.HashMap::new), //
 	JDK_O2O_LINKEDHASH(java.util.LinkedHashMap::new), //
 	JDK_O2O_TREE(java.util.TreeMap::new), //

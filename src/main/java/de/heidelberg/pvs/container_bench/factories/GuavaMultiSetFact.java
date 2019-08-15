@@ -8,8 +8,8 @@ import com.google.common.collect.Multiset;
 
 public enum GuavaMultiSetFact {
 	
-	GUAVA_HASH_MULTISET(HashMultiset::create),
-	GUAVA_LINKEDHASH_MULTISET(LinkedHashMultiset::create);
+	GUAVA_HASH_MULTISET(HashMultiset::create), //
+	GUAVA_LINKEDHASH_MULTISET(LinkedHashMultiset::create); //
 	
 	public final Supplier<Multiset<Object>> maker;
 
