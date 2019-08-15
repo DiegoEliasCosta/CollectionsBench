@@ -19,6 +19,10 @@ import de.heidelberg.pvs.container_bench.generators.PayloadType;
  * Benchmark that evaluates the performance of the multitude of ways of
  * iterating on a list according to the Stack Overflow question:
  * https://stackoverflow.com/questions/18410035/ways-to-iterate-over-a-list-in-java
+ *
+ * This benchmark can also be used to evaluate the performance of the following stack overflow
+ * question:
+ * https://stackoverflow.com/questions/2113216/which-is-more-efficient-a-for-each-loop-or-an-iterator/2113226#2113226
  * 
  * @author diego.costa
  *
