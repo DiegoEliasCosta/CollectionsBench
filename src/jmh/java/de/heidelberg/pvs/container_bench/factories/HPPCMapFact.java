@@ -8,7 +8,7 @@ import com.carrotsearch.hppc.ObjectObjectWormMap;
 
 public enum HPPCMapFact {
 	HPPC_O2O_HASH(ObjectObjectHashMap::new), //
-	HPPC_O2O_SCATTER(ObjectObjectWormMap::new), //
+	HPPC_O2O_WORM(ObjectObjectWormMap::new), //
 	;
 
 	public final Supplier<ObjectObjectMap<Object, Integer>> maker;

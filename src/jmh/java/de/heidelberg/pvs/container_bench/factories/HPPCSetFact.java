@@ -9,7 +9,7 @@ import com.carrotsearch.hppc.ObjectWormSet;
 
 public enum HPPCSetFact {
 	HPPC_O_HASH(ObjectHashSet::new, ObjectHashSet::new), //
-	HPPC_O_SCATTER(ObjectWormSet::new, ObjectWormSet::from), //
+	HPPC_O_WORM(ObjectWormSet::new, ObjectWormSet::from), //
 	;
 
 	public final Supplier<ObjectSet<Object>> maker;

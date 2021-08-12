@@ -9,7 +9,7 @@ import com.carrotsearch.hppc.IntWormSet;
 
 public enum HPPCIntSetFact {
 	HPPC_I_HASH(IntHashSet::new), //
-	HPPC_I_SCATTER(IntWormSet::new), //
+	HPPC_I_WORM(IntWormSet::new), //
 	;
 
 	public final Supplier<IntSet> maker;
