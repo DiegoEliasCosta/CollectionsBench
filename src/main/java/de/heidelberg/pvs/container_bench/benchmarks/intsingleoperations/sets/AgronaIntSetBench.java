@@ -1,9 +1,7 @@
 package de.heidelberg.pvs.container_bench.benchmarks.intsingleoperations.sets;
 
 import org.agrona.collections.IntHashSet;
-import org.agrona.collections.IntIterator;
-import org.eclipse.collections.api.block.procedure.primitive.IntProcedure;
-import org.eclipse.collections.api.set.primitive.MutableIntSet;
+import org.agrona.collections.IntHashSet.IntIterator;
 import org.openjdk.jmh.annotations.Param;
 
 import de.heidelberg.pvs.container_bench.factories.AgronaIntSetFact;

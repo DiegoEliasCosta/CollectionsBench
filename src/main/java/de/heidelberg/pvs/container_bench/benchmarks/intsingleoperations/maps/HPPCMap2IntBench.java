@@ -2,9 +2,6 @@ package de.heidelberg.pvs.container_bench.benchmarks.intsingleoperations.maps;
 
 import java.util.function.Consumer;
 
-import org.eclipse.collections.api.block.procedure.Procedure;
-import org.eclipse.collections.api.block.procedure.primitive.ObjectIntProcedure;
-import org.eclipse.collections.api.map.primitive.MutableObjectIntMap;
 import org.openjdk.jmh.annotations.Param;
 
 import com.carrotsearch.hppc.ObjectCollection;

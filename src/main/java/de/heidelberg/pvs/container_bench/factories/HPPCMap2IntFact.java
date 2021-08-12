@@ -4,11 +4,11 @@ import java.util.function.Supplier;
 
 import com.carrotsearch.hppc.ObjectIntHashMap;
 import com.carrotsearch.hppc.ObjectIntMap;
-import com.carrotsearch.hppc.ObjectIntScatterMap;
+import com.carrotsearch.hppc.ObjectIntWormMap;
 
 public enum HPPCMap2IntFact {
 	HPPC_O2I_HASH(ObjectIntHashMap::new), //
-	HPPC_O2I_SCATTER(ObjectIntScatterMap::new), //
+	HPPC_O2I_SCATTER(ObjectIntWormMap::new), //
 	;
 
 	public final Supplier<ObjectIntMap<Object>> maker;

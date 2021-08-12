@@ -4,11 +4,11 @@ import java.util.function.Supplier;
 
 import com.carrotsearch.hppc.ObjectObjectHashMap;
 import com.carrotsearch.hppc.ObjectObjectMap;
-import com.carrotsearch.hppc.ObjectObjectScatterMap;
+import com.carrotsearch.hppc.ObjectObjectWormMap;
 
 public enum HPPCMapFact {
 	HPPC_O2O_HASH(ObjectObjectHashMap::new), //
-	HPPC_O2O_SCATTER(ObjectObjectScatterMap::new), //
+	HPPC_O2O_SCATTER(ObjectObjectWormMap::new), //
 	;
 
 	public final Supplier<ObjectObjectMap<Object, Integer>> maker;

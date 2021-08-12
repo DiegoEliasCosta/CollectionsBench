@@ -1,14 +1,8 @@
 package de.heidelberg.pvs.container_bench.benchmarks.intsingleoperations.maps;
 
-import java.util.Map.Entry;
-import java.util.function.Consumer;
 import java.util.function.ObjIntConsumer;
 
 import org.openjdk.jmh.annotations.Param;
-
-import com.carrotsearch.hppc.ObjectCollection;
-import com.carrotsearch.hppc.ObjectIntMap;
-import com.carrotsearch.hppc.cursors.ObjectIntCursor;
 
 import de.heidelberg.pvs.container_bench.factories.KolobokeMap2IntFact;
 import net.openhft.koloboke.collect.map.hash.HashObjIntMap;

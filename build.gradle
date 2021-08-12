@@ -1,19 +1,18 @@
 buildscript {
-    ext.jmh_version = '1.20' // JMH version to use
+    ext.jmh_version = '1.33' // JMH version to use
 }
 
 plugins {
   id 'java'
-  id 'maven'
   id 'eclipse'
-  id 'idea'
-  // id 'me.champeau.gradle.jmh' version '0.4.5' // did not work
-  id 'com.github.johnrengelman.shadow' version '2.0.4'
-  id 'com.github.ben-manes.versions' version '0.17.0' // for "gradlew dependencyUpdates"
+  //id 'idea'
+  // id 'me.champeau.gradle.jmh' version '0.4.5' // did not work, have not tried since
+  id 'com.github.johnrengelman.shadow' version '7.0.0'
+  id 'com.github.ben-manes.versions' version '0.39.0' // for "gradlew dependencyUpdates"
 }
 
 repositories {
-    jcenter()
+    mavenCentral()
     maven { url "https://plugins.gradle.org/m2/" } // for JMH plugin
 }
 
@@ -34,27 +33,27 @@ shadowJar {
 }
 
 dependencies {
-    compile group: 'org.openjdk.jmh', name: 'jmh-core', version: jmh_version
-    compileOnly group: 'org.openjdk.jmh', name: 'jmh-generator-annprocess', version: jmh_version
-    compile group: 'org.openjdk.jol', name: 'jol-core', version:'0.9'
+    implementation group: 'org.openjdk.jmh', name: 'jmh-core', version: jmh_version
+    implementation group: 'org.openjdk.jmh', name: 'jmh-generator-annprocess', version: jmh_version
+    implementation group: 'org.openjdk.jol', name: 'jol-core', version:'0.16'
 
-    compile group: 'com.google.api-client', name: 'google-api-client', version: '1.23.0'
-    compile group: 'com.google.guava', name: 'guava', version:'24.1-jre'
-    compile group: 'net.openhft', name: 'koloboke-impl-jdk8', version:'0.6.8'
-    compile group: 'net.sf.trove4j', name: 'trove4j', version:'3.0.3'
-    compile group: 'it.unimi.dsi', name: 'fastutil', version:'8.1.1'
-    compile group: 'com.carrotsearch', name: 'hppc', version:'0.7.3'
-    compile group: 'org.eclipse.collections', name: 'eclipse-collections', version: '9.1.0'
-    compile group: 'org.apache.mahout', name: 'mahout-math', version:'0.13.0'
-    compile group: 'edu.stanford.nlp', name: 'stanford-corenlp', version:'3.9.1'
-    compile group: 'org.agrona', name: 'Agrona', version: '0.9.1'
-    compile group: 'org.apache.commons', name: 'commons-collections4', version: '4.1'
-    compile group: 'org.javolution', name: 'javolution-core-java', version: '6.0.0'
-    compile group: 'org.scala-lang', name: 'scala-library', version: '2.12.6'
+    implementation group: 'com.google.api-client', name: 'google-api-client', version: '1.32.1'
+    implementation group: 'com.google.guava', name: 'guava', version:'30.1.1-jre'
+    implementation group: 'net.openhft', name: 'koloboke-impl-jdk8', version:'0.6.8'
+    implementation group: 'net.sf.trove4j', name: 'trove4j', version:'3.0.3'
+    implementation group: 'it.unimi.dsi', name: 'fastutil', version:'8.5.4'
+    implementation group: 'com.carrotsearch', name: 'hppc', version:'0.9.0'
+    implementation group: 'org.eclipse.collections', name: 'eclipse-collections', version: '11.0.0.M3'
+    implementation group: 'org.apache.mahout', name: 'mahout-math', version:'0.13.0'
+    implementation group: 'edu.stanford.nlp', name: 'stanford-corenlp', version:'4.2.2'
+    implementation group: 'org.agrona', name: 'agrona', version: '1.12.0'
+    implementation group: 'org.apache.commons', name: 'commons-collections4', version: '4.4'
+    implementation group: 'org.javolution', name: 'javolution-core-java', version: '6.0.0'
+    implementation group: 'org.scala-lang', name: 'scala-library', version: '2.13.6'
 
-    // compile group: 'in.jlibs', name: 'jlibs-core', version:'2.2.1'
-    // compile group: 'de.heidelberg.pvs.diego', name: 'collections-online-adapter', version:'0.0.1-SNAPSHOT'
+    // implementation group: 'in.jlibs', name: 'jlibs-core', version:'2.2.1'
+    // implementation group: 'de.heidelberg.pvs.diego', name: 'collections-online-adapter', version:'0.0.1-SNAPSHOT'
 
-    testCompile group: 'junit', name: 'junit', version:'4.12'
+    testImplementation group: 'junit', name: 'junit', version:'4.13.2'
 }
 

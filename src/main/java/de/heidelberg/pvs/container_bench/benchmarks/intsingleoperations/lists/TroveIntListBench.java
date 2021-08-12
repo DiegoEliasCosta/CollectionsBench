@@ -1,8 +1,5 @@
 package de.heidelberg.pvs.container_bench.benchmarks.intsingleoperations.lists;
 
-import com.carrotsearch.hppc.IntArrayList;
-import com.carrotsearch.hppc.procedures.IntProcedure;
-
 import gnu.trove.list.array.TIntArrayList;
 import gnu.trove.procedure.TIntProcedure;
 

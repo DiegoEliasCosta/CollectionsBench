@@ -1,7 +1,6 @@
 package de.heidelberg.pvs.container_bench.factories;
 
 import java.util.List;
-import java.util.function.Function;
 import java.util.function.Supplier;
 
 

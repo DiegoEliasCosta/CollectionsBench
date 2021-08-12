@@ -2,11 +2,8 @@ package de.heidelberg.pvs.container_bench.generators.dictionary;
 
 import java.io.IOException;
 import java.util.List;
-import java.util.Set;
-import java.util.stream.Collectors;
 
 import org.apache.commons.math3.random.Well44497b;
-import org.eclipse.collections.impl.set.mutable.UnifiedSet;
 
 import de.heidelberg.pvs.container_bench.generators.ElementGenerator;
 import de.heidelberg.pvs.container_bench.generators.Wordlist;

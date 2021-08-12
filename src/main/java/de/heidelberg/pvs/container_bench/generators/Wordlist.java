@@ -13,8 +13,6 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 import java.util.zip.GZIPInputStream;
 
-import org.openjdk.jmh.infra.Blackhole;
-
 public class Wordlist {
 	
 	private static final int DEFAULT_SEED = -1;

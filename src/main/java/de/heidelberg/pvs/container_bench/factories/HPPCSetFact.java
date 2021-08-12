@@ -4,12 +4,12 @@ import java.util.function.Function;
 import java.util.function.Supplier;
 
 import com.carrotsearch.hppc.ObjectHashSet;
-import com.carrotsearch.hppc.ObjectScatterSet;
 import com.carrotsearch.hppc.ObjectSet;
+import com.carrotsearch.hppc.ObjectWormSet;
 
 public enum HPPCSetFact {
 	HPPC_O_HASH(ObjectHashSet::new, ObjectHashSet::new), //
-	HPPC_O_SCATTER(ObjectScatterSet::new, ObjectScatterSet::from), //
+	HPPC_O_SCATTER(ObjectWormSet::new, ObjectWormSet::from), //
 	;
 
 	public final Supplier<ObjectSet<Object>> maker;

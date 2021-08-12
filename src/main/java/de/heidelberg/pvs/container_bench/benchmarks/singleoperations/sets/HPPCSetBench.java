@@ -1,7 +1,5 @@
 package de.heidelberg.pvs.container_bench.benchmarks.singleoperations.sets;
 
-import java.util.Set;
-
 import org.openjdk.jmh.annotations.Benchmark;
 import org.openjdk.jmh.annotations.Param;
 
