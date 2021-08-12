@@ -7,7 +7,8 @@ plugins {
   id 'eclipse'
   //id 'idea'
   // id 'me.champeau.gradle.jmh' version '0.4.5' // did not work, have not tried since
-  id 'com.github.johnrengelman.shadow' version '7.0.0'
+  id 'me.champeau.gradle.jmh' version '0.5.3'
+  //id 'com.github.johnrengelman.shadow' version '7.0.0'
   id 'com.github.ben-manes.versions' version '0.39.0' // for "gradlew dependencyUpdates"
 }
 
@@ -25,12 +26,20 @@ sourceCompatibility = 1.8
 targetCompatibility = 1.8
 compileJava.options.encoding = 'UTF-8'
 
-shadowJar {
+//shadowJar {
+//    destinationDir = project.rootDir
+//    archiveName = 'benchmarks.jar'
+//    classifier = 'benchmarks'
+//    manifest.attributes('Main-Class': 'org.openjdk.jmh.Main')
+//}
+jmhJar {
     destinationDir = project.rootDir
-    archiveName = 'benchmarks.jar'
-    classifier = 'benchmarks'
-    manifest.attributes('Main-Class': 'org.openjdk.jmh.Main')
 }
+jmh {
+    jmhVersion = jmh_version
+}
+// Not sure why this is necessary:
+tasks.getByName('processJmhResources').doFirst() { duplicatesStrategy = DuplicatesStrategy.EXCLUDE }
 
 dependencies {
     implementation group: 'org.openjdk.jmh', name: 'jmh-core', version: jmh_version
