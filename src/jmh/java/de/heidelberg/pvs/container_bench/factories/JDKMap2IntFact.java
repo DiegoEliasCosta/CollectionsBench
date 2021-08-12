@@ -39,6 +39,9 @@ public enum JDKMap2IntFact {
 
 	JAVOLUTION_HASH(javolution.util.FastMap::new), //
 	JAVOLUTION_SORTED(javolution.util.FastSortedMap::new), //
+	
+	AGRONA_O2I_HASH(() -> new org.agrona.collections.Object2IntHashMap<Object>(0)), //
+	AGRONA_O2O_HASH(org.agrona.collections.Object2ObjectHashMap::new), //
 
 	GOOGLE_O2O_ARRAY(com.google.api.client.util.ArrayMap::new), //
 	CORENLP_ARRAY(edu.stanford.nlp.util.ArrayMap::new); //
