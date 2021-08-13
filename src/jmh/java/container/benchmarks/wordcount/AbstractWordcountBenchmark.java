@@ -35,7 +35,7 @@ public abstract class AbstractWordcountBenchmark<T> {
 	/**
 	 * Number of words to load from the file.
 	 */
-	@Param({ "100", "1000", "10000", "100000", "1000000" })
+	@Param({ "1000", "10000", "100000", "1000000" })
 	public int size;
 
 	/** -1: no random shuffling */
@@ -46,7 +46,9 @@ public abstract class AbstractWordcountBenchmark<T> {
 	@Param
 	public WorkloadEnum workload;
 
-	public static enum WorkloadEnum { WORDCOUNT };
+	public static enum WorkloadEnum {
+		WORDCOUNT
+	};
 
 	Blackhole bh;
 
@@ -72,8 +74,7 @@ public abstract class AbstractWordcountBenchmark<T> {
 	/**
 	 * Class to benchmark a single adapter.
 	 * 
-	 * @param data
-	 *            Data to process
+	 * @param data Data to process
 	 */
 	@Benchmark
 	public void wordcount(Data data) throws InterruptedException {
@@ -99,10 +100,8 @@ public abstract class AbstractWordcountBenchmark<T> {
 	/**
 	 * Count a single object
 	 *
-	 * @param map
-	 *            data
-	 * @param object
-	 *            Object to count.
+	 * @param map    data
+	 * @param object Object to count.
 	 */
 	@CompilerControl(CompilerControl.Mode.DONT_INLINE)
 	abstract protected void count(T map, String object);
