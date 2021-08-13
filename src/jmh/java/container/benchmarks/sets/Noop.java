@@ -32,4 +32,19 @@ public class Noop extends AbstractWordSetBenchmark<Void> {
 	protected void remove(String object) {
 		// Empty, not even blackhole
 	}
+
+	@Override
+	protected void forLoop() {
+		// nothing even to consume
+	}
+
+	@Override
+	protected void iterate() {
+		// nothing even to consume
+	}
+
+	@Override
+	protected void forEachLoop() {
+		// nothing even to consume
+	}
 }

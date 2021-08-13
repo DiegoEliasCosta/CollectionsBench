@@ -97,6 +97,24 @@ public abstract class AbstractWordSetBenchmark<T> {
 	@CompilerControl(CompilerControl.Mode.DONT_INLINE)
 	abstract protected void remove(String object);
 
+	/**
+	 * Iterate over all objects with for()
+	 */
+	@CompilerControl(CompilerControl.Mode.DONT_INLINE)
+	abstract protected void forLoop();
+
+	/**
+	 * Iterate over all objects with for(), optimized version
+	 */
+	@CompilerControl(CompilerControl.Mode.DONT_INLINE)
+	abstract protected void iterate();
+
+	/**
+	 * Iterate over all objects with forEach
+	 */
+	@CompilerControl(CompilerControl.Mode.DONT_INLINE)
+	abstract protected void forEachLoop();
+
 	public enum Workload {
 		ADD {
 			@Override
@@ -110,11 +128,7 @@ public abstract class AbstractWordSetBenchmark<T> {
 		REMOVE {
 			@Override
 			public <T> void init(AbstractWordSetBenchmark<T> self) throws InterruptedException {
-				self.set = self.makeSet(); // Same as super()
-				List<String> words = self.words;
-				for (int i = 0, size = words.size(); i < size && failIfInterrupted(); i++) {
-					self.add(words.get(i));
-				}
+				initFill(self);
 			}
 
 			@Override
@@ -176,11 +190,7 @@ public abstract class AbstractWordSetBenchmark<T> {
 		REMOVE_THEN_ADD {
 			@Override
 			public <T> void init(AbstractWordSetBenchmark<T> self) throws InterruptedException {
-				self.set = self.makeSet(); // same as super();
-				List<String> words = self.words;
-				for (int i = 0, size = words.size(); i < size && failIfInterrupted(); i++) {
-					self.add(words.get(i));
-				}
+				initFill(self);
 			}
 
 			@Override
@@ -194,10 +204,51 @@ public abstract class AbstractWordSetBenchmark<T> {
 				}
 			}
 		}, //
+		FOR {
+			@Override
+			public <T> void init(AbstractWordSetBenchmark<T> self) throws InterruptedException {
+				initFill(self);
+			}
+
+			@Override
+			public <T> void run(AbstractWordSetBenchmark<T> self) throws InterruptedException {
+				self.forLoop();
+			}
+		}, //
+		ITER {
+			@Override
+			public <T> void init(AbstractWordSetBenchmark<T> self) throws InterruptedException {
+				initFill(self);
+			}
+
+			@Override
+			public <T> void run(AbstractWordSetBenchmark<T> self) throws InterruptedException {
+				self.iterate();
+			}
+		}, //
+		FOREACH {
+			@Override
+			public <T> void init(AbstractWordSetBenchmark<T> self) throws InterruptedException {
+				initFill(self);
+			}
+
+			@Override
+			public <T> void run(AbstractWordSetBenchmark<T> self) throws InterruptedException {
+				self.forEachLoop();
+			}
+		}, //
 		;
 
 		public <T> void init(AbstractWordSetBenchmark<T> self) throws InterruptedException {
 			self.set = self.makeSet();
+		}
+
+		private static <T> void initFill(AbstractWordSetBenchmark<T> self) throws InterruptedException {
+			self.set = self.makeSet(); // Same as super()
+			List<String> words = self.words;
+			for (int i = 0, size = words.size(); i < size && failIfInterrupted(); i++) {
+				self.add(words.get(i));
+			}
 		}
 
 		abstract public <T> void run(AbstractWordSetBenchmark<T> self) throws InterruptedException;

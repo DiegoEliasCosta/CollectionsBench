@@ -17,7 +17,7 @@ public class BlackholeBaseline extends AbstractWordSetBenchmark<Void> {
 	protected void add(String object) {
 		bh.consume(object);
 	}
-	
+
 	@Override
 	protected boolean contains(String object) {
 		return false;
@@ -26,5 +26,20 @@ public class BlackholeBaseline extends AbstractWordSetBenchmark<Void> {
 	@Override
 	protected void remove(String object) {
 		bh.consume(object);
+	}
+
+	@Override
+	protected void forLoop() {
+		// nothing even to consume
+	}
+
+	@Override
+	protected void iterate() {
+		// nothing even to consume
+	}
+
+	@Override
+	protected void forEachLoop() {
+		// nothing even to consume
 	}
 }

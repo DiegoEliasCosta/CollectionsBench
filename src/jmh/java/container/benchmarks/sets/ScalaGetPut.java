@@ -1,5 +1,7 @@
 package container.benchmarks.sets;
 
+import scala.Unit;
+import scala.collection.Iterator;
 import scala.collection.mutable.Set;
 
 import org.openjdk.jmh.annotations.Param;
@@ -29,5 +31,25 @@ public class ScalaGetPut extends AbstractWordSetBenchmark<Set<String>> {
 	@Override
 	protected void remove(String object) {
 		set.remove(object);
+	}
+
+	@Override
+	protected void forLoop() {
+		throw new UnsupportedOperationException("Scala does not have a standard for loop.");
+	}
+
+	@Override
+	protected void iterate() {
+		for (Iterator<String> iter = set.iterator(); iter.hasNext();) {
+			bh.consume(iter.next());
+		}
+	}
+
+	@Override
+	protected void forEachLoop() {
+		set.iterator().<Unit>foreach(x -> {
+			bh.consume(x);
+			return null;
+		});
 	}
 }
