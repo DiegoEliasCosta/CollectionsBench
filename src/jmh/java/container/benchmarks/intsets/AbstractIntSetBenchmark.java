@@ -100,6 +100,24 @@ public abstract class AbstractIntSetBenchmark<T> {
 	@CompilerControl(CompilerControl.Mode.DONT_INLINE)
 	abstract protected void remove(int object);
 
+	/**
+	 * Iterate over all objects with for()
+	 */
+	@CompilerControl(CompilerControl.Mode.DONT_INLINE)
+	abstract protected void forLoop();
+
+	/**
+	 * Iterate over all objects with for(), optimized version
+	 */
+	@CompilerControl(CompilerControl.Mode.DONT_INLINE)
+	abstract protected void iterate();
+
+	/**
+	 * Iterate over all objects with forEach
+	 */
+	@CompilerControl(CompilerControl.Mode.DONT_INLINE)
+	abstract protected void forEachLoop();
+
 	public enum Workload {
 		ADD {
 			@Override
@@ -112,14 +130,6 @@ public abstract class AbstractIntSetBenchmark<T> {
 		}, //
 		REMOVE {
 			@Override
-			public <T> void run(AbstractIntSetBenchmark<T> self) throws InterruptedException {
-				int[] words = self.words;
-				for (int i = 0, size = words.length; i < size && failIfInterrupted(); i++) {
-					self.remove(words[i]);
-				}
-			}
-
-			@Override
 			public <T> void init(AbstractIntSetBenchmark<T> self) throws InterruptedException {
 				int[] words = self.words;
 				self.set = self.makeSet();
@@ -127,8 +137,26 @@ public abstract class AbstractIntSetBenchmark<T> {
 					self.add(words[i]);
 				}
 			}
+
+			@Override
+			public <T> void run(AbstractIntSetBenchmark<T> self) throws InterruptedException {
+				int[] words = self.words;
+				for (int i = 0, size = words.length; i < size && failIfInterrupted(); i++) {
+					self.remove(words[i]);
+				}
+			}
 		}, //
 		CONTAINS {
+			@Override
+			public <T> void init(AbstractIntSetBenchmark<T> self) throws InterruptedException {
+				int[] words = self.words;
+				self.set = self.makeSet();
+				for (int i = 0, size = words.length; i < size && failIfInterrupted(); i++) {
+					self.add(words[i]);
+					++i; // Skip every other word for the contains benchmark.
+				}
+			}
+
 			@Override
 			public <T> void run(AbstractIntSetBenchmark<T> self) throws InterruptedException {
 				int[] words = self.words;
@@ -139,16 +167,6 @@ public abstract class AbstractIntSetBenchmark<T> {
 					}
 				}
 				self.bh.consume(found); // Prevent elimination
-			}
-
-			@Override
-			public <T> void init(AbstractIntSetBenchmark<T> self) throws InterruptedException {
-				int[] words = self.words;
-				self.set = self.makeSet();
-				for (int i = 0, size = words.length; i < size && failIfInterrupted(); i++) {
-					self.add(words[i]);
-					++i; // Skip every other word for the contains benchmark.
-				}
 			}
 		}, //
 		ADD_OR_REMOVE {
@@ -178,6 +196,15 @@ public abstract class AbstractIntSetBenchmark<T> {
 		}, //
 		REMOVE_THEN_ADD {
 			@Override
+			public <T> void init(AbstractIntSetBenchmark<T> self) throws InterruptedException {
+				int[] words = self.words;
+				self.set = self.makeSet();
+				for (int i = 0, size = words.length; i < size && failIfInterrupted(); i++) {
+					self.add(words[i]);
+				}
+			}
+
+			@Override
 			public <T> void run(AbstractIntSetBenchmark<T> self) throws InterruptedException {
 				int[] words = self.words;
 				for (int i = 0, size = words.length; i < size && failIfInterrupted(); i++) {
@@ -187,7 +214,8 @@ public abstract class AbstractIntSetBenchmark<T> {
 					self.add(words[i]);
 				}
 			}
-
+		}, //
+		FOR {
 			@Override
 			public <T> void init(AbstractIntSetBenchmark<T> self) throws InterruptedException {
 				int[] words = self.words;
@@ -195,6 +223,41 @@ public abstract class AbstractIntSetBenchmark<T> {
 				for (int i = 0, size = words.length; i < size && failIfInterrupted(); i++) {
 					self.add(words[i]);
 				}
+			}
+
+			@Override
+			public <T> void run(AbstractIntSetBenchmark<T> self) throws InterruptedException {
+				self.forLoop();
+			}
+		}, //
+		ITER {
+			@Override
+			public <T> void init(AbstractIntSetBenchmark<T> self) throws InterruptedException {
+				int[] words = self.words;
+				self.set = self.makeSet();
+				for (int i = 0, size = words.length; i < size && failIfInterrupted(); i++) {
+					self.add(words[i]);
+				}
+			}
+
+			@Override
+			public <T> void run(AbstractIntSetBenchmark<T> self) throws InterruptedException {
+				self.iterate();
+			}
+		}, //
+		FOREACH {
+			@Override
+			public <T> void init(AbstractIntSetBenchmark<T> self) throws InterruptedException {
+				int[] words = self.words;
+				self.set = self.makeSet();
+				for (int i = 0, size = words.length; i < size && failIfInterrupted(); i++) {
+					self.add(words[i]);
+				}
+			}
+
+			@Override
+			public <T> void run(AbstractIntSetBenchmark<T> self) throws InterruptedException {
+				self.forEachLoop();
 			}
 		}, //
 		;

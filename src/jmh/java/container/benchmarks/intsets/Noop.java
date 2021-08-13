@@ -6,7 +6,7 @@ import container.factories.BlackholeFact;
 
 /**
  * Noop class - this is supposed to be as fast as blackhole.
- *
+ * <p>
  * Otherwise, we may need to reenable blackholing in other benchmarks.
  */
 public class Noop extends AbstractIntSetBenchmark<Void> {
@@ -31,5 +31,20 @@ public class Noop extends AbstractIntSetBenchmark<Void> {
 	@Override
 	protected void remove(int object) {
 		return; // Empty, not even blackhole
+	}
+
+	@Override
+	protected void forEachLoop() {
+		// nothing even to consume
+	}
+
+	@Override
+	protected void forLoop() {
+		// nothing even to consume
+	}
+
+	@Override
+	protected void iterate() {
+		// nothing even to consume
 	}
 }

@@ -1,10 +1,10 @@
 package container.benchmarks.intsets;
 
-import scala.collection.mutable.Set;
-
 import org.openjdk.jmh.annotations.Param;
 
 import container.factories.ScalaSetFact;
+import scala.Unit;
+import scala.collection.mutable.Set;
 
 public class ScalaGetPut extends AbstractIntSetBenchmark<Set<Integer>> {
 	@Param
@@ -29,5 +29,25 @@ public class ScalaGetPut extends AbstractIntSetBenchmark<Set<Integer>> {
 	@Override
 	protected void remove(int object) {
 		set.remove(object);
+	}
+
+	@Override
+	protected void forLoop() {
+		throw new UnsupportedOperationException("Scala does not have a standard for loop.");
+	}
+
+	@Override
+	protected void iterate() {
+		for (scala.collection.Iterator<Integer> it = set.iterator(); it.hasNext();) {
+			bh.consume(it.next());
+		}
+	}
+
+	@Override
+	protected void forEachLoop() {
+		set.iterator().foreach(x -> {
+			bh.consume(x);
+			return (Unit) null;
+		});
 	}
 }

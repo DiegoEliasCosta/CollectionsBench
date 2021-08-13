@@ -17,7 +17,7 @@ public class BlackholeBaseline extends AbstractIntSetBenchmark<Void> {
 	protected void add(int object) {
 		bh.consume(object);
 	}
-	
+
 	@Override
 	protected boolean contains(int object) {
 		return false;
@@ -26,5 +26,20 @@ public class BlackholeBaseline extends AbstractIntSetBenchmark<Void> {
 	@Override
 	protected void remove(int object) {
 		bh.consume(object);
+	}
+
+	@Override
+	protected void forEachLoop() {
+		// nothing even to consume
+	}
+
+	@Override
+	protected void forLoop() {
+		// nothing even to consume
+	}
+
+	@Override
+	protected void iterate() {
+		// nothing even to consume
 	}
 }

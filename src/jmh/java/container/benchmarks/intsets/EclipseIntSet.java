@@ -1,5 +1,6 @@
 package container.benchmarks.intsets;
 
+import org.eclipse.collections.api.iterator.IntIterator;
 import org.eclipse.collections.api.set.primitive.MutableIntSet;
 import org.openjdk.jmh.annotations.Param;
 
@@ -27,5 +28,22 @@ public class EclipseIntSet extends AbstractIntSetBenchmark<MutableIntSet> {
 	@Override
 	protected void remove(int object) {
 		set.remove(object);
+	}
+
+	@Override
+	protected void forLoop() {
+		throw new UnsupportedOperationException("Eclipse does not allow standard for loops.");
+	}
+
+	@Override
+	protected void iterate() {
+		for (IntIterator it = set.intIterator(); it.hasNext();) {
+			bh.consume(it.next());
+		}
+	}
+
+	@Override
+	protected void forEachLoop() {
+		set.forEach(bh::consume);
 	}
 }

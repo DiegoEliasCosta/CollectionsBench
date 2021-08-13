@@ -1,8 +1,11 @@
 package container.benchmarks.intsets;
 
+import java.util.function.IntConsumer;
+
 import org.openjdk.jmh.annotations.Param;
 
 import container.factories.KolobokeIntSetFact;
+import net.openhft.koloboke.collect.IntCursor;
 import net.openhft.koloboke.collect.set.IntSet;
 
 public class KolobokeIntSet extends AbstractIntSetBenchmark<IntSet> {
@@ -27,5 +30,24 @@ public class KolobokeIntSet extends AbstractIntSetBenchmark<IntSet> {
 	@Override
 	protected void remove(int object) {
 		set.removeInt(object);
+	}
+
+	@Override
+	protected void forLoop() {
+		for (Integer i : set) {
+			bh.consume(i);
+		}
+	}
+
+	@Override
+	protected void iterate() {
+		for (IntCursor it = set.cursor(); it.moveNext();) {
+			bh.consume(it.elem());
+		}
+	}
+
+	@Override
+	protected void forEachLoop() {
+		set.forEach((IntConsumer) bh::consume);
 	}
 }

@@ -28,4 +28,22 @@ public class MahoutIntSet extends AbstractIntSetBenchmark<OpenIntHashSet> {
 	protected void remove(int object) {
 		set.remove(object);
 	}
+
+	@Override
+	protected void forLoop() {
+		throw new UnsupportedOperationException("Mahout does not allow standard for loops.");
+	}
+
+	@Override
+	protected void iterate() {
+		throw new UnsupportedOperationException("Mahout does not allow optimized for loops.");
+	}
+
+	@Override
+	protected void forEachLoop() {
+		set.forEachKey(x -> {
+			bh.consume(x);
+			return true;
+		});
+	}
 }
