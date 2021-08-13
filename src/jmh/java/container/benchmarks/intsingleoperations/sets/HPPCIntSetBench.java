@@ -1,0 +1,66 @@
+package container.benchmarks.intsingleoperations.sets;
+
+import java.util.function.Consumer;
+
+import org.openjdk.jmh.annotations.Param;
+
+import com.carrotsearch.hppc.IntSet;
+import com.carrotsearch.hppc.cursors.IntCursor;
+
+import container.factories.HPPCIntSetFact;
+
+public class HPPCIntSetBench extends AbstractIntSetBench {
+	
+	@Param
+	HPPCIntSetFact impl;
+	
+	IntSet fullSet;
+	
+	@Override
+	public void testSetup() {
+		fullSet = impl.maker.get();
+		for (int i = 0; i < values.length; i++) {
+			fullSet.add(values[i]);
+		}
+	}
+
+
+	@Override
+	protected void populateBench() {
+		IntSet newSet = impl.maker.get();
+		for (int i = 0; i < values.length; i++) {
+			newSet.add(values[i]);
+		}
+		blackhole.consume(newSet);
+		
+	}
+
+	@Override
+	protected void containsBench() {
+		int index = generator.generateIndex(size);
+		blackhole.consume(fullSet.contains(values[index]));
+	}
+
+	@Override
+	protected void copyBench() {
+		IntSet newSet = impl.maker.get();
+		// was: newSet.addAll(fullSet);
+		fullSet.forEach(new Consumer<IntCursor>() {
+			@Override
+			public void accept(IntCursor t) {
+				newSet.add(t.value);
+			}
+		});
+		blackhole.consume(newSet);
+	}
+
+	@Override
+	protected void iterateBench() {
+		fullSet.forEach(new Consumer<IntCursor>() {
+			@Override
+			public void accept(IntCursor t) {
+				blackhole.consume(t.value);
+			}
+		});
+	}
+}

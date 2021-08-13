@@ -9,3 +9,4 @@
 benchmarks.jar
 
 *.class
+/container-bench-1.0-jmh.jar
