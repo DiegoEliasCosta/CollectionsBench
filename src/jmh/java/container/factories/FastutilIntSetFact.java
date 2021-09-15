@@ -8,7 +8,7 @@ public enum FastutilIntSetFact {
 	FASTUTIL_I_HASH(it.unimi.dsi.fastutil.ints.IntOpenHashSet::new), //
 	FASTUTIL_I_AVL(it.unimi.dsi.fastutil.ints.IntAVLTreeSet::new), //
 	FASTUTIL_I_RB(it.unimi.dsi.fastutil.ints.IntRBTreeSet::new), //
-	FASTUTIL_I_ARRAY(it.unimi.dsi.fastutil.ints.IntArraySet::new), //
+	// FASTUTIL_I_ARRAY(it.unimi.dsi.fastutil.ints.IntArraySet::new), //
 	;
 
 	public final Supplier<IntSet> maker;
