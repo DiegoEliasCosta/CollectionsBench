@@ -38,13 +38,13 @@ public enum JDKMap2IntFact {
 	MAHOUT_O2O_HASH(org.apache.mahout.math.map.OpenHashMap::new), //
 
 	JAVOLUTION_HASH(javolution.util.FastMap::new), //
-	JAVOLUTION_SORTED(javolution.util.FastSortedMap::new), //
+	// very slow: JAVOLUTION_SORTED(javolution.util.FastSortedMap::new), //
 	
 	AGRONA_O2I_HASH(() -> new org.agrona.collections.Object2IntHashMap<Object>(0)), //
 	AGRONA_O2O_HASH(org.agrona.collections.Object2ObjectHashMap::new), //
 
-	// GOOGLE_O2O_ARRAY(com.google.api.client.util.ArrayMap::new), //
-	// CORENLP_ARRAY(edu.stanford.nlp.util.ArrayMap::new); //
+	// very slow: GOOGLE_O2O_ARRAY(com.google.api.client.util.ArrayMap::new), //
+	// very slow: CORENLP_ARRAY(edu.stanford.nlp.util.ArrayMap::new); //
 	;
 
 	public final Supplier<Map<Object, Integer>> maker;
