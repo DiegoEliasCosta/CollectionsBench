@@ -15,7 +15,7 @@ public enum JDKSetFact {
 	FASTUTIL_LINKEDHASH(it.unimi.dsi.fastutil.objects.ObjectLinkedOpenHashSet::new), //
 	FASTUTIL_AVL(it.unimi.dsi.fastutil.objects.ObjectAVLTreeSet::new), //
 	FASTUTIL_RB(it.unimi.dsi.fastutil.objects.ObjectRBTreeSet::new), //
-	FASTUTIL_ARRAY(it.unimi.dsi.fastutil.objects.ObjectArraySet::new), //
+	// FASTUTIL_ARRAY(it.unimi.dsi.fastutil.objects.ObjectArraySet::new), //
 
 	TROVE_HASH(gnu.trove.set.hash.THashSet::new), //
 
@@ -32,7 +32,7 @@ public enum JDKSetFact {
 
 	AGRONA_HASH(org.agrona.collections.ObjectHashSet::new), //
 
-	CORENLP_ARRAY(edu.stanford.nlp.util.ArraySet::new); //
+	// CORENLP_ARRAY(edu.stanford.nlp.util.ArraySet::new); //
 	;
 
 	public Supplier<Set<?>> maker;
