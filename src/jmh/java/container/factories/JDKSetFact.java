@@ -28,7 +28,7 @@ public enum JDKSetFact {
 	MAHOUT_HASH(org.apache.mahout.math.set.OpenHashSet::new), //
 
 	JAVOLUTION_HASH(javolution.util.FastSet::new), //
-	JAVOLUTION_SORTED(javolution.util.FastSortedSet::new), //
+	// JAVOLUTION_SORTED(javolution.util.FastSortedSet::new), //
 
 	AGRONA_HASH(org.agrona.collections.ObjectHashSet::new), //
 
