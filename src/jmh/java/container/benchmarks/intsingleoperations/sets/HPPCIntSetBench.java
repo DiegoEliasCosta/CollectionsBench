@@ -44,13 +44,7 @@ public class HPPCIntSetBench extends AbstractIntSetBench {
 	@Override
 	protected void copyBench() {
 		IntSet newSet = impl.maker.get();
-		// was: newSet.addAll(fullSet);
-		fullSet.forEach(new Consumer<IntCursor>() {
-			@Override
-			public void accept(IntCursor t) {
-				newSet.add(t.value);
-			}
-		});
+		newSet.addAll(fullSet);
 		blackhole.consume(newSet);
 	}
 
