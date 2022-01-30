@@ -1,18 +1,16 @@
 package container.benchmarks.intsingleoperations.sets;
 
-import org.eclipse.collections.api.block.procedure.primitive.IntProcedure;
 import org.eclipse.collections.api.set.primitive.MutableIntSet;
 import org.openjdk.jmh.annotations.Param;
 
 import container.factories.EclipseIntSetFact;
 
 public class EclipseIntSetBench extends AbstractIntSetBench {
-
 	@Param
 	EclipseIntSetFact impl;
-	
+
 	MutableIntSet fullSet;
-	
+
 	@Override
 	public void testSetup() {
 		fullSet = impl.maker.get();
@@ -20,7 +18,7 @@ public class EclipseIntSetBench extends AbstractIntSetBench {
 			fullSet.add(values[i]);
 		}
 	}
-	
+
 	@Override
 	protected void populateBench() {
 		MutableIntSet newSet = impl.maker.get();
@@ -45,12 +43,6 @@ public class EclipseIntSetBench extends AbstractIntSetBench {
 
 	@Override
 	protected void iterateBench() {
-		fullSet.forEach(new IntProcedure() {
-			@Override
-			public void value(int each) {
-				blackhole.consume(each);
-			}
-		});
+		fullSet.forEach(blackhole::consume);
 	}
-
 }

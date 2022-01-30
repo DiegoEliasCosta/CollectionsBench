@@ -11,25 +11,25 @@ import container.factories.HPPCSetFact;
  * Abstract class for every test with HPPC Sets implementation
  * 
  * @author Diego
- *
  */
 public class HPPCSetBench extends AbstractSetBench<Object> {
-
 	private ObjectSet<Object> fullSet;
 	private Object[] values;
 
 	@Param
 	public HPPCSetFact impl;
-	
+
 	@Param
 	public HPPCSetWorkload workload;
 
+	@SuppressWarnings("unchecked")
 	protected ObjectSet<Object> getNewSet() {
-		return impl.maker.get();
+		return (ObjectSet<Object>) impl.maker.get();
 	}
 
+	@SuppressWarnings("unchecked")
 	protected ObjectSet<Object> copySet(ObjectSet<Object> original) {
-		return impl.copyMaker.apply(original);
+		return (ObjectSet<Object>) impl.copyMaker.apply(original);
 	}
 
 	public void testSetup() {
@@ -39,7 +39,7 @@ public class HPPCSetBench extends AbstractSetBench<Object> {
 			fullSet.add(values[i]);
 		}
 	}
-	
+
 	@Benchmark
 	public void bench() throws InterruptedException {
 		workload.run(this);
@@ -47,7 +47,6 @@ public class HPPCSetBench extends AbstractSetBench<Object> {
 	}
 
 	public enum HPPCSetWorkload {
-
 		POPULATE {
 			@Override
 			void run(HPPCSetBench self) {
@@ -77,7 +76,6 @@ public class HPPCSetBench extends AbstractSetBench<Object> {
 		},
 
 		CONTAINS {
-
 			@Override
 			void run(HPPCSetBench self) {
 				int index = self.generator.generateIndex(self.size);
@@ -86,7 +84,5 @@ public class HPPCSetBench extends AbstractSetBench<Object> {
 		};
 
 		abstract void run(HPPCSetBench self);
-
 	}
-
 }

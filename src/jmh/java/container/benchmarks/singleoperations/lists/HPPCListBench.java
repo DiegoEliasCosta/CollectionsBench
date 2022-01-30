@@ -52,7 +52,6 @@ public class HPPCListBench extends AbstractListBench<Object> {
 		}, //
 
 		GET_INDEX {
-
 			@Override
 			public void run(HPPCListBench self) {
 				int index = self.generator.generateIndex(self.size);
@@ -61,18 +60,15 @@ public class HPPCListBench extends AbstractListBench<Object> {
 		}, //
 
 		CONTAINS {
-
 			@Override
 			public void run(HPPCListBench self) {
 				int index = self.generator.generateIndex(self.size);
 				self.blackhole.consume(self.fullList.contains(self.values[index]));
 
 			}
-
 		}, //
 
 		POPULATE {
-
 			@Override
 			public <T> void run(HPPCListBench self) {
 				ObjectIndexedContainer<Object> newList = self.getNewList();
@@ -81,11 +77,9 @@ public class HPPCListBench extends AbstractListBench<Object> {
 				}
 				self.blackhole.consume(newList);
 			}
-
 		}, //
 
 		COPY {
-
 			@Override
 			public void run(HPPCListBench self) {
 				ObjectIndexedContainer<Object> newList = self.copyList(self.fullList);
