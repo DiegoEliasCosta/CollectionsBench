@@ -9,7 +9,7 @@ import container.factories.GuavaMultiSetFact;
 public class GuavaMultiSetAdd extends AbstractWordcountBenchmark<Multiset<Object>> {
 	@Param
 	GuavaMultiSetFact impl;
-	
+
 	@SuppressWarnings("unchecked")
 	@Override
 	protected Multiset<Object> makeMap() {
@@ -22,5 +22,10 @@ public class GuavaMultiSetAdd extends AbstractWordcountBenchmark<Multiset<Object
 		// Adding an element to a Multiset which already
 		// implements the counting
 		map.add(object);
+	}
+
+	@Override
+	protected long size(Multiset<Object> map) {
+		return map.size();
 	}
 }

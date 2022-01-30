@@ -19,4 +19,9 @@ public class TroveIntegerAdjust extends AbstractWordcountBenchmark<TObjectIntMap
 	protected void count(TObjectIntMap<Object> map, String object) {
 		map.adjustOrPutValue(object, 1, 1);
 	}
+	
+	@Override
+	protected long size(TObjectIntMap<Object> map) {
+		return map.size();
+	}
 }

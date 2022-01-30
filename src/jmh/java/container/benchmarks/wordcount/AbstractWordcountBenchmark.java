@@ -4,6 +4,7 @@ import java.io.IOException;
 import java.util.List;
 import java.util.concurrent.TimeUnit;
 
+import org.openjdk.jmh.annotations.AuxCounters;
 import org.openjdk.jmh.annotations.Benchmark;
 import org.openjdk.jmh.annotations.BenchmarkMode;
 import org.openjdk.jmh.annotations.CompilerControl;
@@ -16,10 +17,12 @@ import org.openjdk.jmh.annotations.Param;
 import org.openjdk.jmh.annotations.Scope;
 import org.openjdk.jmh.annotations.Setup;
 import org.openjdk.jmh.annotations.State;
+import org.openjdk.jmh.annotations.TearDown;
 import org.openjdk.jmh.annotations.Threads;
 import org.openjdk.jmh.annotations.Timeout;
 import org.openjdk.jmh.annotations.Warmup;
 import org.openjdk.jmh.infra.Blackhole;
+import org.openjdk.jol.info.GraphLayout;
 
 import container.generators.Wordlist;
 
@@ -71,6 +74,36 @@ public abstract class AbstractWordcountBenchmark<T> {
 		map = makeMap();
 	}
 
+	@AuxCounters(AuxCounters.Type.EVENTS)
+	@State(Scope.Thread)
+	public static class MemoryMeasurements {
+		public long mem;
+		public long size;
+		public double avgm;
+		public long inst;
+		public long runs;
+	}
+
+	@TearDown(Level.Trial)
+	public void memoryLayout() {
+		final GraphLayout mem = GraphLayout.parseInstance(map);
+		System.err.println(mem.toFootprint());
+		System.err.println("class:" + this.getClass() + ",collection:" + map.getClass().getName() //
+				+ ",input:" + size + ",workload:" + workload //
+				+ ",size:" + size(map) + ",mem:" + mem.totalSize());
+	}
+
+	@TearDown(Level.Invocation)
+	public void measureMemory(MemoryMeasurements aux) {
+		final GraphLayout mem = GraphLayout.parseInstance(map);
+		// JMH AuxCounters are rounded to floats, unfortunately.
+		aux.size = size(map);
+		aux.mem = mem.totalSize();
+		aux.inst = mem.totalCount();
+		aux.avgm = aux.mem / (double) aux.size;
+		aux.runs = 1; // will be added
+	}
+
 	/**
 	 * Class to benchmark a single adapter.
 	 * 
@@ -105,4 +138,12 @@ public abstract class AbstractWordcountBenchmark<T> {
 	 */
 	@CompilerControl(CompilerControl.Mode.DONT_INLINE)
 	abstract protected void count(T map, String object);
+
+	/**
+	 * Get the number of stored entries.
+	 *
+	 * @param map data
+	 * @return size
+	 */
+	abstract protected long size(T map);
 }

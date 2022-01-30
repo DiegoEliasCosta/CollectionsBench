@@ -27,4 +27,9 @@ public class FastutilIntegerAddToA extends AbstractWordcountBenchmark<Object2Int
 	protected void count(Object2IntAVLTreeMap<Object> map, String object) {
 		map.addTo(object, 1);
 	}
+
+	@Override
+	protected long size(Object2IntAVLTreeMap<Object> map) {
+		return map.size();
+	}
 }

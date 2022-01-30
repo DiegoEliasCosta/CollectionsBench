@@ -18,4 +18,9 @@ public class AgronaIntegerGetPut extends AbstractWordcountBenchmark<Object2IntHa
 	protected void count(Object2IntHashMap<Object> map, String object) {
 		map.put(object, map.getValue(object) + 1);
 	}
+
+	@Override
+	protected long size(Object2IntHashMap<Object> map) {
+		return map.size();
+	}
 }

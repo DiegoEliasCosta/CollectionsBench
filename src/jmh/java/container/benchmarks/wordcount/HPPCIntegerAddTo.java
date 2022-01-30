@@ -24,4 +24,9 @@ public class HPPCIntegerAddTo extends AbstractWordcountBenchmark<ObjectIntMap<Ob
 	protected void count(ObjectIntMap<Object> map, String object) {
 		map.addTo(object, 1);
 	}
+
+	@Override
+	protected long size(ObjectIntMap<Object> map) {
+		return map.size();
+	}
 }

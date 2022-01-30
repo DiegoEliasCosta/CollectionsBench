@@ -3,10 +3,10 @@ package container.benchmarks.wordcount;
 import org.openjdk.jmh.annotations.Param;
 
 import container.factories.ScalaMapFact;
-import scala.Option;
+import scala.Some;
 import scala.collection.mutable.Map;
 
-public class ScalaGetPut extends AbstractWordcountBenchmark<Map<String, Integer>> {
+public class ScalaUpdateWith extends AbstractWordcountBenchmark<Map<String, Integer>> {
 	@Param
 	public ScalaMapFact impl;
 
@@ -17,9 +17,7 @@ public class ScalaGetPut extends AbstractWordcountBenchmark<Map<String, Integer>
 
 	@Override
 	protected void count(Map<String, Integer> map, String object) {
-		// Avoid ambiguity:
-		Option<Integer> old = ((scala.collection.Map<String, Integer>) map).get(object);
-		map.put(object, old.isDefined() ? old.get() + 1 : 1);
+		map.updateWith(object, (x) -> new Some<Integer>(x.getOrElse(() -> 0) + 1));
 	}
 
 	@Override
