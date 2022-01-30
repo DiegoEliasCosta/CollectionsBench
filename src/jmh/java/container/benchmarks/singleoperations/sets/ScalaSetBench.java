@@ -66,7 +66,7 @@ public class ScalaSetBench extends AbstractSetBench<Object> {
 			@Override
 			void run(ScalaSetBench self) {
 				Set<Object> newSet = self.getNewSet();
-				newSet.$plus$plus$eq(self.fullSet);
+				newSet.addAll(self.fullSet);
 				self.blackhole.consume(newSet);
 			}
 		},

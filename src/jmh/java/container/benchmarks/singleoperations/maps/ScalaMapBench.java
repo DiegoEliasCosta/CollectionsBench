@@ -26,7 +26,7 @@ public class ScalaMapBench extends AbstractMapBench<Object, Integer> {
 
 	protected Map<Object, Integer> copyMap(Map<Object, Integer> fullMap2) {
 		Map<Object, Integer> map = this.getNewMap();
-		map.$plus$plus$eq(fullMap2);
+		map.addAll(fullMap2);
 		return map;
 	}
 
