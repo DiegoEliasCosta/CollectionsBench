@@ -10,6 +10,8 @@ public class GeneratorFactory {
 		switch (payloadType) {
 		case INTEGER_UNIFORM:
 			return new IntegerUniformGenerator();
+		case INTEGER_DICTIONARY:
+			return new IntegerDictionaryGenerator();
 		case STRING_UNIFORM:
 			return new StringUniformGenerator();
 		case STRING_DICTIONARY:

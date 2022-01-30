@@ -5,10 +5,11 @@ import java.util.Arrays;
 
 import org.apache.commons.math3.random.Well44497b;
 
+import container.generators.ElementGenerator;
 import container.generators.IntElementGenerator;
 import container.generators.Wordlist;
 
-public class IntegerDictionaryGenerator implements IntElementGenerator {
+public class IntegerDictionaryGenerator implements IntElementGenerator, ElementGenerator<Integer> {
 	int[] words;
 
 	protected Well44497b randomGenerator;
@@ -26,5 +27,14 @@ public class IntegerDictionaryGenerator implements IntElementGenerator {
 	@Override
 	public int[] generateIntArray(int arraySize) {
 		return Arrays.copyOfRange(words, 0, arraySize);
+	}
+
+	@Override
+	public Integer[] generateArray(int arraySize) {
+		Integer[] array = new Integer[arraySize];
+		for (int i = 0; i < arraySize; i++) {
+			array[i] = words[i]; // boxing
+		}
+		return array;
 	}
 }
