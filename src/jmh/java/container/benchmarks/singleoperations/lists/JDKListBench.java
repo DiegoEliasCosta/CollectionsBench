@@ -13,16 +13,15 @@ import container.factories.JDKListFact;
  * @author Diego
  */
 public class JDKListBench extends AbstractListBench<Object> {
-
 	private List<Object> fullList;
 	protected Object[] values;
 
 	@Param
-	public JDKListWorkload workload; 
-	
+	public JDKListWorkload workload;
+
 	@Param
 	public JDKListFact impl;
-	
+
 	protected List<Object> getNewList() {
 		return impl.maker.get();
 	}
@@ -47,9 +46,8 @@ public class JDKListBench extends AbstractListBench<Object> {
 		list.addAll(fullList2);
 		return list;
 	}
-	
-	public enum JDKListWorkload {
 
+	public enum JDKListWorkload {
 		ITERATE {
 			@Override
 			public void run(JDKListBench self) {
@@ -58,29 +56,21 @@ public class JDKListBench extends AbstractListBench<Object> {
 				}
 			}
 		}, //
-
 		GET_INDEX {
-
 			@Override
 			public void run(JDKListBench self) {
 				int index = self.generator.generateIndex(self.size);
 				self.blackhole.consume(self.fullList.get(index));
 			}
 		}, //
-
 		CONTAINS {
-
 			@Override
 			public void run(JDKListBench self) {
 				int index = self.generator.generateIndex(self.size);
 				self.blackhole.consume(self.fullList.contains(self.values[index]));
-
 			}
-
 		}, //
-
 		POPULATE {
-
 			@Override
 			public void run(JDKListBench self) {
 				List<Object> newList = self.getNewList();
@@ -89,25 +79,16 @@ public class JDKListBench extends AbstractListBench<Object> {
 				}
 				self.blackhole.consume(newList);
 			}
-
 		}, //
-		
 		COPY {
-
 			@Override
 			public void run(JDKListBench self) {
 				List<Object> newList = self.copyList(self.fullList);
 				self.blackhole.consume(newList);
 			}
-		}, 
-		
+		};
 		// TODO: Add more scenarios for single operation
 
-		;
-
 		abstract public void run(JDKListBench self);
-
 	}
-
-
 }

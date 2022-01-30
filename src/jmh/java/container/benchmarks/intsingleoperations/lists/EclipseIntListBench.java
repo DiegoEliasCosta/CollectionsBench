@@ -1,12 +1,10 @@
 package container.benchmarks.intsingleoperations.lists;
 
-import org.eclipse.collections.api.block.procedure.primitive.IntProcedure;
 import org.eclipse.collections.impl.list.mutable.primitive.IntArrayList;
 
 public class EclipseIntListBench extends AbstractIntListBench {
-
 	IntArrayList fullList;
-	
+
 	@Override
 	public void testSetup() {
 		fullList = new IntArrayList();
@@ -14,7 +12,7 @@ public class EclipseIntListBench extends AbstractIntListBench {
 			fullList.add(values[i]);
 		}
 	}
-	
+
 	@Override
 	protected void populateBench() {
 		IntArrayList newList = new IntArrayList();
@@ -38,14 +36,6 @@ public class EclipseIntListBench extends AbstractIntListBench {
 
 	@Override
 	protected void iterateBench() {
-		fullList.forEach(new IntProcedure() {
-			@Override
-			public void value(int each) {
-				blackhole.consume(each);
-			}
-		});
+		fullList.forEach(blackhole::consume);
 	}
-
-
-
 }

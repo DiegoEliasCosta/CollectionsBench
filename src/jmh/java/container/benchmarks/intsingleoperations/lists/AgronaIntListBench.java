@@ -5,19 +5,16 @@ import java.util.function.IntConsumer;
 import org.agrona.collections.IntArrayList;
 import org.openjdk.jmh.annotations.Param;
 
-
 public class AgronaIntListBench extends AbstractIntListBench {
-
 	IntArrayList fullList;
-	
+
 	@Param
 	public AgronaIntListFact impl;
-	
+
 	public enum AgronaIntListFact {
 		AGRONA_I_ARRAY
 	}
-	
-	
+
 	@Override
 	public void testSetup() {
 		fullList = new IntArrayList();
@@ -25,8 +22,7 @@ public class AgronaIntListBench extends AbstractIntListBench {
 			fullList.add(values[i]);
 		}
 	}
-	
-	
+
 	@Override
 	protected void populateBench() {
 		IntArrayList newList = new IntArrayList();
@@ -61,7 +57,4 @@ public class AgronaIntListBench extends AbstractIntListBench {
 			}
 		});
 	}
-
-	
-
 }

@@ -8,17 +8,14 @@ import org.apache.commons.math3.random.Well44497b;
 import container.generators.IntElementGenerator;
 import container.generators.Wordlist;
 
-public class IntegerDictionaryGenerator implements IntElementGenerator{
-
+public class IntegerDictionaryGenerator implements IntElementGenerator {
 	int[] words;
 
 	protected Well44497b randomGenerator;
-	
+
 	public void init(int size, int seed) throws IOException {
-		
 		words = Wordlist.loadInts(size, seed, 1);
 		randomGenerator = new Well44497b(seed);
-		
 	}
 
 	@Override
@@ -30,5 +27,4 @@ public class IntegerDictionaryGenerator implements IntElementGenerator{
 	public int[] generateIntArray(int arraySize) {
 		return Arrays.copyOfRange(words, 0, arraySize);
 	}
-
 }

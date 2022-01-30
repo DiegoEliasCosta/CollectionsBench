@@ -9,16 +9,15 @@ import com.carrotsearch.hppc.cursors.ObjectCursor;
 import container.factories.HPPCListFact;
 
 public class HPPCListBench extends AbstractListBench<Object> {
-
 	ObjectIndexedContainer<Object> fullList;
 	Object[] values;
-	
+
 	@Param
 	public HPPCListFact impl;
-	
+
 	@Param
 	public HPPCListWorkload workload;
-	
+
 	protected ObjectIndexedContainer<Object> getNewList() {
 		return impl.maker.get();
 	}
@@ -26,7 +25,7 @@ public class HPPCListBench extends AbstractListBench<Object> {
 	protected ObjectIndexedContainer<Object> copyList(ObjectIndexedContainer<Object> original) {
 		return impl.copyMaker.apply(original);
 	}
-	
+
 	@Override
 	public void testSetup() {
 		fullList = this.getNewList();
@@ -34,17 +33,15 @@ public class HPPCListBench extends AbstractListBench<Object> {
 		for (int i = 0; i < size; i++) {
 			fullList.add(values[i]);
 		}
-
 	}
-	
+
 	@Benchmark
 	public void bench() {
 		workload.run(this);
 		blackhole.consume(fullList);
 	}
-	
-	public enum HPPCListWorkload {
 
+	public enum HPPCListWorkload {
 		ITERATE {
 			@Override
 			public void run(HPPCListBench self) {
@@ -86,7 +83,7 @@ public class HPPCListBench extends AbstractListBench<Object> {
 			}
 
 		}, //
-		
+
 		COPY {
 
 			@Override
@@ -94,13 +91,9 @@ public class HPPCListBench extends AbstractListBench<Object> {
 				ObjectIndexedContainer<Object> newList = self.copyList(self.fullList);
 				self.blackhole.consume(newList);
 			}
-		}, 
-		
+		};
 		// TODO: Add more scenarios for single operation
-		;
-		
-		abstract public <T> void run(HPPCListBench self);
-		
-	}
 
+		abstract public <T> void run(HPPCListBench self);
+	}
 }

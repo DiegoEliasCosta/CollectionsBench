@@ -4,7 +4,6 @@ import gnu.trove.list.array.TIntArrayList;
 import gnu.trove.procedure.TIntProcedure;
 
 public class TroveIntListBench extends AbstractIntListBench {
-
 	TIntArrayList fullList;
 
 	@Override
@@ -22,12 +21,11 @@ public class TroveIntListBench extends AbstractIntListBench {
 			newList.add(values[i]);
 		}
 		blackhole.consume(newList);
-
 	}
 
 	@Override
 	protected void containsBench() {
-		int index = generator.generateIndex(seed);
+		int index = generator.generateIndex(size);
 		blackhole.consume(fullList.contains(values[index]));
 	}
 
@@ -47,5 +45,4 @@ public class TroveIntListBench extends AbstractIntListBench {
 			}
 		});
 	}
-
 }

@@ -3,7 +3,6 @@ package container.generators.uniform;
 import container.generators.IntElementGenerator;
 
 public class IntegerUniformGenerator extends AbstractUniformGenerator<Integer> implements IntElementGenerator {
-
 	@Override
 	public Integer[] generateArray(int arraySize) {
 		Integer[] integers = new Integer[arraySize];
@@ -21,5 +20,4 @@ public class IntegerUniformGenerator extends AbstractUniformGenerator<Integer> i
 		}
 		return integers;
 	}
-
 }

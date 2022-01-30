@@ -1,15 +1,10 @@
 package container.benchmarks.intsingleoperations.lists;
 
-import java.util.function.IntConsumer;
-
 import it.unimi.dsi.fastutil.ints.IntArrayList;
 
 public class FastutilIntListBench extends AbstractIntListBench {
-
-	
-	
 	IntArrayList fullList;
-	
+
 	@Override
 	public void testSetup() {
 		fullList = new IntArrayList();
@@ -17,8 +12,7 @@ public class FastutilIntListBench extends AbstractIntListBench {
 			fullList.add(values[i]);
 		}
 	}
-	
-	
+
 	@Override
 	protected void populateBench() {
 		IntArrayList newList = new IntArrayList();
@@ -42,13 +36,6 @@ public class FastutilIntListBench extends AbstractIntListBench {
 
 	@Override
 	protected void iterateBench() {
-		fullList.forEach(new IntConsumer() {
-			@Override
-			public void accept(int value) {
-				blackhole.consume(value);
-			}
-		});
+		fullList.forEach(blackhole::consume);
 	}
-
-
 }

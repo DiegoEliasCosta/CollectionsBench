@@ -1,7 +1,6 @@
 package container.generators.uniform;
 
 public class LongUniformGenerator extends AbstractUniformGenerator<Long> {
-
 	@Override
 	public Long[] generateArray(int arraySize) {
 		Long[] longs = new Long[arraySize];
@@ -10,5 +9,4 @@ public class LongUniformGenerator extends AbstractUniformGenerator<Long> {
 		}
 		return longs;
 	}
-
 }
